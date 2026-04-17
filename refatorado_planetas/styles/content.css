@@ -1,0 +1,13 @@
+
+.content-stack {
+    display: grid;
+    gap: 20px;
+}
+
+.topic-card {
+    padding: 24px;
+}
+
+.topic-card h2 {
+    margin-bottom: 14px;
+}

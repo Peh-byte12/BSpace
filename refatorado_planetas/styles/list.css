@@ -1,0 +1,22 @@
+
+.planets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.planet-card {
+    padding: 20px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.planet-card h2 {
+    margin-bottom: 10px;
+}
+
+.planet-card p {
+    margin-bottom: 18px;
+}

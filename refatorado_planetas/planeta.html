@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planeta</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/planet.css">
+</head>
+<body>
+
+<div class="ceu" aria-hidden="true">
+    <div class="estrela" style="top: 5%; left: 10%; animation-delay: 0.2s;"></div>
+    <div class="estrela" style="top: 12%; left: 25%; animation-delay: 1s;"></div>
+    <div class="estrela" style="top: 8%; left: 42%; animation-delay: 0.5s;"></div>
+    <div class="estrela" style="top: 18%; left: 60%; animation-delay: 1.7s;"></div>
+    <div class="estrela" style="top: 10%; left: 80%; animation-delay: 0.8s;"></div>
+    <div class="estrela" style="top: 22%; left: 15%; animation-delay: 1.3s;"></div>
+    <div class="estrela" style="top: 28%; left: 35%; animation-delay: 0.6s;"></div>
+    <div class="estrela" style="top: 30%; left: 52%; animation-delay: 1.8s;"></div>
+    <div class="estrela" style="top: 24%; left: 72%; animation-delay: 0.9s;"></div>
+    <div class="estrela" style="top: 36%; left: 88%; animation-delay: 1.2s;"></div>
+    <div class="estrela" style="top: 42%; left: 8%; animation-delay: 0.3s;"></div>
+    <div class="estrela" style="top: 48%; left: 20%; animation-delay: 1.4s;"></div>
+    <div class="estrela" style="top: 40%; left: 38%; animation-delay: 0.7s;"></div>
+    <div class="estrela" style="top: 55%; left: 50%; animation-delay: 1.6s;"></div>
+    <div class="estrela" style="top: 44%; left: 68%; animation-delay: 0.4s;"></div>
+    <div class="estrela" style="top: 52%; left: 82%; animation-delay: 1.1s;"></div>
+    <div class="estrela" style="top: 60%; left: 12%; animation-delay: 0.9s;"></div>
+    <div class="estrela" style="top: 65%; left: 28%; animation-delay: 1.5s;"></div>
+    <div class="estrela" style="top: 58%; left: 44%; animation-delay: 0.2s;"></div>
+    <div class="estrela" style="top: 70%; left: 62%; animation-delay: 1.9s;"></div>
+    <div class="estrela" style="top: 74%; left: 78%; animation-delay: 0.8s;"></div>
+    <div class="estrela" style="top: 82%; left: 18%; animation-delay: 1.2s;"></div>
+    <div class="estrela" style="top: 86%; left: 36%; animation-delay: 0.5s;"></div>
+    <div class="estrela" style="top: 80%; left: 54%; animation-delay: 1.7s;"></div>
+    <div class="estrela" style="top: 90%; left: 72%; animation-delay: 1s;"></div>
+    <div class="estrela" style="top: 14%; left: 92%; animation-delay: 0.6s;"></div>
+    <div class="estrela" style="top: 32%; left: 95%; animation-delay: 1.4s;"></div>
+    <div class="estrela" style="top: 67%; left: 92%; animation-delay: 0.7s;"></div>
+    <div class="estrela" style="top: 88%; left: 92%; animation-delay: 1.6s;"></div>
+    <div class="estrela" style="top: 50%; left: 96%; animation-delay: 0.3s;"></div>
+</div>
+<div class="planeta-decoracao" aria-hidden="true"></div>
+
+
+<header class="page-shell site-header surface">
+    <div class="brand">
+        <img src="assets/logo.gif" alt="Logotipo do site de astronomia">
+        <div>
+            <strong>BSpace</strong>
+            <span>Universo além da sua compreensão</span>
+        </div>
+    </div>
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="planetas.html">Planetas</a>
+        <a href="curiosidades.html">Curiosidades</a>
+        <a href="missoes.html">Missões</a>
+    </nav>
+</header>
+
+<main class="page-shell">
+    <section class="hero surface">
+        <span class="badge">Planeta do Sistema Solar</span>
+        <h1 id="planetName">Carregando planeta...</h1>
+        <p id="planetDescription">Aguarde enquanto os dados do planeta são preparados.</p>
+    </section>
+
+    <section class="planet-layout" id="planetLayout">
+        <article class="planet-image surface">
+            <img id="planetImage" src="" alt="">
+        </article>
+
+        <article class="planet-content surface">
+            <h2>Resumo</h2>
+            <p id="planetSummary"></p>
+            <p>Esta página usa um único HTML e preenche o conteúdo dinamicamente com JavaScript, reduzindo repetição e facilitando manutenção.</p>
+
+            <div class="planet-facts" id="planetFacts"></div>
+
+            <div class="planet-nav">
+                <a id="linkAnterior" href="planetas.html">Planeta anterior</a>
+                <a href="planetas.html">Lista de planetas</a>
+                <a id="linkProximo" href="planetas.html">Próximo planeta</a>
+            </div>
+        </article>
+    </section>
+
+    <section class="surface error-box" id="planetError" hidden>
+        <h2>Planeta não encontrado</h2>
+        <p>O nome informado na URL não corresponde a um planeta cadastrado no projeto.</p>
+        <a class="button-secondary" href="planetas.html">Voltar para a lista de planetas</a>
+    </section>
+</main>
+<script src="scripts/main.js" defer></script>
+<script src="scripts/planeta.js" defer></script>
+</body>
+</html>
