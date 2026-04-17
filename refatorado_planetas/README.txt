@@ -55,3 +55,6 @@ Vantagens:
 - Menos repetição de código
 - Manutenção mais fácil
 - Base pronta para evoluir depois com filtros, busca e modelos 3D
+_______________________________________________________________________________________________________________________________________________
+
+Atividade de Git add no Projeto
