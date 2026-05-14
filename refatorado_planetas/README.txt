@@ -58,3 +58,12 @@ Vantagens:
 _______________________________________________________________________________________________________________________________________________
 
 Atividade de Git add no Projeto !
+
+_______________________________________________________________________________________________________________________________________________
+
+
+13/05/2026: Adicionado Modelos de planetas em 3D na Terra, Jupiter, marte, saturno, venus
+
+Problemas encontrados:
+O modelo em 3d do planeta Saturno está com o contraste muito alto, necessário encontrar forma de arrumar o planeta e os aneis separadamente.
+
