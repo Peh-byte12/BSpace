@@ -41,6 +41,7 @@
     <div class="estrela" style="top: 88%; left: 92%; animation-delay: 1.6s;"></div>
     <div class="estrela" style="top: 50%; left: 96%; animation-delay: 0.3s;"></div>
 </div>
+<div id="planeta3d" aria-label="Modelo 3D do planeta"></div>
 <div class="planeta-decoracao" aria-hidden="true"></div>
 
 
@@ -95,5 +96,14 @@
 </main>
 <script src="scripts/main.js" defer></script>
 <script src="scripts/planeta.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="scripts/terra3d.js"></script>
 </body>
 </html>
