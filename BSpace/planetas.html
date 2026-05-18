@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planeta</title>
+    <title>Planetas</title>
     <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/planet.css">
+    <link rel="stylesheet" href="styles/list.css">
 </head>
 <body>
 
@@ -62,38 +62,26 @@
 
 <main class="page-shell">
     <section class="hero surface">
-        <span class="badge">Planeta do Sistema Solar</span>
-        <h1 id="planetName">Carregando planeta...</h1>
-        <p id="planetDescription">Aguarde enquanto os dados do planeta são preparados.</p>
+        <span class="badge">Sistema Solar</span>
+        <h1>Escolha um planeta</h1>
+        <p>Navegue pelos oito planetas com uma interface consistente e uma página única de detalhes para reduzir repetição no projeto.</p>
     </section>
-
-    <section class="planet-layout" id="planetLayout">
-        <article class="planet-image surface">
-            <img id="planetImage" src="" alt="">
-        </article>
-
-        <article class="planet-content surface">
-            <h2>Resumo</h2>
-            <p id="planetSummary"></p>
-            <p>Esta página usa um único HTML e preenche o conteúdo dinamicamente com JavaScript, reduzindo repetição e facilitando manutenção.</p>
-
-            <div class="planet-facts" id="planetFacts"></div>
-
-            <div class="planet-nav">
-                <a id="linkAnterior" href="planetas.html">Planeta anterior</a>
-                <a href="planetas.html">Lista de planetas</a>
-                <a id="linkProximo" href="planetas.html">Próximo planeta</a>
-            </div>
-        </article>
-    </section>
-
-    <section class="surface error-box" id="planetError" hidden>
-        <h2>Planeta não encontrado</h2>
-        <p>O nome informado na URL não corresponde a um planeta cadastrado no projeto.</p>
-        <a class="button-secondary" href="planetas.html">Voltar para a lista de planetas</a>
+    <section class="planets-grid">
+        <article class="planet-card card"><div><h2>Mercúrio</h2><p>O planeta mais próximo do Sol e também um dos menores do Sistema Solar.</p></div><a class="grid-link" href="planeta.html?nome=mercurio">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Vênus</h2><p>Conhecido pelo calor extremo e pela atmosfera densa rica em dióxido de carbono.</p></div><a class="grid-link" href="planeta.html?nome=venus">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Terra</h2><p>O único planeta conhecido com água líquida estável na superfície e vida confirmada.</p></div><a class="grid-link" href="planeta.html?nome=terra">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Marte</h2><p>Famoso pela coloração avermelhada e por ser um alvo frequente de missões robóticas.</p></div><a class="grid-link" href="planeta.html?nome=marte">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Júpiter</h2><p>O maior planeta do Sistema Solar, com intensa atividade atmosférica.</p></div><a class="grid-link" href="planeta.html?nome=jupiter">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Saturno</h2><p>Reconhecido principalmente pelo seu impressionante sistema de anéis.</p></div><a class="grid-link" href="planeta.html?nome=saturno">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Urano</h2><p>Um gigante gelado que gira praticamente de lado em relação à sua órbita.</p></div><a class="grid-link" href="planeta.html?nome=urano">Abrir página</a></article>
+        <article class="planet-card card"><div><h2>Netuno</h2><p>Planeta distante, frio e com ventos entre os mais fortes já observados.</p></div><a class="grid-link" href="planeta.html?nome=netuno">Abrir página</a></article>
     </section>
 </main>
+
+<footer class="page-shell page-footer surface">
+    <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
+</footer>
 <script src="scripts/main.js" defer></script>
-<script src="scripts/planeta.js" defer></script>
+
 </body>
 </html>

@@ -223,28 +223,59 @@ p {
 }
 
 .planeta-decoracao {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #8fc5ff, #2f7cff, #0b2b7a);
     position: fixed;
-    top: 100px;
-    right: 36px;
+    top: 86px;
+    right: 32px;
     z-index: 1;
-    box-shadow: 0 0 28px rgba(77, 163, 255, 0.45);
-    animation: girar 16s linear infinite;
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    isolation: isolate;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.92) 0 7%, transparent 18%),
+        linear-gradient(122deg, transparent 0 16%, rgba(205, 234, 255, 0.42) 17% 20%, transparent 21% 32%, rgba(13, 55, 143, 0.34) 33% 37%, transparent 38% 100%),
+        radial-gradient(circle at 64% 70%, #11245d 0 24%, #1f65dd 48%, #5da9ff 72%, #d8efff 100%);
+    border: 1px solid rgba(191, 226, 255, 0.52);
+    box-shadow:
+        inset -24px -22px 34px rgba(0, 10, 42, 0.62),
+        inset 16px 12px 24px rgba(255, 255, 255, 0.28),
+        0 0 18px rgba(92, 168, 255, 0.32),
+        0 0 54px rgba(35, 121, 255, 0.2);
+    animation: planeta-flutuar 7s ease-in-out infinite;
 }
 
 .planeta-decoracao::before {
     content: "";
     position: absolute;
-    width: 180px;
-    height: 34px;
-    border: 3px solid rgba(180, 220, 255, 0.7);
+    width: 186px;
+    height: 44px;
+    top: 45px;
+    left: -26px;
+    z-index: -1;
+    border: 2px solid rgba(180, 222, 255, 0.58);
     border-radius: 50%;
-    top: 46px;
-    left: -25px;
-    transform: rotate(-18deg);
+    transform: rotate(-23deg);
+    box-shadow:
+        0 0 12px rgba(133, 193, 255, 0.35),
+        inset 0 0 10px rgba(255, 255, 255, 0.22);
+    animation: anel-respirar 5.8s ease-in-out infinite;
+}
+
+.planeta-decoracao::after {
+    content: "";
+    position: absolute;
+    width: 186px;
+    height: 44px;
+    top: 45px;
+    left: -26px;
+    z-index: 2;
+    border-radius: 50%;
+    border-bottom: 3px solid rgba(221, 242, 255, 0.78);
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    transform: rotate(-23deg);
+    filter: drop-shadow(0 0 5px rgba(139, 204, 255, 0.48));
 }
 
 .page-footer {
@@ -258,9 +289,28 @@ p {
     to { opacity: 1; transform: scale(1.4); }
 }
 
-@keyframes girar {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+@keyframes planeta-flutuar {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        background-position: 0 0, 0 0, 0 0;
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(1.5deg);
+        background-position: 0 0, 16px 0, 0 0;
+    }
+}
+
+@keyframes anel-respirar {
+    0%, 100% {
+        opacity: 0.76;
+        transform: rotate(-23deg) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: rotate(-23deg) scale(1.04);
+    }
 }
 
 @media (max-width: 900px) {
@@ -284,16 +334,17 @@ p {
     }
 
     .planeta-decoracao {
-        width: 84px;
-        height: 84px;
-        top: 90px;
+        width: 88px;
+        height: 88px;
+        top: 96px;
         right: 12px;
     }
 
-    .planeta-decoracao::before {
-        width: 120px;
-        height: 20px;
-        top: 31px;
+    .planeta-decoracao::before,
+    .planeta-decoracao::after {
+        width: 124px;
+        height: 28px;
+        top: 30px;
         left: -18px;
     }
 }

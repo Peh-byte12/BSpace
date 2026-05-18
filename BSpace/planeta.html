@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curiosidades</title>
+    <title>Planeta</title>
     <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/planet.css">
 </head>
 <body>
 
@@ -41,6 +41,7 @@
     <div class="estrela" style="top: 88%; left: 92%; animation-delay: 1.6s;"></div>
     <div class="estrela" style="top: 50%; left: 96%; animation-delay: 0.3s;"></div>
 </div>
+<div id="planeta3d" aria-label="Modelo 3D do planeta"></div>
 <div class="planeta-decoracao" aria-hidden="true"></div>
 
 
@@ -60,37 +61,49 @@
     </nav>
 </header>
 
-<main class="page-shell content-stack">
+<main class="page-shell">
     <section class="hero surface">
-        <span class="badge">Curiosidades astronômicas</span>
-        <h1>Fatos interessantes sobre o universo</h1>
-        <p>Aprenda um pouco mais sobre as proporções, estrelas e características do nosso universo.</p>
+        <span class="badge">Planeta do Sistema Solar</span>
+        <h1 id="planetName">Carregando planeta...</h1>
+        <p id="planetDescription">Aguarde enquanto os dados do planeta são preparados.</p>
     </section>
 
-    <section class="curiosity-box surface">
-        <h2>Curiosidade aleatória</h2>
-        <p class="curiosity-output" id="curiosidadeTexto">Clique no botão para revelar uma curiosidade astronômica.</p>
-        <button class="button" id="btnCuriosidade" type="button">Mostrar curiosidade</button>
+    <section class="planet-layout" id="planetLayout">
+        <article class="planet-image surface">
+            <img id="planetImage" src="" alt="">
+        </article>
+
+        <article class="planet-content surface">
+            <h2>Resumo</h2>
+            <p id="planetSummary"></p>
+            <p>.</p>
+
+            <div class="planet-facts" id="planetFacts"></div>
+
+            <div class="planet-nav">
+                <a id="linkAnterior" href="planetas.html">Planeta anterior</a>
+                <a href="planetas.html">Lista de planetas</a>
+                <a id="linkProximo" href="planetas.html">Próximo planeta</a>
+            </div>
+        </article>
     </section>
 
-    <article class="topic-card surface">
-        <h2>Escalas são difíceis de imaginar</h2>
-        <p>Mesmo dentro do Sistema Solar, as distâncias são enormes. A luz do Sol leva cerca de 8 minutos para chegar à Terra, mas demora várias horas para alcançar os planetas mais distantes.</p>
-    </article>
-    <article class="topic-card surface">
-        <h2>Nem todas as estrelas são iguais</h2>
-        <p>As estrelas variam em massa, cor, temperatura e tempo de vida. Algumas são pequenas e estáveis por bilhões de anos; outras consomem seu combustível muito rapidamente.</p>
-    </article>
-    <article class="topic-card surface">
-        <h2>Júpiter influencia o Sistema Solar interno</h2>
-        <p>Por ter massa enorme, Júpiter influencia trajetórias de asteroides e cometas. Essa gravidade pode tanto capturar objetos quanto alterar suas órbitas.</p>
-    </article>
+    <section class="surface error-box" id="planetError" hidden>
+        <h2>Planeta não encontrado</h2>
+        <p>O nome informado na URL não corresponde a um planeta cadastrado no projeto.</p>
+        <a class="button-secondary" href="planetas.html">Voltar para a lista de planetas</a>
+    </section>
 </main>
-
-<footer class="page-shell page-footer surface">
-    <p class="footer-note">Projeto de astronomia refatorado. <span data-current-year></span></p>
-</footer>
 <script src="scripts/main.js" defer></script>
-
+<script src="scripts/planeta.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="scripts/planetas3d.js"></script>
 </body>
 </html>

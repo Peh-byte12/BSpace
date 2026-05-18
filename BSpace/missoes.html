@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planetas</title>
+    <title>Missões</title>
     <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/list.css">
+    <link rel="stylesheet" href="styles/content.css">
 </head>
 <body>
 
@@ -60,26 +60,28 @@
     </nav>
 </header>
 
-<main class="page-shell">
+<main class="page-shell content-stack">
     <section class="hero surface">
-        <span class="badge">Sistema Solar</span>
-        <h1>Escolha um planeta</h1>
-        <p>Navegue pelos oito planetas com uma interface consistente e uma página única de detalhes para reduzir repetição no projeto.</p>
+        <span class="badge">Exploração espacial</span>
+        <h1>Missões que ampliaram nosso conhecimento</h1>
+        <p>Da observação dos gigantes gasosos até a análise detalhada de Marte, essas missões ajudaram a humanidade a compreender melhor o universo.</p>
     </section>
-    <section class="planets-grid">
-        <article class="planet-card card"><div><h2>Mercúrio</h2><p>O planeta mais próximo do Sol e também um dos menores do Sistema Solar.</p></div><a class="grid-link" href="planeta.html?nome=mercurio">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Vênus</h2><p>Conhecido pelo calor extremo e pela atmosfera densa rica em dióxido de carbono.</p></div><a class="grid-link" href="planeta.html?nome=venus">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Terra</h2><p>O único planeta conhecido com água líquida estável na superfície e vida confirmada.</p></div><a class="grid-link" href="planeta.html?nome=terra">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Marte</h2><p>Famoso pela coloração avermelhada e por ser um alvo frequente de missões robóticas.</p></div><a class="grid-link" href="planeta.html?nome=marte">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Júpiter</h2><p>O maior planeta do Sistema Solar, com intensa atividade atmosférica.</p></div><a class="grid-link" href="planeta.html?nome=jupiter">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Saturno</h2><p>Reconhecido principalmente pelo seu impressionante sistema de anéis.</p></div><a class="grid-link" href="planeta.html?nome=saturno">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Urano</h2><p>Um gigante gelado que gira praticamente de lado em relação à sua órbita.</p></div><a class="grid-link" href="planeta.html?nome=urano">Abrir página</a></article>
-        <article class="planet-card card"><div><h2>Netuno</h2><p>Planeta distante, frio e com ventos entre os mais fortes já observados.</p></div><a class="grid-link" href="planeta.html?nome=netuno">Abrir página</a></article>
-    </section>
+    <article class="topic-card surface">
+        <h2>Voyager 1 e Voyager 2</h2>
+        <p>Lançadas em 1977, as sondas Voyager estudaram os gigantes gasosos e seguiram viagem para além dos planetas externos, enviando dados valiosos por décadas.</p>
+    </article>
+    <article class="topic-card surface">
+        <h2>Curiosity e Perseverance</h2>
+        <p>Esses robôs em Marte analisam rochas, clima e sinais de condições antigas que poderiam ter favorecido vida microbiana.</p>
+    </article>
+    <article class="topic-card surface">
+        <h2>Telescópios espaciais</h2>
+        <p>Hubble e James Webb não pousam em planetas, mas são missões essenciais para observar galáxias, nebulosas, atmosferas de exoplanetas e regiões muito distantes do universo.</p>
+    </article>
 </main>
 
 <footer class="page-shell page-footer surface">
-    <p class="footer-note">Projeto de astronomia refatorado. <span data-current-year></span></p>
+    <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
 </footer>
 <script src="scripts/main.js" defer></script>
 
