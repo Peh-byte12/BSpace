@@ -61,7 +61,6 @@ Atividade de Git add no Projeto !
 
 _______________________________________________________________________________________________________________________________________________
 
-
 13/05/2026: Adicionado Modelos de planetas em 3D na Terra, Jupiter, marte, saturno, venus
 
 Problemas encontrados:
