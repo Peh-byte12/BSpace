@@ -6,7 +6,7 @@ const planetas = {
     mercurio: {
         nome: "Mercúrio",
         descricao: "Mercúrio é o menor planeta do Sistema Solar e o mais próximo do Sol.",
-        imagem: "https://images-assets.nasa.gov/image/PIA11406/PIA11406~orig.jpg?w=400&h=270&fit=crop&crop=faces%2Cfocalpoint",
+        imagem: "assets/mercurio.jpg",
         fatos: [
             { titulo: "Posição", valor: "1º planeta" },
             { titulo: "Destaque", valor: "Grande variação térmica" },
@@ -19,7 +19,7 @@ const planetas = {
     venus: {
         nome: "Vênus",
         descricao: "Vênus é parecido em tamanho com a Terra, mas possui atmosfera extremamente densa e quente.",
-        imagem: "https://science.nasa.gov/wp-content/uploads/2024/03/venus-mariner-10-pia23791-fig2.jpg?w=1024",
+        imagem: "assets/venus.webp",
         fatos: [
             { titulo: "Posição", valor: "2º planeta" },
             { titulo: "Destaque", valor: "Planeta mais quente" },
@@ -32,7 +32,7 @@ const planetas = {
     terra: {
         nome: "Terra",
         descricao: "A Terra é o terceiro planeta do Sistema Solar e o único com vida confirmada até o momento.",
-        imagem: "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/0/885/modis_wonderglobe_lrg.jpg",
+        imagem: "assets/terra.jpg",
         fatos: [
             { titulo: "Posição", valor: "3º planeta" },
             { titulo: "Destaque", valor: "Água líquida abundante" },
@@ -45,7 +45,7 @@ const planetas = {
     marte: {
         nome: "Marte",
         descricao: "Marte é conhecido como planeta vermelho e é um dos corpos mais estudados na busca por sinais de vida passada.",
-        imagem: "https://images-assets.nasa.gov/image/PIA02653/PIA02653~large.jpg?w=1920&h=1920&fit=clip&crop=faces%2Cfocalpoint",
+        imagem: "assets/marte.jpg",
         fatos: [
             { titulo: "Posição", valor: "4º planeta" },
             { titulo: "Destaque", valor: "Solo avermelhado" },
@@ -58,7 +58,7 @@ const planetas = {
     jupiter: {
         nome: "Júpiter",
         descricao: "Júpiter é o maior planeta do Sistema Solar e possui dezenas de luas, além da Grande Mancha Vermelha.",
-        imagem: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia00/pia00343/jpeg/PIA00343.jpg?w=400&h=400&fit=crop&crop=faces%2Cfocalpoint",
+        imagem: "assets/jupiter.jpg",
         fatos: [
             { titulo: "Posição", valor: "5º planeta" },
             { titulo: "Destaque", valor: "Maior planeta do sistema" },
@@ -71,7 +71,7 @@ const planetas = {
     saturno: {
         nome: "Saturno",
         descricao: "Saturno é famoso por seus anéis extensos e por ser um gigante gasoso de baixa densidade.",
-        imagem: "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/03/saturn-farewell-pia21345.jpg?w=400&h=207&fit=crop&crop=faces%2Cfocalpoint",
+        imagem: "assets/saturno.jpg",
         fatos: [
             { titulo: "Posição", valor: "6º planeta" },
             { titulo: "Destaque", valor: "Sistema de anéis" },
@@ -84,7 +84,7 @@ const planetas = {
     urano: {
         nome: "Urano",
         descricao: "Urano é um gigante gelado e possui um eixo de rotação extremamente inclinado.",
-        imagem: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/0/PIA01492-1.jpg?w=2188&h=2185&fit=clip&crop=faces%2Cfocalpoint",
+        imagem: "assets/urano.jpg",
         fatos: [
             { titulo: "Posição", valor: "7º planeta" },
             { titulo: "Destaque", valor: "Gira quase de lado" },
@@ -97,7 +97,7 @@ const planetas = {
     netuno: {
         nome: "Netuno",
         descricao: "Netuno é o planeta mais distante do Sol e apresenta ventos extremamente intensos.",
-        imagem: "https://science.nasa.gov/wp-content/uploads/2024/03/pia01492-neptune-full-disk-16x9-1.jpg?resize=768,432",
+        imagem: "assets/netuno.webp",
         fatos: [
             { titulo: "Posição", valor: "8º planeta" },
             { titulo: "Destaque", valor: "Ventos muito fortes" },
@@ -136,17 +136,21 @@ function carregarPlanetaDaURL() {
     const imagem = document.getElementById("planetImage");
     imagem.src = planeta.imagem;
     imagem.alt = `Imagem de ${planeta.nome}`;
+    imagem.loading = "lazy";
+    imagem.decoding = "async";
 
     const factsContainer = document.getElementById("planetFacts");
     factsContainer.innerHTML = "";
 
     planeta.fatos.forEach((fato) => {
         const card = document.createElement("div");
+        const titulo = document.createElement("strong");
+        const valor = document.createElement("span");
+
         card.className = "fact";
-        card.innerHTML = `
-            <strong>${fato.titulo}</strong>
-            <span>${fato.valor}</span>
-        `;
+        titulo.textContent = fato.titulo;
+        valor.textContent = fato.valor;
+        card.append(titulo, valor);
         factsContainer.appendChild(card);
     });
 

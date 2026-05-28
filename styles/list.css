@@ -5,6 +5,57 @@
     gap: 16px;
 }
 
+.planet-tools {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 20px;
+    padding: 24px;
+}
+
+.tool-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.tool-heading h2 {
+    margin-bottom: 0;
+}
+
+.compact-field {
+    min-width: min(320px, 100%);
+}
+
+.compare-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.comparison-table {
+    display: grid;
+    gap: 10px;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 132px repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.comparison-row span {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.comparison-row strong {
+    overflow-wrap: anywhere;
+}
+
 .planet-card {
     padding: 20px;
     min-height: 150px;
@@ -19,4 +70,20 @@
 
 .planet-card p {
     margin-bottom: 18px;
+}
+
+.planet-card.is-hidden {
+    display: none;
+}
+
+@media (max-width: 760px) {
+    .tool-heading,
+    .compare-controls,
+    .comparison-row {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-heading {
+        display: grid;
+    }
 }

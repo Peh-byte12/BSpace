@@ -46,7 +46,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="assets/logo.gif" alt="Logotipo do site de astronomia">
+        <img src="assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -71,6 +71,27 @@
         <h2>Curiosidade aleatória</h2>
         <p class="curiosity-output" id="curiosidadeTexto">Clique no botão para revelar uma curiosidade astronômica.</p>
         <button class="button" id="btnCuriosidade" type="button">Mostrar curiosidade</button>
+    </section>
+
+    <section class="interactive-content-grid">
+        <article class="quiz-box surface" data-reveal>
+            <span class="section-kicker">Quiz</span>
+            <h2>Teste sua exploração</h2>
+            <p class="quiz-question" id="quizQuestion">Carregando pergunta...</p>
+            <div class="quiz-options" id="quizOptions"></div>
+            <p class="highlight-output" id="quizFeedback">Cada resposta soma XP ao seu perfil.</p>
+        </article>
+
+        <article class="simulation-box surface" data-reveal>
+            <span class="section-kicker">Simulação</span>
+            <h2>Tempo da luz no Sistema Solar</h2>
+            <label class="field-label">
+                Destino
+                <select id="lightDestination"></select>
+            </label>
+            <div class="simulation-track" aria-hidden="true"><span id="lightMeter"></span></div>
+            <p class="highlight-output" id="lightOutput">Escolha um destino para simular quanto tempo a luz leva para chegar lá.</p>
+        </article>
     </section>
 
     <article class="topic-card surface">
