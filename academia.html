@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia BSpace</title>
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/academy.css">
+</head>
+<body data-page="academy">
+
+<div class="ceu" data-stars aria-hidden="true"></div>
+<div class="planeta-decoracao" aria-hidden="true"></div>
+
+<header class="page-shell site-header surface">
+    <div class="brand">
+        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <div>
+            <strong>BSpace</strong>
+            <span>Universo além da sua compreensão</span>
+        </div>
+    </div>
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="academia.html">Academia</a>
+        <a href="calendario.html">Calendário</a>
+        <a href="planetas.html">Planetas</a>
+        <a href="curiosidades.html">Curiosidades</a>
+        <a href="missoes.html">Missões</a>
+    </nav>
+</header>
+
+<main class="page-shell academy-stack">
+    <section class="hero surface academy-hero">
+        <span class="badge">Academia BSpace</span>
+        <h1>Aprenda astronomia em uma trilha progressiva</h1>
+        <p>Estude por módulos, pratique com exercícios, responda quizzes e acompanhe seu avanço com XP local.</p>
+    </section>
+
+    <section class="academy-progress surface" id="academyProgress" aria-live="polite"></section>
+
+    <section class="academy-layout">
+        <aside class="academy-sidebar surface" aria-label="Módulos da Academia">
+            <span class="section-kicker">Trilha de aprendizagem</span>
+            <h2>Módulos</h2>
+            <div class="academy-module-list" id="academyModuleList"></div>
+        </aside>
+
+        <article class="academy-content surface" id="academyModuleContent" aria-live="polite"></article>
+    </section>
+</main>
+
+<footer class="page-shell page-footer surface">
+    <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
+</footer>
+<script type="module" src="src/pages/app.js"></script>
+
+</body>
+</html>

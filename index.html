@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BSpace</title>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/home.css">
 </head>
-<body>
+<body data-page="home">
 
 <div class="ceu" aria-hidden="true">
     <div class="estrela" style="top: 5%; left: 10%; animation-delay: 0.2s;"></div>
@@ -46,7 +46,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -54,6 +54,8 @@
     </div>
     <nav class="nav-links" aria-label="Navegação principal">
         <a href="index.html">Início</a>
+        <a href="academia.html">Academia</a>
+        <a href="calendario.html">Calendário</a>
         <a href="planetas.html">Planetas</a>
         <a href="curiosidades.html">Curiosidades</a>
         <a href="missoes.html">Missões</a>
@@ -61,20 +63,44 @@
 </header>
 
 <main class="page-shell">
-    <section class="hero surface">
-        <span class="badge">BSpace</span>
-        <h1>Astronomia é muito maior do que parece.</h1>
-        <p>Este site apresenta uma introdução simples ao Sistema Solar, com páginas separadas para explorar planetas, curiosidades e missões espaciais.</p>
-        <div class="hero-actions">
-            <a class="button" href="planetas.html">Explorar planetas</a>
-            <a class="button-secondary" href="missoes.html">Ver missões espaciais</a>
+    <section class="hero surface hero-dashboard" aria-labelledby="home-dashboard-title">
+        <div class="hero-copy">
+            <span class="badge">Dashboard</span>
+            <h1 id="home-dashboard-title">Explorar o universo começa aqui</h1>
+            <p>Um painel de controle espacial para navegar rápido entre planetas, missões e eventos astronômicos, com foco em descoberta e ação.</p>
+            <div class="hero-actions">
+                <a class="button" href="academia.html">Começar Academia</a>
+                <a class="button" href="planetas.html">Explorar planetas</a>
+                <a class="button-secondary" href="missoes.html">Missões recomendadas</a>
+            </div>
+        </div>
+
+        <div class="hero-panel">
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroPlanetsStat">8</span>
+                <span class="hero-stat-label">destinos</span>
+                <strong>Planetas disponíveis</strong>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroVisitedStat">0</span>
+                <span class="hero-stat-label">visitados</span>
+                <strong>Exploração retomável</strong>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="heroMissionStat">0</span>
+                <span class="hero-stat-label">simulações</span>
+                <strong>Missões testadas</strong>
+            </div>
         </div>
     </section>
 
-    <section class="experience-grid">
-        <article class="solar-panel surface" data-reveal>
-            <div class="section-kicker">Sistema Solar</div>
-            <h2>Explore a órbita dos planetas</h2>
+    <section class="dashboard-grid">
+        <article class="section-box surface panel panel-explore">
+            <div class="section-kicker">Continue Explorando</div>
+            <div class="panel-copy">
+                <h2>Retome sua jornada pelo espaço</h2>
+                <p>Use o mapa interativo para escolher um planeta ou navegar diretamente para curiosidades e missões com um clique.</p>
+            </div>
             <div class="solar-stage" aria-label="Sistema Solar simplificado">
                 <span class="solar-sun"></span>
                 <span class="solar-orbit orbit-mercurio"><i></i></span>
@@ -86,36 +112,49 @@
             <p class="highlight-output" id="solarPlanetInfo">Selecione um planeta para ver um resumo rápido.</p>
         </article>
 
-    </section>
+        <div class="mini-grid">
+            <article class="section-box surface panel panel-last-visit" id="lastVisitedPlanet">
+                <div class="section-kicker">Último planeta visitado</div>
+                <h3 id="lastVisitedTitle">Terra</h3>
+                <p id="lastVisitedSummary">Confira de onde você parou e retome sua exploração.</p>
+                <div class="card-footnote">
+                    <span id="lastVisitedDetails">12742 km de diâmetro · 1 lua</span>
+                    <a class="button-secondary" href="planeta.html?nome=terra" id="continuePlanetLink">Continuar</a>
+                </div>
+            </article>
 
-    <section class="feature-grid">
-        <article class="feature-card card">
-            <h3>Planetas</h3>
-            <p>Conheça os oito planetas do Sistema Solar, agora com uma página dinâmica única para cada planeta.</p>
-        </article>
-        <article class="feature-card card">
-            <h3>Curiosidades</h3>
-            <p>Veja fatos rápidos sobre o universo, estrelas, luas, gravidade e proporções astronômicas.</p>
-        </article>
-        <article class="feature-card card">
-            <h3>Missões</h3>
-            <p>Entenda a importância de sondas, telescópios e robôs que ampliaram nosso conhecimento do espaço.</p>
-        </article>
-    </section>
+            <article class="section-box surface panel panel-mission" id="recommendedMission">
+                <div class="section-kicker">Missão recomendada</div>
+                <h3 id="missionTitle">Sobrevoo em Marte</h3>
+                <p id="missionDescription">Uma missão orbital com risco médio e alto retorno de descobertas para o planeta vermelho.</p>
+                <div class="mission-meta">
+                    <span id="missionType">Missão Orbital</span>
+                    <span id="missionLevel">Risco médio</span>
+                </div>
+                <a class="button" href="missoes.html" id="missionLink">Ver detalhes</a>
+            </article>
 
-    <section class="grid-2 home-info-grid">
-        <article class="section-box surface">
-            <h2>Objetivo do site</h2>
-            <p>O foco do projeto é servir como exercício prático de desenvolvimento web, agora com recursos interativos e uma base preparada para crescer.</p>
-            <p></p>
+            <article class="section-box surface panel panel-event" id="astronomyEvent">
+                <div class="section-kicker">Evento astronômico da semana</div>
+                <h3 id="eventTitle">Chuva de meteoros Perseidas</h3>
+                <p id="eventDescription">Um espetáculo visível no céu noturno, perfeito para conectar a experiência digital à observação real.</p>
+                <ul class="event-list">
+                    <li><strong>Melhor horário:</strong> 23h às 2h</li>
+                    <li><strong>Visibilidade:</strong> Céu limpo e sem lua</li>
+                </ul>
+            </article>
+        </div>
+
+        <article class="section-box surface panel panel-highlights">
+            <div class="section-kicker">Destaques</div>
+            <h2>Destaques que ampliam sua curiosidade</h2>
+            <div class="highlight-grid" id="highlightGrid"></div>
         </article>
-        <article class="section-box surface">
-            <h2>Por que Astronomia?</h2>
-            <ul class="list-clean">
-                <li>O projeto une programação com um tema que desperta curiosidade.</li>
-                <li>Aprender com algo que você gosta torna o estudo muito mais interessante.</li>
-                <li>Esta versão já inclui filtros, quiz, simulações, comparações e visualização 3D.</li>
-            </ul>
+
+        <article class="section-box surface panel panel-progress">
+            <div class="section-kicker">Estatísticas de progresso</div>
+            <h2>Seu ritmo de exploração</h2>
+            <div class="progress-list" id="progressList"></div>
         </article>
     </section>
 </main>
@@ -123,7 +162,7 @@
 <footer class="page-shell page-footer surface">
     <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
 </footer>
-<script src="scripts/main.js" defer></script>
+<script type="module" src="src/pages/app.js"></script>
 
 </body>
 </html>

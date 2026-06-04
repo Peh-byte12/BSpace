@@ -1,88 +1,49 @@
-28/03 - Estrutura refatorada do BSpace
+BSpace - Plataforma educacional de astronomia
 
-Pastas:
-- assets/: arquivos estáticos
-- styles/: CSS compartilhado e CSS específicos de página
-- *.html: páginas do site
+Estrutura atual
 
-Principais ajustes:
-- Separação entre HTML e CSS
-- Correção da página de missões (agora em missoes.html)
-- Remoção de CSS inline repetido
-- Padronização visual e responsiva
-- Navegação corrigida entre páginas
+- index.html, planetas.html, planeta.html, curiosidades.html, missoes.html: páginas HTML de entrada
+- src/assets/: imagens, logo e modelos 3D
+- src/data/: dados puros do domínio
+- src/components/: componentes interativos reutilizáveis
+- src/pages/: inicializadores de página
+- src/services/: regras de acesso a dados e serviços de apoio
+- src/utils/: helpers pequenos e genéricos
+- src/styles/: CSS base e estilos por página
 
-_________________________________________________________________________________________________________________________________________________
-28/03 - Projeto BSpace - versão completa com HTML, CSS e JavaScript
+Arquitetura
 
-Estrutura:
-- assets/: imagens e logo
-- styles/: CSS base e estilos por página
-- scripts/: JavaScript global do site
-- *.html: páginas do site
+- Os dados dos planetas ficam centralizados em src/data/planets.js.
+- A lista, o comparador, a página de detalhe e o modelo 3D consomem o mesmo cadastro.
+- O quiz, as curiosidades e os tipos de missão ficam em arquivos de dados próprios.
+- As páginas HTML apontam para src/pages/app.js, que carrega apenas o módulo da página atual.
+- A página planeta.html carrega src/pages/planet-3d.js separadamente para evitar carregar Three.js nas outras páginas.
 
-Funcionalidades JS:
-- destaque automático do link ativo no menu
-- botão voltar ao topo
-- ano automático no rodapé
-- animação suave nos cards e seções
-- curiosidade aleatória na página curiosidades
+Guia de manutenção
 
-_______________________________________________________________________________________________________________________________________________
-02/04 - Projeto BSpace refatorado novamente
+- Para adicionar um planeta, edite apenas src/data/planets.js.
+- Para alterar perguntas do quiz, edite src/data/quiz.js.
+- Para alterar curiosidades, edite src/data/curiosities.js.
+- Para alterar tipos de missão, edite src/data/mission-types.js.
+- Para criar uma nova página, adicione um data-page no body, crie um módulo em src/pages/ e registre esse módulo em src/pages/app.js.
 
-Nova estrutura:
-- index.html
-- planetas.html
-- planeta.html
-- curiosidades.html
-- missoes.html
-- styles/
-- scripts/
+Funcionalidades
 
-Principal mudança:
-As 8 páginas individuais dos planetas foram substituídas por 1 único arquivo: planeta.html
-
-Como funciona:
-- O arquivo planeta.html permanece fixo.
-- O JavaScript lê o parâmetro da URL, por exemplo:
-  planeta.html?nome=marte
-- Em seguida, o script planeta.js busca os dados no objeto "planetas"
-  e preenche a página dinamicamente.
-
-Vantagens:
-- Menos arquivos HTML
-- Menos repetição de código
-- Manutenção mais fácil
-- Base pronta para evoluir depois com filtros, busca e modelos 3D
-_______________________________________________________________________________________________________________________________________________
-
-Atividade de Git add no Projeto !
-
-_______________________________________________________________________________________________________________________________________________
-
-13/05/2026: Adicionado Modelos de planetas em 3D na Terra, Jupiter, marte, saturno, venus
-
-Problemas encontrados:
-O modelo em 3d do planeta Saturno está com o contraste muito alto, necessário encontrar forma de arrumar o planeta e os aneis separadamente.
-
-_______________________________________________________________________________________________________________________________________________
-
-28/05/2026: Fases 1, 2 e 3 integradas ao site existente
-
-Fase 1 - Refinamento:
-- Melhorias de visual, foco, navegacao responsiva e performance leve
-- Imagens dinamicas dos planetas usando assets locais
-- Scroll otimizado e imagens com carregamento/decodificacao assincrona
-
-Fase 2 - Interatividade:
-- Sistema solar simplificado na pagina inicial
-- Quiz interativo na pagina de curiosidades
-- Simulacao de tempo da luz e simulador de missoes
-- Busca e comparacao entre planetas na pagina de planetas
-
-Fase 3 - Experiencia Premium:
-- Perfil local de usuario
-- XP, niveis e feedback de gamificacao
-- Sons opcionais
-- Trilha IA demonstrativa baseada no progresso
+- Destaque automático do link ativo no menu
+- Botão voltar ao topo
+- Ano automático no rodapé
+- Animação suave nos cards e seções
+- Home em formato de dashboard de exploração espacial
+- Sistema solar simplificado na página inicial
+- Último planeta visitado salvo localmente
+- Missão recomendada e evento astronômico da semana
+- Estatísticas locais de exploração, missões e quiz
+- Quiz interativo na página de curiosidades
+- Simulação de tempo da luz
+- Simulador de missões
+- Página de missões em formato de experiência interativa
+- Componentes MissionCard, MissionTimeline, MissionStats e MissionGallery
+- Busca e comparação entre planetas
+- Página dinâmica de detalhe dos planetas
+- Visualização 3D com Three.js, GLTFLoader e OrbitControls
+- Viewer 3D com loader, zoom, rotação automática, hotspots clicáveis, painel contextual e tela cheia

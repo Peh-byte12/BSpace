@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Missões</title>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/content.css">
 </head>
-<body>
+<body data-page="missions">
 
 <div class="ceu" aria-hidden="true">
     <div class="estrela" style="top: 5%; left: 10%; animation-delay: 0.2s;"></div>
@@ -46,7 +46,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -54,6 +54,8 @@
     </div>
     <nav class="nav-links" aria-label="Navegação principal">
         <a href="index.html">Início</a>
+        <a href="academia.html">Academia</a>
+        <a href="calendario.html">Calendário</a>
         <a href="planetas.html">Planetas</a>
         <a href="curiosidades.html">Curiosidades</a>
         <a href="missoes.html">Missões</a>
@@ -61,10 +63,73 @@
 </header>
 
 <main class="page-shell content-stack">
-    <section class="hero surface">
-        <span class="badge">Exploração espacial</span>
-        <h1>Missões que ampliaram nosso conhecimento</h1>
-        <p>Da observação dos gigantes gasosos até a análise detalhada de Marte, essas missões ajudaram a humanidade a compreender melhor o universo.</p>
+    <section class="mission-hero surface" id="missionBanner" aria-labelledby="missionTitle">
+        <div class="mission-hero-copy">
+            <span class="badge" id="missionEyebrow">Exploração espacial</span>
+            <h1 id="missionTitle">Missões que ampliaram nosso conhecimento</h1>
+            <p id="missionTagline">Selecione uma missão para explorar timeline, tripulação, tecnologias, objetivos e resultados.</p>
+            <div class="mission-hero-actions">
+                <a class="button" href="#missionTimelineSection">Ver timeline</a>
+                <a class="button-secondary" href="#missionGallerySection">Abrir galeria</a>
+            </div>
+        </div>
+        <div class="mission-hero-visual" aria-hidden="true">
+            <img id="missionBannerImage" src="" alt="">
+        </div>
+    </section>
+
+    <section class="mission-selector surface" data-reveal aria-labelledby="missionSelectorTitle">
+        <div>
+            <span class="section-kicker">Experiências interativas</span>
+            <h2 id="missionSelectorTitle">Escolha uma missão</h2>
+        </div>
+        <div class="mission-cards" id="missionCards"></div>
+    </section>
+
+    <section class="mission-overview-grid">
+        <article class="mission-panel surface" data-reveal>
+            <span class="section-kicker">Dados técnicos</span>
+            <h2>Perfil da missão</h2>
+            <div class="mission-stats" id="missionStats"></div>
+        </article>
+
+        <article class="mission-panel surface" data-reveal>
+            <span class="section-kicker">Tripulação</span>
+            <h2>Equipe principal</h2>
+            <div class="crew-grid" id="missionCrew"></div>
+        </article>
+    </section>
+
+    <section class="mission-panel surface" id="missionTimelineSection" data-reveal>
+        <span class="section-kicker">Timeline visual</span>
+        <h2>Etapas da missão</h2>
+        <div class="mission-timeline" id="missionTimeline"></div>
+    </section>
+
+    <section class="mission-detail-grid">
+        <article class="mission-panel surface" data-reveal>
+            <span class="section-kicker">Objetivos</span>
+            <h2>O que a missão buscava</h2>
+            <ul class="mission-list" id="missionObjectives"></ul>
+        </article>
+
+        <article class="mission-panel surface" data-reveal>
+            <span class="section-kicker">Tecnologias</span>
+            <h2>Sistemas utilizados</h2>
+            <ul class="mission-list" id="missionTechnologies"></ul>
+        </article>
+
+        <article class="mission-panel surface" data-reveal>
+            <span class="section-kicker">Resultados</span>
+            <h2>Impacto científico</h2>
+            <ul class="mission-list" id="missionResults"></ul>
+        </article>
+    </section>
+
+    <section class="mission-panel surface" id="missionGallerySection" data-reveal>
+        <span class="section-kicker">Galeria</span>
+        <h2>Registros visuais</h2>
+        <div class="mission-gallery" id="missionGallery"></div>
     </section>
 
     <section class="mission-control surface" data-reveal>
@@ -77,35 +142,18 @@
             </label>
             <label class="field-label">
                 Tipo de missão
-                <select id="missionType">
-                    <option value="sobrevoo">Sobrevoo</option>
-                    <option value="orbital">Orbital</option>
-                    <option value="pouso">Pouso</option>
-                </select>
+                <select id="missionType"></select>
             </label>
             <button class="button" id="launchMission" type="button">Simular missão</button>
         </div>
-        <p class="highlight-output" id="missionResult">Escolha um destino e um tipo de missão para estimar risco, duração e recompensa em XP.</p>
+        <p class="highlight-output" id="missionResult">Escolha um destino e um tipo de missão para estimar risco e duração.</p>
     </section>
-
-    <article class="topic-card surface">
-        <h2>Voyager 1 e Voyager 2</h2>
-        <p>Lançadas em 1977, as sondas Voyager estudaram os gigantes gasosos e seguiram viagem para além dos planetas externos, enviando dados valiosos por décadas.</p>
-    </article>
-    <article class="topic-card surface">
-        <h2>Curiosity e Perseverance</h2>
-        <p>Esses robôs em Marte analisam rochas, clima e sinais de condições antigas que poderiam ter favorecido vida microbiana.</p>
-    </article>
-    <article class="topic-card surface">
-        <h2>Telescópios espaciais</h2>
-        <p>Hubble e James Webb não pousam em planetas, mas são missões essenciais para observar galáxias, nebulosas, atmosferas de exoplanetas e regiões muito distantes do universo.</p>
-    </article>
 </main>
 
 <footer class="page-shell page-footer surface">
     <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
 </footer>
-<script src="scripts/main.js" defer></script>
+<script type="module" src="src/pages/app.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Astronômico</title>
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/calendar.css">
+</head>
+<body data-page="calendar">
+
+<div class="ceu" data-stars aria-hidden="true"></div>
+<div class="planeta-decoracao" aria-hidden="true"></div>
+
+<header class="page-shell site-header surface">
+    <div class="brand">
+        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <div>
+            <strong>BSpace</strong>
+            <span>Universo além da sua compreensão</span>
+        </div>
+    </div>
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="academia.html">Academia</a>
+        <a href="calendario.html">Calendário</a>
+        <a href="planetas.html">Planetas</a>
+        <a href="curiosidades.html">Curiosidades</a>
+        <a href="missoes.html">Missões</a>
+    </nav>
+</header>
+
+<main class="page-shell calendar-stack">
+    <section class="hero surface calendar-hero">
+        <span class="badge">Central de eventos</span>
+        <h1>Calendário astronômico</h1>
+        <p>Filtre eclipses, fases da Lua, chuvas de meteoros e conjunções para planejar observações e atividades educacionais.</p>
+    </section>
+
+    <section class="calendar-controls surface" aria-label="Filtros do calendário">
+        <label class="field-label calendar-search">
+            Buscar evento
+            <input id="calendarSearch" type="search" placeholder="Ex.: eclipse, Lua, Vênus, meteoros">
+        </label>
+        <div class="calendar-filter-bar" id="calendarTypeFilters" aria-label="Tipos de evento"></div>
+        <div class="calendar-stats" id="calendarStats"></div>
+    </section>
+
+    <section class="calendar-layout">
+        <article class="calendar-list-panel surface">
+            <span class="section-kicker">Agenda</span>
+            <h2>Próximos eventos</h2>
+            <p class="calendar-empty" id="calendarEmpty" hidden>Nenhum evento encontrado com os filtros atuais.</p>
+            <div class="calendar-events" id="calendarEvents"></div>
+        </article>
+
+        <aside class="calendar-detail surface" id="calendarDetails" aria-live="polite"></aside>
+    </section>
+</main>
+
+<footer class="page-shell page-footer surface">
+    <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
+</footer>
+<script type="module" src="src/pages/app.js"></script>
+
+</body>
+</html>

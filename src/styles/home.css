@@ -1,0 +1,436 @@
+.hero-actions {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.hero-dashboard {
+    display: grid;
+    gap: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 86% 16%, rgba(94, 234, 212, 0.18), transparent 30%),
+        radial-gradient(circle at 8% 84%, rgba(255, 209, 102, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(9, 23, 67, 0.96), rgba(2, 6, 23, 0.94));
+}
+
+.hero-copy {
+    max-width: 720px;
+}
+
+.hero-panel {
+    display: grid;
+    gap: 14px;
+}
+
+.hero-stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-content: start;
+    column-gap: 8px;
+    row-gap: 6px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+.hero-stat-value,
+.hero-stat-label {
+    color: var(--accent-2);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.hero-stat-value {
+    font-size: 1.55rem;
+}
+
+.hero-stat-label {
+    align-self: end;
+    padding-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.hero-stat strong {
+    display: block;
+    grid-column: 1 / -1;
+    color: var(--text);
+    font-size: 0.98rem;
+    line-height: 1.24;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.panel {
+    min-width: 0;
+    padding: 20px;
+}
+
+.panel h2,
+.panel h3 {
+    margin-bottom: 10px;
+}
+
+.panel-copy {
+    max-width: 620px;
+}
+
+.panel-explore {
+    display: grid;
+    gap: 18px;
+}
+
+.mini-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.panel-last-visit,
+.panel-mission,
+.panel-event,
+.panel-highlights,
+.panel-progress {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-footnote {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.card-footnote span {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.mission-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 22px;
+}
+
+.mission-meta span {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid rgba(94, 234, 212, 0.22);
+    border-radius: 999px;
+    background: rgba(94, 234, 212, 0.12);
+    color: var(--text);
+    font-size: 0.94rem;
+}
+
+.event-list {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.event-list li {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.event-list strong {
+    color: var(--text);
+}
+
+.highlight-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.highlight-card {
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.045);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.highlight-card a {
+    display: grid;
+    min-height: 100%;
+    padding: 18px;
+    text-decoration: none;
+}
+
+.highlight-card strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.highlight-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.highlight-card:hover {
+    border-color: rgba(94, 234, 212, 0.32);
+    background: rgba(94, 234, 212, 0.08);
+    transform: translateY(-2px);
+}
+
+.highlight-card a:focus-visible {
+    outline: 3px solid rgba(255, 209, 102, 0.72);
+    outline-offset: 3px;
+}
+
+.progress-list {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.progress-item {
+    display: grid;
+    gap: 12px;
+}
+
+.progress-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.progress-heading span {
+    color: var(--muted);
+}
+
+.progress-heading strong {
+    color: var(--text);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent-2), var(--primary));
+}
+
+.progress-description {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.solar-stage {
+    position: relative;
+    min-height: 238px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(circle at center, rgba(255, 209, 102, 0.14), transparent 42%),
+        rgba(255, 255, 255, 0.035);
+}
+
+.solar-sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #fff8c9, #ffd166 52%, #e46d2b);
+    box-shadow: 0 0 42px rgba(255, 209, 102, 0.52);
+    transform: translate(-50%, -50%);
+}
+
+.solar-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbital 18s linear infinite;
+}
+
+.solar-orbit i {
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    transform: translateY(-50%);
+}
+
+.orbit-mercurio {
+    width: 96px;
+    height: 96px;
+    animation-duration: 8s;
+}
+
+.orbit-mercurio i {
+    background: #cbd5e1;
+}
+
+.orbit-venus {
+    width: 142px;
+    height: 142px;
+    animation-duration: 12s;
+}
+
+.orbit-venus i {
+    width: 15px;
+    height: 15px;
+    background: #ffb86b;
+}
+
+.orbit-terra {
+    width: 188px;
+    height: 188px;
+    animation-duration: 16s;
+}
+
+.orbit-terra i {
+    width: 15px;
+    height: 15px;
+    background: #7ddc8a;
+}
+
+.orbit-marte {
+    width: 228px;
+    height: 228px;
+    animation-duration: 22s;
+}
+
+.orbit-marte i {
+    background: #e76f51;
+}
+
+.planet-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.planet-selector button {
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+}
+
+.planet-selector button.is-active {
+    border-color: rgba(94, 234, 212, 0.75);
+    background: rgba(94, 234, 212, 0.14);
+}
+
+@keyframes orbital {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@media (min-width: 640px) {
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .hero-panel {
+        grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+    }
+
+    .card-footnote {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+    }
+
+    .highlight-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .solar-stage {
+        min-height: 280px;
+    }
+
+    .orbit-mercurio {
+        width: 110px;
+        height: 110px;
+    }
+
+    .orbit-venus {
+        width: 160px;
+        height: 160px;
+    }
+
+    .orbit-terra {
+        width: 214px;
+        height: 214px;
+    }
+
+    .orbit-marte {
+        width: 268px;
+        height: 268px;
+    }
+}
+
+@media (min-width: 960px) {
+    .hero-dashboard {
+        grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+        align-items: end;
+        padding: 34px;
+    }
+
+    .hero-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: start;
+    }
+
+    .panel-explore,
+    .panel-highlights {
+        grid-column: span 7;
+    }
+
+    .mini-grid,
+    .panel-progress {
+        grid-column: span 5;
+    }
+}
+
+@media (min-width: 1180px) {
+    .hero-panel {
+        grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+    }
+
+    .hero-stat {
+        min-height: 126px;
+    }
+}

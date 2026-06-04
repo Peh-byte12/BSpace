@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curiosidades</title>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="src/styles/base.css">
+    <link rel="stylesheet" href="src/styles/content.css">
 </head>
-<body>
+<body data-page="curiosities">
 
 <div class="ceu" aria-hidden="true">
     <div class="estrela" style="top: 5%; left: 10%; animation-delay: 0.2s;"></div>
@@ -46,7 +46,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -54,6 +54,8 @@
     </div>
     <nav class="nav-links" aria-label="Navegação principal">
         <a href="index.html">Início</a>
+        <a href="academia.html">Academia</a>
+        <a href="calendario.html">Calendário</a>
         <a href="planetas.html">Planetas</a>
         <a href="curiosidades.html">Curiosidades</a>
         <a href="missoes.html">Missões</a>
@@ -75,11 +77,14 @@
 
     <section class="interactive-content-grid">
         <article class="quiz-box surface" data-reveal>
-            <span class="section-kicker">Quiz</span>
+            <span class="section-kicker">Cosmic Quiz</span>
             <h2>Teste sua exploração</h2>
+            <div class="quiz-categories" id="quizCategories" aria-label="Categorias do quiz"></div>
+            <p class="quiz-question-meta" id="quizQuestionMeta">Categoria e dificuldade</p>
             <p class="quiz-question" id="quizQuestion">Carregando pergunta...</p>
             <div class="quiz-options" id="quizOptions"></div>
-            <p class="highlight-output" id="quizFeedback">Cada resposta soma XP ao seu perfil.</p>
+            <p class="highlight-output" id="quizFeedback">Escolha uma alternativa para responder ao quiz.</p>
+            <div class="quiz-dashboard" id="quizDashboard" aria-live="polite"></div>
         </article>
 
         <article class="simulation-box surface" data-reveal>
@@ -111,7 +116,7 @@
 <footer class="page-shell page-footer surface">
     <p class="footer-note">Projeto BSpace. <span data-current-year></span></p>
 </footer>
-<script src="scripts/main.js" defer></script>
+<script type="module" src="src/pages/app.js"></script>
 
 </body>
 </html>

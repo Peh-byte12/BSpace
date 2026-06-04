@@ -545,28 +545,6 @@ p {
     transform: translateY(0);
 }
 
-.progress-toast {
-    position: fixed;
-    left: 50%;
-    bottom: 26px;
-    z-index: 40;
-    padding: 12px 16px;
-    border: 1px solid rgba(94, 234, 212, 0.45);
-    border-radius: var(--radius);
-    background: rgba(8, 15, 40, 0.94);
-    color: var(--text);
-    box-shadow: var(--shadow);
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, 14px);
-    transition: opacity 0.22s ease, transform 0.22s ease;
-}
-
-.progress-toast.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
 .js-reveal {
     opacity: 0;
     transform: translateY(18px);
