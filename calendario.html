@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendário Astronômico</title>
+    <title>Calendário Astronômico | BSpace</title>
+    <meta name="description" content="Central de eventos astronômicos com eclipses, fases da Lua, chuvas de meteoros e conjunções para planejar observações.">
+    <meta name="author" content="BSpace">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#08133a">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
+    <link rel="canonical" href="https://bspace.example/calendario.html">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BSpace">
+    <meta property="og:title" content="Calendário Astronômico | BSpace">
+    <meta property="og:description" content="Filtre eventos de astronomia por tipo, busque datas e veja detalhes de observação.">
+    <meta property="og:url" content="https://bspace.example/calendario.html">
+    <meta property="og:image" content="https://bspace.example/src/assets/social-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calendário Astronômico | BSpace">
+    <meta name="twitter:description" content="Eclipses, Lua, meteoros e conjunções em uma central preparada para APIs astronômicas.">
+    <meta name="twitter:image" content="https://bspace.example/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
     <link rel="stylesheet" href="src/styles/calendar.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Calendário Astronômico BSpace",
+        "description": "Central de eventos astronômicos com filtros, busca, cards e detalhes de observação.",
+        "inLanguage": "pt-BR",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "BSpace",
+            "url": "https://bspace.example/"
+        }
+    }
+    </script>
 </head>
 <body data-page="calendar">
 
@@ -14,7 +46,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.gif" alt="Logotipo do site de astronomia" width="72" height="72">
+        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -42,7 +74,7 @@
             Buscar evento
             <input id="calendarSearch" type="search" placeholder="Ex.: eclipse, Lua, Vênus, meteoros">
         </label>
-        <div class="calendar-filter-bar" id="calendarTypeFilters" aria-label="Tipos de evento"></div>
+        <div class="calendar-filter-bar" id="calendarTypeFilters" role="group" aria-label="Tipos de evento"></div>
         <div class="calendar-stats" id="calendarStats"></div>
     </section>
 

@@ -8,7 +8,7 @@ export const MISSIONS = [
         period: "7-19 dez 1972",
         destination: "Lua · Taurus-Littrow",
         agency: "NASA",
-        bannerImage: "https://images-assets.nasa.gov/image/S72-55070/S72-55070~orig.jpg",
+        bannerImage: "https://images-assets.nasa.gov/image/S72-55070/S72-55070~medium.jpg",
         source: "NASA Apollo 17",
         stats: [
             { label: "Duração", value: "12d 13h 52min" },
@@ -70,17 +70,17 @@ export const MISSIONS = [
         ],
         gallery: [
             {
-                image: "https://images-assets.nasa.gov/image/S72-55070/S72-55070~orig.jpg",
+                image: "https://images-assets.nasa.gov/image/S72-55070/S72-55070~medium.jpg",
                 title: "Lançamento do Saturn V",
                 caption: "Apollo 17 decola à noite do Kennedy Space Center."
             },
             {
-                image: "https://images-assets.nasa.gov/image/S72-50438/S72-50438~large.jpg",
+                image: "https://images-assets.nasa.gov/image/S72-50438/S72-50438~medium.jpg",
                 title: "Tripulação principal",
                 caption: "Cernan, Evans e Schmitt posam antes da missão."
             },
             {
-                image: "https://images-assets.nasa.gov/image/S72-54813/S72-54813~large.jpg",
+                image: "https://images-assets.nasa.gov/image/S72-54813/S72-54813~medium.jpg",
                 title: "Pad 39A iluminado",
                 caption: "A nave Apollo 17 antes da primeira decolagem noturna do Saturn V."
             }

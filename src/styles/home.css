@@ -1,3 +1,320 @@
+.section-heading {
+    display: grid;
+    gap: 10px;
+    max-width: 760px;
+    margin-bottom: 18px;
+}
+
+.section-heading h2,
+.section-heading p {
+    margin: 0;
+}
+
+body[data-page="home"] .site-header {
+    gap: 12px;
+}
+
+body[data-page="home"] .nav-links a {
+    padding: 10px 14px;
+}
+
+.product-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 520px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(90deg, rgba(2, 6, 23, 0.94) 0%, rgba(2, 6, 23, 0.78) 52%, rgba(2, 6, 23, 0.28) 100%),
+        url("../assets/product-hero-bg.png") center / cover no-repeat;
+    box-shadow: var(--shadow);
+}
+
+.product-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 42%;
+    background: linear-gradient(180deg, transparent, rgba(2, 6, 23, 0.82));
+    pointer-events: none;
+}
+
+.product-hero-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 18px;
+    max-width: 760px;
+    padding: 28px;
+}
+
+.product-hero h1 {
+    margin: 0;
+    max-width: 760px;
+    font-size: 2.35rem;
+    line-height: 1.08;
+}
+
+.product-hero p {
+    max-width: 680px;
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.product-proof {
+    display: grid;
+    gap: 10px;
+    margin: 8px 0 0;
+}
+
+.product-proof div {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius);
+    background: rgba(2, 6, 23, 0.56);
+}
+
+.product-proof dt {
+    color: var(--accent-2);
+    font-weight: 800;
+}
+
+.product-proof dd {
+    margin: 5px 0 0;
+    color: var(--muted);
+}
+
+.product-metrics-section,
+.product-section,
+.investor-section {
+    margin-bottom: 24px;
+}
+
+.product-metrics-grid,
+.differential-grid,
+.investor-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.product-metric,
+.differential-card,
+.investor-point {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.055);
+    box-shadow: var(--shadow);
+}
+
+.product-metric strong {
+    display: block;
+    color: var(--accent);
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.product-metric span {
+    display: block;
+    margin-top: 8px;
+    color: var(--text);
+    font-weight: 800;
+}
+
+.product-metric p,
+.differential-card p,
+.investor-point p {
+    margin-bottom: 0;
+}
+
+.differential-signal {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 7px 10px;
+    border: 1px solid rgba(255, 209, 102, 0.28);
+    border-radius: 999px;
+    background: rgba(255, 209, 102, 0.12);
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.demo-section {
+    display: grid;
+    gap: 22px;
+    margin-bottom: 24px;
+    padding: 22px;
+    background:
+        linear-gradient(135deg, rgba(12, 22, 58, 0.94), rgba(2, 6, 23, 0.9)),
+        linear-gradient(90deg, rgba(94, 234, 212, 0.12), rgba(255, 209, 102, 0.08));
+}
+
+.demo-heading {
+    display: grid;
+    gap: 16px;
+}
+
+.demo-heading h2,
+.demo-heading p {
+    margin: 0;
+}
+
+.demo-layout {
+    display: grid;
+    gap: 18px;
+}
+
+.demo-step-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.demo-step-card {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.045);
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.demo-step-card.is-current,
+.demo-step-card:hover {
+    border-color: rgba(94, 234, 212, 0.48);
+    background: rgba(94, 234, 212, 0.09);
+    transform: translateY(-2px);
+}
+
+.demo-step-card h3,
+.demo-step-card p {
+    margin: 0;
+}
+
+.demo-step-number {
+    color: var(--accent-2);
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.demo-step-value {
+    color: var(--text);
+    line-height: 1.45;
+}
+
+.demo-script {
+    align-self: start;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid rgba(255, 209, 102, 0.18);
+    border-radius: var(--radius);
+    background: rgba(255, 209, 102, 0.08);
+}
+
+.demo-script p {
+    margin-top: 0;
+}
+
+.demo-script-list {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.investor-point h3 {
+    margin-bottom: 8px;
+}
+
+.tour-is-open {
+    overflow: hidden;
+}
+
+.tour-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    background: rgba(2, 6, 23, 0.78);
+    backdrop-filter: blur(10px);
+}
+
+.tour-overlay[hidden] {
+    display: none;
+}
+
+.tour-dialog {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    width: min(100%, 620px);
+    max-height: min(720px, calc(100vh - 36px));
+    overflow: auto;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius);
+    background: var(--surface-strong);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.52);
+}
+
+.tour-close {
+    justify-self: end;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.tour-progress-track {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tour-progress-fill {
+    display: block;
+    width: 20%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+}
+
+.tour-dialog h2,
+.tour-dialog p {
+    margin: 0;
+}
+
+.tour-value {
+    display: block;
+    padding: 14px;
+    border-left: 3px solid var(--accent-2);
+    border-radius: var(--radius);
+    background: rgba(94, 234, 212, 0.08);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.tour-actions {
+    display: grid;
+    gap: 10px;
+}
+
 .hero-actions {
     display: grid;
     gap: 12px;
@@ -355,6 +672,21 @@
 }
 
 @media (min-width: 640px) {
+    .product-proof,
+    .product-metrics-grid,
+    .investor-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .product-metrics-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .tour-actions {
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+    }
+
     .hero-actions {
         display: flex;
         flex-wrap: wrap;
@@ -399,6 +731,31 @@
 }
 
 @media (min-width: 960px) {
+    .product-hero-content {
+        padding: 44px;
+    }
+
+    .product-hero h1 {
+        font-size: 3.2rem;
+    }
+
+    .differential-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .demo-heading {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+    }
+
+    .demo-layout {
+        grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    }
+
+    .demo-step-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .hero-dashboard {
         grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
         align-items: end;
@@ -432,5 +789,54 @@
 
     .hero-stat {
         min-height: 126px;
+    }
+}
+
+@media (max-width: 720px) {
+    .product-hero {
+        min-height: 560px;
+        background-position: 62% center;
+    }
+
+    .product-hero-content {
+        padding: 22px;
+    }
+
+    .product-hero h1 {
+        font-size: 2rem;
+    }
+
+    .demo-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 640px) {
+    body[data-page="home"] .nav-links {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    body[data-page="home"] .nav-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    body[data-page="home"] .nav-links a {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 112px;
+    }
+
+    .product-hero {
+        min-height: 520px;
+        background:
+            linear-gradient(90deg, rgba(2, 6, 23, 0.96) 0%, rgba(2, 6, 23, 0.9) 68%, rgba(2, 6, 23, 0.7) 100%),
+            url("../assets/product-hero-bg.png") 62% center / cover no-repeat;
+    }
+
+    .product-proof {
+        display: none;
     }
 }

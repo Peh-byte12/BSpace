@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">BSpace</title>
+  <desc id="description">Plataforma educacional de astronomia</desc>
+  <defs>
+    <radialGradient id="planet" cx="32%" cy="28%" r="78%">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="32%" stop-color="#5da9ff"/>
+      <stop offset="62%" stop-color="#1f65dd"/>
+      <stop offset="100%" stop-color="#10245d"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#091743"/>
+      <stop offset="58%" stop-color="#06102f"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="164" r="122" fill="url(#planet)" opacity="0.92"/>
+  <ellipse cx="1010" cy="164" rx="180" ry="42" fill="none" stroke="#d8efff" stroke-width="8" opacity="0.72" transform="rotate(-18 1010 164)"/>
+  <g fill="#ffffff" opacity="0.78">
+    <circle cx="118" cy="118" r="3"/>
+    <circle cx="226" cy="508" r="4"/>
+    <circle cx="420" cy="150" r="3"/>
+    <circle cx="702" cy="492" r="4"/>
+    <circle cx="930" cy="430" r="3"/>
+  </g>
+  <text x="96" y="230" fill="#5eead4" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="2">PLATAFORMA EDUCACIONAL</text>
+  <text x="96" y="330" fill="#eef4ff" font-family="Arial, Helvetica, sans-serif" font-size="112" font-weight="800">BSpace</text>
+  <text x="102" y="405" fill="#bfd2ff" font-family="Arial, Helvetica, sans-serif" font-size="38">Astronomia interativa com planetas 3D, Academia,</text>
+  <text x="102" y="455" fill="#bfd2ff" font-family="Arial, Helvetica, sans-serif" font-size="38">missões, calendário astronômico e quizzes.</text>
+</svg>

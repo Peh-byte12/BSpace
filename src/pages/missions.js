@@ -63,6 +63,7 @@ function renderMissionBanner(mission) {
         image.alt = "";
         image.loading = "eager";
         image.decoding = "async";
+        image.fetchPriority = "high";
     }
 
     if (banner) {

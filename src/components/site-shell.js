@@ -109,7 +109,13 @@ function setupResponsiveImages() {
             image.decoding = "async";
         }
 
-        if (!image.closest(".brand") && !image.hasAttribute("loading")) {
+        if (image.closest(".brand")) {
+            image.loading = "eager";
+            image.fetchPriority = "high";
+            return;
+        }
+
+        if (!image.hasAttribute("loading")) {
             image.loading = "lazy";
         }
     });

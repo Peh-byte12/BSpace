@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144" role="img" aria-labelledby="title">
+  <title id="title">BSpace</title>
+  <defs>
+    <radialGradient id="p" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="28%" stop-color="#6fb6ff"/>
+      <stop offset="56%" stop-color="#256fe4"/>
+      <stop offset="100%" stop-color="#151f5c"/>
+    </radialGradient>
+    <linearGradient id="b" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#08133a"/>
+      <stop offset="60%" stop-color="#15136a"/>
+      <stop offset="100%" stop-color="#1f1dd2"/>
+    </linearGradient>
+  </defs>
+  <rect width="144" height="144" rx="18" fill="url(#b)"/>
+  <circle cx="72" cy="76" r="32" fill="url(#p)" opacity="0.94"/>
+  <ellipse cx="72" cy="76" rx="48" ry="13" fill="none" stroke="#d8efff" stroke-width="3" opacity="0.62" transform="rotate(-18 72 76)"/>
+  <path d="M48 67c15 8 34 10 52 3M47 82c17-6 35-5 51 2" fill="none" stroke="#5eead4" stroke-width="1.8" opacity="0.48"/>
+  <text x="34" y="34" fill="#5eead4" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="800" letter-spacing="1.8">BSPACE</text>
+</svg>

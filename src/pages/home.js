@@ -1,8 +1,10 @@
 import { DASHBOARD_HIGHLIGHTS, MISSION_RECOMMENDATIONS, WEEKLY_EVENTS } from "../data/dashboard.js";
+import { GUIDED_DEMO_STEPS, INVESTOR_POINTS, PRODUCT_DIFFERENTIALS, PRODUCT_METRICS } from "../data/product-demo.js";
 import { getPlanets } from "../services/planet-service.js";
 import { getExplorationStats, getLastVisitedPlanet, getNextRecommendedPlanet } from "../services/exploration-progress-service.js";
 import { getQuizSummary } from "../services/quiz-engine.js";
 import { setupSolarSelector } from "../components/solar-selector.js";
+import { renderGuidedDemoSteps, setupProductTour } from "../components/product-tour.js";
 import { formatNumber } from "../utils/format.js";
 import { byId, createTextElement, setText } from "../utils/dom.js";
 
@@ -13,12 +15,76 @@ export function initPage() {
         defaultSlug: "terra"
     });
 
+    renderProductMetrics();
+    renderProductDifferentials();
+    renderGuidedDemoSteps("guidedDemoSteps", GUIDED_DEMO_STEPS);
+    renderInvestorPoints();
+    setupProductTour(GUIDED_DEMO_STEPS);
     renderLastVisitedPlanet();
     renderMissionRecommendation();
     renderAstronomyEvent();
     renderHighlights();
     renderProgress();
     renderHeroStats();
+}
+
+function renderProductMetrics() {
+    const container = byId("productMetrics");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+    PRODUCT_METRICS.forEach((metric) => {
+        const card = document.createElement("article");
+        const value = createTextElement("strong", metric.value);
+        const label = createTextElement("span", metric.label);
+        const detail = createTextElement("p", metric.detail);
+
+        card.className = "product-metric";
+        card.append(value, label, detail);
+        container.appendChild(card);
+    });
+}
+
+function renderProductDifferentials() {
+    const container = byId("productDifferentials");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+    PRODUCT_DIFFERENTIALS.forEach((item) => {
+        const card = document.createElement("article");
+        const signal = createTextElement("span", item.signal, "differential-signal");
+        const title = createTextElement("h3", item.title);
+        const description = createTextElement("p", item.description);
+
+        card.className = "differential-card";
+        card.append(signal, title, description);
+        container.appendChild(card);
+    });
+}
+
+function renderInvestorPoints() {
+    const container = byId("investorPoints");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+    INVESTOR_POINTS.forEach((item) => {
+        const card = document.createElement("article");
+        const title = createTextElement("h3", item.title);
+        const description = createTextElement("p", item.description);
+
+        card.className = "investor-point";
+        card.append(title, description);
+        container.appendChild(card);
+    });
 }
 
 function renderLastVisitedPlanet() {
