@@ -20,14 +20,20 @@ function renderPlanetCards(gridId) {
         const card = document.createElement("article");
         const content = document.createElement("div");
         const title = document.createElement("h2");
+        const icon = document.createElement("span");
+        const titleText = document.createElement("span");
         const summary = document.createElement("p");
         const link = document.createElement("a");
 
-        card.className = "planet-card card";
+        card.className = `planet-card card planet-${planet.slug}`;
         card.dataset.planetCard = "";
         card.dataset.search = planet.lista.busca;
 
-        title.textContent = planet.nome;
+        icon.className = "planet-icon";
+        icon.setAttribute("aria-hidden", "true");
+        titleText.textContent = planet.nome;
+
+        title.append(icon, titleText);
         summary.textContent = planet.lista.resumo;
         content.append(title, summary);
 

@@ -66,6 +66,7 @@ main, header, section, footer, nav {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     min-width: 0;
 }
