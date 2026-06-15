@@ -180,7 +180,9 @@ function getProgressItems() {
         {
             title: "Cosmic Quiz",
             label: `${quizSummary.masteredQuestions} de ${quizSummary.totalQuestions}`,
-            description: `Nível ${quizSummary.level}: ${quizSummary.levelProgress.currentLevel.titulo}.`,
+            description: quizSummary.totalAnswers > 0
+                ? `${quizSummary.accuracy}% de acerto em ${quizSummary.totalAnswers} respostas.`
+                : "Responda ao quiz para acompanhar seu domínio por pergunta.",
             progress: clampProgress(quizSummary.questionProgress)
         }
     ];

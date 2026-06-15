@@ -1,21 +1,17 @@
 import { QUIZ_CATEGORIES, QUIZ_QUESTIONS } from "../data/quiz.js";
 import { readJsonStorage, writeJsonStorage } from "../utils/storage.js";
-import { getAchievementSummaries, evaluateAchievements } from "./achievements-engine.js";
-import { applyXp, calculateAnswerXp, getLevelForXp, getLevelProgress } from "./xp-engine.js";
 
-const STORAGE_KEY = "bspaceQuizGamification";
+const STORAGE_KEY = "bspaceQuizProgress";
+const LEGACY_STORAGE_KEY = "bspaceQuizGamification";
 const HISTORY_LIMIT = 12;
 
 const DEFAULT_STATE = {
-    xp: 0,
-    level: 1,
     totalAnswers: 0,
     correctAnswers: 0,
     combo: 0,
     bestCombo: 0,
     categories: {},
     questionMastery: {},
-    achievements: [],
     history: []
 };
 
@@ -28,10 +24,8 @@ export function recordQuizAnswer({
     const previousState = getQuizState();
     const isCorrect = selectedIndex === question.correta;
     const mastery = previousState.questionMastery[question.id] || createQuestionMastery();
-    const alreadyMastered = Boolean(mastery.correct);
     const nextCombo = isCorrect ? previousState.combo + 1 : 0;
-    const xpBreakdown = calculateAnswerXp({ isCorrect, combo: nextCombo, alreadyMastered });
-    let nextState = {
+    const nextState = {
         ...previousState,
         totalAnswers: previousState.totalAnswers + 1,
         correctAnswers: previousState.correctAnswers + (isCorrect ? 1 : 0),
@@ -39,8 +33,7 @@ export function recordQuizAnswer({
         bestCombo: Math.max(previousState.bestCombo, nextCombo),
         categories: { ...previousState.categories },
         questionMastery: { ...previousState.questionMastery },
-        history: [...previousState.history],
-        achievements: [...previousState.achievements]
+        history: [...previousState.history]
     };
 
     nextState.questionMastery[question.id] = {
@@ -54,40 +47,9 @@ export function recordQuizAnswer({
         isCorrect
     );
     nextState.history = [
-        createHistoryItem({ question, selectedIndex, isCorrect, xp: xpBreakdown.totalXp, combo: nextCombo }),
+        createHistoryItem({ question, selectedIndex, isCorrect, combo: nextCombo }),
         ...nextState.history
     ].slice(0, HISTORY_LIMIT);
-
-    nextState = applyXp(nextState, xpBreakdown.totalXp);
-
-    const unlockedAchievements = evaluateAchievements({
-        state: nextState,
-        previousAchievementIds: previousState.achievements,
-        questions,
-        categories
-    });
-    const achievementBonus = unlockedAchievements.reduce((total, achievement) => total + achievement.xpBonus, 0);
-
-    if (unlockedAchievements.length > 0) {
-        nextState.achievements = [
-            ...new Set([
-                ...nextState.achievements,
-                ...unlockedAchievements.map((achievement) => achievement.id)
-            ])
-        ];
-        nextState = applyXp(nextState, achievementBonus);
-    }
-
-    xpBreakdown.achievementBonus = achievementBonus;
-    xpBreakdown.totalXp += achievementBonus;
-
-    if (achievementBonus > 0 && nextState.history[0]) {
-        nextState.history[0] = {
-            ...nextState.history[0],
-            xp: xpBreakdown.totalXp,
-            achievementBonus
-        };
-    }
 
     saveQuizState(nextState);
 
@@ -96,8 +58,6 @@ export function recordQuizAnswer({
         selectedIndex,
         correctIndex: question.correta,
         question,
-        xp: xpBreakdown,
-        unlockedAchievements,
         state: nextState,
         snapshot: getQuizSnapshot({ state: nextState, questions, categories })
     };
@@ -112,7 +72,8 @@ export function getQuizSummary(questions = QUIZ_QUESTIONS, categories = QUIZ_CAT
 }
 
 export function getQuizState() {
-    return normalizeState(readJsonStorage(STORAGE_KEY, DEFAULT_STATE));
+    const storedState = readJsonStorage(STORAGE_KEY, null) || readJsonStorage(LEGACY_STORAGE_KEY, DEFAULT_STATE);
+    return normalizeState(storedState);
 }
 
 function saveQuizState(state) {
@@ -132,12 +93,10 @@ function getQuizSnapshot({ state, questions, categories }) {
     return {
         ...normalizedState,
         accuracy,
-        levelProgress: getLevelProgress(normalizedState.xp),
         questionProgress: totalQuestions > 0 ? masteredQuestionIds.length / totalQuestions : 0,
         masteredQuestions: masteredQuestionIds.length,
         totalQuestions,
         categories: getCategorySummaries({ state: normalizedState, questions, categories }),
-        achievements: getAchievementSummaries({ state: normalizedState, questions, categories }),
         history: normalizedState.history
     };
 }
@@ -175,14 +134,13 @@ function updateCategoryStats(currentStats = createCategoryStats(), questionId, i
     };
 }
 
-function createHistoryItem({ question, selectedIndex, isCorrect, xp, combo }) {
+function createHistoryItem({ question, selectedIndex, isCorrect, combo }) {
     return {
         questionId: question.id,
         pergunta: question.pergunta,
         categoria: question.categoria,
         selectedIndex,
         isCorrect,
-        xp,
         combo,
         answeredAt: new Date().toISOString()
     };
@@ -190,19 +148,15 @@ function createHistoryItem({ question, selectedIndex, isCorrect, xp, combo }) {
 
 function normalizeState(value) {
     const state = value && typeof value === "object" ? value : DEFAULT_STATE;
-    const xp = readPositiveNumber(state.xp);
 
     return {
-        xp,
-        level: getLevelForXp(xp).level,
-        totalAnswers: readPositiveNumber(state.totalAnswers),
-        correctAnswers: readPositiveNumber(state.correctAnswers),
-        combo: readPositiveNumber(state.combo),
-        bestCombo: readPositiveNumber(state.bestCombo),
+        totalAnswers: readNonNegativeNumber(state.totalAnswers),
+        correctAnswers: readNonNegativeNumber(state.correctAnswers),
+        combo: readNonNegativeNumber(state.combo),
+        bestCombo: readNonNegativeNumber(state.bestCombo),
         categories: normalizeCategories(state.categories),
         questionMastery: normalizeQuestionMastery(state.questionMastery),
-        achievements: Array.isArray(state.achievements) ? state.achievements.filter(Boolean) : [],
-        history: Array.isArray(state.history) ? state.history.slice(0, HISTORY_LIMIT) : []
+        history: normalizeHistory(state.history)
     };
 }
 
@@ -216,8 +170,8 @@ function normalizeCategories(categories) {
             return [
                 categoryId,
                 {
-                    answers: readPositiveNumber(stats?.answers),
-                    correct: readPositiveNumber(stats?.correct),
+                    answers: readNonNegativeNumber(stats?.answers),
+                    correct: readNonNegativeNumber(stats?.correct),
                     correctQuestionIds: Array.isArray(stats?.correctQuestionIds)
                         ? [...new Set(stats.correctQuestionIds.filter(Boolean))]
                         : []
@@ -237,13 +191,29 @@ function normalizeQuestionMastery(questionMastery) {
             return [
                 questionId,
                 {
-                    attempts: readPositiveNumber(mastery?.attempts),
+                    attempts: readNonNegativeNumber(mastery?.attempts),
                     correct: Boolean(mastery?.correct),
                     lastAnsweredAt: mastery?.lastAnsweredAt || ""
                 }
             ];
         })
     );
+}
+
+function normalizeHistory(history) {
+    if (!Array.isArray(history)) {
+        return [];
+    }
+
+    return history.slice(0, HISTORY_LIMIT).map((item) => ({
+        questionId: item.questionId || "",
+        pergunta: item.pergunta || "",
+        categoria: item.categoria || "",
+        selectedIndex: readNonNegativeNumber(item.selectedIndex),
+        isCorrect: Boolean(item.isCorrect),
+        combo: readNonNegativeNumber(item.combo),
+        answeredAt: item.answeredAt || ""
+    }));
 }
 
 function createCategoryStats() {
@@ -262,7 +232,7 @@ function createQuestionMastery() {
     };
 }
 
-function readPositiveNumber(value, fallback = 0) {
+function readNonNegativeNumber(value, fallback = 0) {
     const number = Number(value);
-    return Number.isFinite(number) && number > 0 ? number : fallback;
+    return Number.isFinite(number) && number >= 0 ? number : fallback;
 }

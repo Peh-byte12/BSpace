@@ -1,6 +1,5 @@
 import { completeAcademyExercise, answerAcademyQuiz, getAcademySnapshot, markModuleContentStudied, setActiveAcademyModule } from "../services/academy-progress-service.js";
 import { createTextElement } from "../utils/dom.js";
-import { formatNumber } from "../utils/format.js";
 
 export function setupAcademy({ modules, moduleList, moduleContent, progressPanel }) {
     if (!moduleList || !moduleContent || !progressPanel || modules.length === 0) {
@@ -27,7 +26,7 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
         progressPanel.append(
             createProgressHeader(percent),
             createProgressStats([
-                ["XP total", `${formatNumber(snapshot.xp)} XP`],
+                ["Etapas concluídas", `${snapshot.completedSteps}/${snapshot.totalSteps}`],
                 ["Módulos concluídos", `${snapshot.completedModules}/${snapshot.totalModules}`],
                 ["Próxima trilha", snapshot.nextModule?.titulo || activeModule.titulo]
             ]),
@@ -108,7 +107,7 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
                 header,
                 createTextElement("span", module.nivel, "academy-module-level"),
                 progress,
-                createTextElement("span", `${percent}% · ${formatNumber(module.earnedXp)}/${formatNumber(module.totalXp)} XP`, "academy-module-meta")
+                createTextElement("span", `${percent}% · ${module.completedSteps}/${module.totalSteps} etapas`, "academy-module-meta")
             );
             moduleList.appendChild(card);
         });
@@ -140,7 +139,7 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
         meta.className = "academy-module-summary";
         meta.append(
             createTextElement("span", module.duracao),
-            createTextElement("strong", `${formatNumber(module.earnedXp)} / ${formatNumber(module.totalXp)} XP`)
+            createTextElement("strong", `${module.completedSteps} / ${module.totalSteps} etapas`)
         );
         header.append(copy, meta);
 
@@ -176,11 +175,11 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
 
         button.type = "button";
         button.className = module.contentStudied ? "button-secondary" : "button";
-        button.textContent = module.contentStudied ? "Conteúdo estudado" : `Marcar conteúdo estudado (+${formatNumber(module.conteudoXp)} XP)`;
+        button.textContent = module.contentStudied ? "Conteúdo estudado" : "Marcar conteúdo estudado";
         button.disabled = module.contentStudied;
         button.addEventListener("click", () => {
-            const result = markModuleContentStudied(module.slug, modules);
-            feedbackMessage = getEarnedMessage(result?.earnedXp, "Conteúdo registrado.");
+            markModuleContentStudied(module.slug, modules);
+            feedbackMessage = "Conteúdo registrado.";
             render();
         });
 
@@ -204,11 +203,11 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
             item.classList.toggle("is-completed", completed);
             button.type = "button";
             button.className = completed ? "button-secondary" : "button";
-            button.textContent = completed ? "Concluído" : `Concluir (+${formatNumber(exercise.xp)} XP)`;
+            button.textContent = completed ? "Concluído" : "Concluir exercício";
             button.disabled = completed;
             button.addEventListener("click", () => {
-                const result = completeAcademyExercise({ moduleSlug: module.slug, exerciseId: exercise.id, modules });
-                feedbackMessage = getEarnedMessage(result?.earnedXp, "Exercício registrado.");
+                completeAcademyExercise({ moduleSlug: module.slug, exerciseId: exercise.id, modules });
+                feedbackMessage = "Exercício registrado.";
                 render();
             });
 
@@ -257,7 +256,7 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
                         modules
                     });
                     feedbackMessage = result?.isCorrect
-                        ? getEarnedMessage(result.earnedXp, question.explicacao)
+                        ? question.explicacao
                         : `Revise: ${question.explicacao}`;
                     render();
                 });
@@ -267,7 +266,7 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
             item.append(
                 createTextElement("strong", question.pergunta),
                 options,
-                createTextElement("p", mastered ? question.explicacao : `Vale ${formatNumber(question.xp)} XP.`, "academy-quiz-note")
+                createTextElement("p", mastered ? question.explicacao : "Escolha uma alternativa para testar seu entendimento.", "academy-quiz-note")
             );
             list.appendChild(item);
         });
@@ -306,12 +305,4 @@ export function setupAcademy({ modules, moduleList, moduleContent, progressPanel
     }
 
     render();
-}
-
-function getEarnedMessage(earnedXp = 0, fallback) {
-    if (earnedXp > 0) {
-        return `${fallback} +${formatNumber(earnedXp)} XP.`;
-    }
-
-    return fallback;
 }

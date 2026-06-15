@@ -1,7 +1,7 @@
 export const DASHBOARD_HIGHLIGHTS = [
     {
         title: "Academia BSpace",
-        description: "Avance por módulos de astronomia com conteúdo, exercícios, quiz e XP salvo no navegador.",
+        description: "Avance por módulos de astronomia com conteúdo, exercícios, quiz e progresso salvo no navegador.",
         href: "academia.html"
     },
     {

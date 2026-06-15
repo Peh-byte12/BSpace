@@ -80,7 +80,7 @@ export function setupQuiz({
 
         setText(feedbackId, createFeedbackMessage(result));
         renderCategories(result.snapshot);
-        renderDashboard(result.snapshot, result);
+        renderDashboard(result.snapshot);
         onAnswer?.(result);
 
         window.setTimeout(() => {
@@ -130,66 +130,51 @@ export function setupQuiz({
         return button;
     }
 
-    function renderDashboard(summary, result = null) {
+    function renderDashboard(summary) {
         if (!dashboardElement) {
             return;
         }
 
-        const levelProgress = summary.levelProgress;
-        const currentLevel = levelProgress.currentLevel;
-        const unlockedCount = summary.achievements.filter((achievement) => achievement.unlocked).length;
-
         dashboardElement.innerHTML = "";
         dashboardElement.append(
-            createLevelPanel(summary, result),
+            createProgressPanel(summary),
             createStatsGrid([
-                ["XP total", formatNumber(summary.xp)],
                 ["Acertos", `${formatNumber(summary.correctAnswers)} (${summary.accuracy}%)`],
-                ["Combo", `${formatNumber(summary.combo)}x`],
-                ["Melhor combo", `${formatNumber(summary.bestCombo)}x`]
+                ["Combo atual", `${formatNumber(summary.combo)}x`],
+                ["Melhor combo", `${formatNumber(summary.bestCombo)}x`],
+                ["Perguntas dominadas", `${formatNumber(summary.masteredQuestions)} de ${formatNumber(summary.totalQuestions)}`]
             ]),
             createCategoryProgress(summary.categories),
-            createAchievementList(summary.achievements, unlockedCount),
             createHistoryList(summary.history)
         );
-
-        dashboardElement.dataset.level = String(currentLevel.level);
     }
 
-    function createLevelPanel(summary, result) {
+    function createProgressPanel(summary) {
         const panel = document.createElement("section");
         const header = document.createElement("div");
         const copy = document.createElement("div");
-        const kicker = createTextElement("span", `Nível ${summary.level}`, "section-kicker");
-        const title = createTextElement("strong", summary.levelProgress.currentLevel.titulo);
-        const xpPill = createTextElement("span", `${formatNumber(summary.xp)} XP`, "quiz-xp-pill");
+        const kicker = createTextElement("span", "Progresso do quiz", "section-kicker");
+        const title = createTextElement("strong", `${formatNumber(summary.masteredQuestions)} de ${formatNumber(summary.totalQuestions)} perguntas dominadas`);
         const progress = document.createElement("div");
         const progressFill = document.createElement("span");
-        const progressText = createTextElement("p", getLevelProgressText(summary.levelProgress));
-        const lastGain = result
-            ? createTextElement("p", `Último ganho: +${formatNumber(result.xp.totalXp)} XP`, "quiz-last-gain")
-            : null;
+        const progressText = createTextElement("p", getQuestionProgressText(summary));
+        const progressPercentage = Math.round(summary.questionProgress * 100);
 
-        panel.className = "quiz-level-panel";
-        header.className = "quiz-level-header";
+        panel.className = "quiz-progress-panel";
+        header.className = "quiz-progress-header";
         copy.append(kicker, title);
-        header.append(copy, xpPill);
+        header.appendChild(copy);
 
         progress.className = "quiz-progress-bar";
         progress.setAttribute("role", "progressbar");
-        progress.setAttribute("aria-label", "Progresso de nível do quiz");
+        progress.setAttribute("aria-label", "Progresso de perguntas dominadas no quiz");
         progress.setAttribute("aria-valuemin", "0");
         progress.setAttribute("aria-valuemax", "100");
-        progress.setAttribute("aria-valuenow", String(summary.levelProgress.percent));
-        progressFill.style.width = `${summary.levelProgress.percent}%`;
+        progress.setAttribute("aria-valuenow", String(progressPercentage));
+        progressFill.style.width = `${progressPercentage}%`;
         progress.appendChild(progressFill);
 
         panel.append(header, progress, progressText);
-
-        if (lastGain) {
-            panel.appendChild(lastGain);
-        }
-
         return panel;
     }
 
@@ -240,37 +225,6 @@ export function setupQuiz({
         return wrapper;
     }
 
-    function createAchievementList(achievements, unlockedCount) {
-        const wrapper = document.createElement("section");
-        const title = createTextElement("h3", `Conquistas ${unlockedCount}/${achievements.length}`);
-        const list = document.createElement("div");
-
-        wrapper.className = "quiz-achievements";
-        list.className = "quiz-achievement-list";
-
-        achievements.forEach((achievement) => {
-            const item = document.createElement("article");
-            const text = document.createElement("div");
-            const progress = document.createElement("span");
-
-            item.className = "quiz-achievement";
-            item.classList.toggle("is-unlocked", achievement.unlocked);
-            text.append(
-                createTextElement("strong", achievement.titulo),
-                createTextElement("span", achievement.descricao)
-            );
-            progress.className = "quiz-achievement-progress";
-            progress.textContent = achievement.unlocked
-                ? `+${formatNumber(achievement.xpBonus)} XP`
-                : `${Math.min(achievement.value, achievement.alvo)}/${achievement.alvo}`;
-            item.append(text, progress);
-            list.appendChild(item);
-        });
-
-        wrapper.append(title, list);
-        return wrapper;
-    }
-
     function createHistoryList(history) {
         const wrapper = document.createElement("section");
         const title = createTextElement("h3", "Histórico recente");
@@ -287,7 +241,7 @@ export function setupQuiz({
                 historyItem.className = item.isCorrect ? "is-correct" : "is-wrong";
                 historyItem.append(
                     createTextElement("strong", item.isCorrect ? "Correta" : "Revisar"),
-                    createTextElement("span", `${item.pergunta} · +${formatNumber(item.xp)} XP`)
+                    createTextElement("span", item.pergunta)
                 );
                 list.appendChild(historyItem);
             });
@@ -314,17 +268,14 @@ function createFeedbackMessage(result) {
         ? "Resposta correta."
         : "Quase. A alternativa correta ficou destacada.";
     const combo = result.state.combo > 1 ? ` Combo ${result.state.combo}x ativo.` : "";
-    const achievements = result.unlockedAchievements.length > 0
-        ? ` Nova conquista: ${result.unlockedAchievements.map((achievement) => achievement.titulo).join(", ")}.`
-        : "";
 
-    return `${base} ${result.question.explicacao} +${formatNumber(result.xp.totalXp)} XP.${combo}${achievements}`;
+    return `${base} ${result.question.explicacao}${combo}`;
 }
 
-function getLevelProgressText(levelProgress) {
-    if (!levelProgress.nextLevel) {
-        return "Nível máximo alcançado nesta trilha.";
+function getQuestionProgressText(summary) {
+    if (summary.masteredQuestions === summary.totalQuestions && summary.totalQuestions > 0) {
+        return "Você já acertou todas as perguntas disponíveis nesta trilha.";
     }
 
-    return `Faltam ${formatNumber(levelProgress.xpToNext)} XP para ${levelProgress.nextLevel.titulo}.`;
+    return "Cada pergunta correta conta para o domínio do conteúdo, sem sistema de pontuação por experiência.";
 }

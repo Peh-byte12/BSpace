@@ -4,7 +4,6 @@ import { readJsonStorage, writeJsonStorage } from "../utils/storage.js";
 const STORAGE_KEY = "bspaceAcademyProgress";
 
 const DEFAULT_STATE = {
-    xp: 0,
     activeModule: DEFAULT_ACADEMY_MODULE,
     modules: {}
 };
@@ -13,16 +12,17 @@ export function getAcademySnapshot(modules = ACADEMY_MODULES) {
     const state = getAcademyState();
     const moduleSummaries = modules.map((module) => getModuleSummary(module, state));
     const completedModules = moduleSummaries.filter((module) => module.progress >= 1).length;
-    const totalXpAvailable = modules.reduce((total, module) => total + getModuleXpTotal(module), 0);
+    const completedSteps = moduleSummaries.reduce((total, module) => total + module.completedSteps, 0);
+    const totalSteps = moduleSummaries.reduce((total, module) => total + module.totalSteps, 0);
     const nextModule = moduleSummaries.find((module) => module.progress < 1) || moduleSummaries[moduleSummaries.length - 1];
 
     return {
-        xp: state.xp,
         activeModule: state.activeModule,
         totalModules: modules.length,
         completedModules,
-        totalXpAvailable,
-        progress: totalXpAvailable > 0 ? state.xp / totalXpAvailable : 0,
+        completedSteps,
+        totalSteps,
+        progress: totalSteps > 0 ? completedSteps / totalSteps : 0,
         nextModule,
         modules: moduleSummaries
     };
@@ -48,11 +48,11 @@ export function markModuleContentStudied(moduleSlug, modules = ACADEMY_MODULES) 
 
     return updateModuleState(moduleSlug, (moduleState) => {
         if (moduleState.contentStudied) {
-            return { moduleState, earnedXp: 0 };
+            return { moduleState, changed: false };
         }
 
         return {
-            earnedXp: module.conteudoXp,
+            changed: true,
             moduleState: {
                 ...moduleState,
                 contentStudied: true
@@ -71,11 +71,11 @@ export function completeAcademyExercise({ moduleSlug, exerciseId, modules = ACAD
 
     return updateModuleState(moduleSlug, (moduleState) => {
         if (moduleState.completedExercises.includes(exerciseId)) {
-            return { moduleState, earnedXp: 0 };
+            return { moduleState, changed: false };
         }
 
         return {
-            earnedXp: exercise.xp,
+            changed: true,
             moduleState: {
                 ...moduleState,
                 completedExercises: [...moduleState.completedExercises, exerciseId]
@@ -108,7 +108,7 @@ export function answerAcademyQuiz({ moduleSlug, questionId, selectedIndex, modul
             : moduleState.correctQuestions;
 
         return {
-            earnedXp: isCorrect && !wasAlreadyCorrect ? question.xp : 0,
+            changed: isCorrect && !wasAlreadyCorrect,
             moduleState: {
                 ...moduleState,
                 answeredQuestions,
@@ -124,20 +124,12 @@ export function answerAcademyQuiz({ moduleSlug, questionId, selectedIndex, modul
     };
 }
 
-export function getModuleXpTotal(module) {
-    const contentXp = module.conteudoXp || 0;
-    const exerciseXp = module.exercicios.reduce((total, exercise) => total + exercise.xp, 0);
-    const quizXp = module.quiz.reduce((total, question) => total + question.xp, 0);
-    return contentXp + exerciseXp + quizXp;
-}
-
 function updateModuleState(moduleSlug, updater) {
     const state = getAcademyState();
     const currentModuleState = getStoredModuleState(state, moduleSlug);
-    const { moduleState, earnedXp } = updater(currentModuleState);
+    const { moduleState, changed } = updater(currentModuleState);
     const nextState = {
         ...state,
-        xp: state.xp + earnedXp,
         activeModule: moduleSlug,
         modules: {
             ...state.modules,
@@ -148,7 +140,7 @@ function updateModuleState(moduleSlug, updater) {
     saveAcademyState(nextState);
 
     return {
-        earnedXp,
+        changed,
         snapshot: getAcademySnapshot(),
         moduleState
     };
@@ -162,8 +154,6 @@ function getModuleSummary(module, state) {
         ...module.quiz.map((question) => moduleState.correctQuestions.includes(question.id))
     ].filter(Boolean).length;
     const totalSteps = 1 + module.exercicios.length + module.quiz.length;
-    const earnedXp = getModuleEarnedXp(module, moduleState);
-    const totalXp = getModuleXpTotal(module);
 
     return {
         ...module,
@@ -173,22 +163,8 @@ function getModuleSummary(module, state) {
         correctQuestions: moduleState.correctQuestions,
         completedSteps,
         totalSteps,
-        earnedXp,
-        totalXp,
         progress: totalSteps > 0 ? completedSteps / totalSteps : 0
     };
-}
-
-function getModuleEarnedXp(module, moduleState) {
-    const contentXp = moduleState.contentStudied ? module.conteudoXp : 0;
-    const exerciseXp = module.exercicios.reduce((total, exercise) => {
-        return total + (moduleState.completedExercises.includes(exercise.id) ? exercise.xp : 0);
-    }, 0);
-    const quizXp = module.quiz.reduce((total, question) => {
-        return total + (moduleState.correctQuestions.includes(question.id) ? question.xp : 0);
-    }, 0);
-
-    return contentXp + exerciseXp + quizXp;
 }
 
 function getAcademyState() {
@@ -203,7 +179,6 @@ function normalizeState(state) {
     const source = state && typeof state === "object" ? state : DEFAULT_STATE;
 
     return {
-        xp: readPositiveNumber(source.xp),
         activeModule: source.activeModule || DEFAULT_ACADEMY_MODULE,
         modules: normalizeModules(source.modules)
     };
@@ -240,9 +215,4 @@ function normalizeModuleState(moduleState) {
 
 function findModule(slug, modules) {
     return modules.find((module) => module.slug === slug);
-}
-
-function readPositiveNumber(value) {
-    const number = Number(value);
-    return Number.isFinite(number) && number > 0 ? number : 0;
 }

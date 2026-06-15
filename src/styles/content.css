@@ -113,7 +113,7 @@
     margin-top: 20px;
 }
 
-.quiz-level-panel {
+.quiz-progress-panel {
     display: grid;
     gap: 12px;
     padding: 16px;
@@ -122,32 +122,21 @@
     background: rgba(94, 234, 212, 0.075);
 }
 
-.quiz-level-header {
+.quiz-progress-header {
     display: flex;
     align-items: start;
     justify-content: space-between;
     gap: 14px;
 }
 
-.quiz-level-header div {
+.quiz-progress-header div {
     display: grid;
     gap: 4px;
 }
 
-.quiz-level-header strong {
+.quiz-progress-header strong {
     color: var(--text);
     font-size: 1.08rem;
-}
-
-.quiz-xp-pill {
-    flex: 0 0 auto;
-    padding: 8px 10px;
-    border: 1px solid rgba(255, 209, 102, 0.28);
-    border-radius: 999px;
-    background: rgba(255, 209, 102, 0.12);
-    color: var(--accent);
-    font-size: 0.84rem;
-    font-weight: 800;
 }
 
 .quiz-progress-bar,
@@ -171,16 +160,10 @@
     background: linear-gradient(90deg, var(--accent-2), var(--primary));
 }
 
-.quiz-level-panel p,
-.quiz-last-gain {
+.quiz-progress-panel p {
     margin: 0;
     color: var(--muted);
     font-size: 0.94rem;
-}
-
-.quiz-last-gain {
-    color: var(--accent-2);
-    font-weight: 800;
 }
 
 .quiz-stat-grid {
@@ -199,7 +182,6 @@
 }
 
 .quiz-stat span,
-.quiz-achievement span,
 .quiz-history-list span {
     color: var(--muted);
     font-size: 0.86rem;
@@ -211,14 +193,12 @@
 }
 
 .quiz-category-progress,
-.quiz-achievements,
 .quiz-history {
     display: grid;
     gap: 12px;
 }
 
 .quiz-category-progress h3,
-.quiz-achievements h3,
 .quiz-history h3 {
     margin: 0;
     color: var(--text);
@@ -226,7 +206,6 @@
 }
 
 .quiz-category-list,
-.quiz-achievement-list,
 .quiz-history-list {
     display: grid;
     gap: 10px;
@@ -255,39 +234,6 @@
     height: 8px;
 }
 
-.quiz-achievement {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 12px;
-    align-items: center;
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.04);
-}
-
-.quiz-achievement div {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
-}
-
-.quiz-achievement strong {
-    color: var(--text);
-}
-
-.quiz-achievement.is-unlocked {
-    border-color: rgba(255, 209, 102, 0.36);
-    background: rgba(255, 209, 102, 0.09);
-}
-
-.quiz-achievement-progress {
-    color: var(--accent-2);
-    font-size: 0.84rem;
-    font-weight: 800;
-    white-space: nowrap;
-}
-
 .quiz-history-list {
     margin: 0;
     padding: 0;
@@ -314,18 +260,12 @@
 }
 
 @media (max-width: 520px) {
-    .quiz-level-header,
-    .quiz-achievement {
+    .quiz-progress-header {
         grid-template-columns: 1fr;
     }
 
-    .quiz-level-header {
+    .quiz-progress-header {
         display: grid;
-    }
-
-    .quiz-xp-pill,
-    .quiz-achievement-progress {
-        justify-self: start;
     }
 }
 

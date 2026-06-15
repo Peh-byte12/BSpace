@@ -5,7 +5,6 @@ export const ACADEMY_MODULES = [
         titulo: "Sistema Solar",
         nivel: "Fundamentos",
         duracao: "18 min",
-        conteudoXp: 30,
         resumo: "Entenda como o Sol, planetas, luas, asteroides e cometas formam uma vizinhança cósmica organizada por gravidade.",
         objetivos: [
             "Reconhecer os principais corpos do Sistema Solar.",
@@ -31,13 +30,11 @@ export const ACADEMY_MODULES = [
                 id: "classificar-planetas",
                 titulo: "Classifique os planetas",
                 instrucao: "Separe mentalmente os oito planetas entre rochosos, gasosos e gelados.",
-                xp: 15
             },
             {
                 id: "ordem-orbital",
                 titulo: "Reconstrua a ordem orbital",
                 instrucao: "Liste os planetas do mais próximo ao mais distante do Sol.",
-                xp: 15
             }
         ],
         quiz: [
@@ -47,7 +44,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Sol", "Júpiter", "Terra"],
                 correta: 0,
                 explicacao: "O Sol concentra quase toda a massa do Sistema Solar e domina sua gravidade.",
-                xp: 20
             },
             {
                 id: "gigante-gelado",
@@ -55,7 +51,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Netuno", "Marte", "Saturno"],
                 correta: 0,
                 explicacao: "Netuno e Urano são chamados de gigantes gelados por sua composição rica em compostos voláteis.",
-                xp: 20
             }
         ]
     },
@@ -65,7 +60,6 @@ export const ACADEMY_MODULES = [
         titulo: "Estrelas",
         nivel: "Essencial",
         duracao: "20 min",
-        conteudoXp: 35,
         resumo: "Aprenda como estrelas nascem, brilham, evoluem e por que massa, cor e temperatura contam histórias diferentes.",
         objetivos: [
             "Explicar o brilho das estrelas por fusão nuclear.",
@@ -91,13 +85,11 @@ export const ACADEMY_MODULES = [
                 id: "comparar-cores",
                 titulo: "Compare cores estelares",
                 instrucao: "Ordene mentalmente estrelas vermelhas, amarelas e azuis da mais fria para a mais quente.",
-                xp: 15
             },
             {
                 id: "ciclo-estelar",
                 titulo: "Mapa do ciclo estelar",
                 instrucao: "Descreva em uma frase como massa influencia o destino de uma estrela.",
-                xp: 20
             }
         ],
         quiz: [
@@ -107,7 +99,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Fusão nuclear", "Evaporação", "Reflexão de planetas"],
                 correta: 0,
                 explicacao: "A fusão nuclear converte massa em energia no interior das estrelas.",
-                xp: 20
             },
             {
                 id: "cor-mais-quente",
@@ -115,7 +106,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Azul", "Vermelha", "Laranja"],
                 correta: 0,
                 explicacao: "Estrelas azuladas têm temperaturas superficiais mais altas.",
-                xp: 20
             }
         ]
     },
@@ -125,7 +115,6 @@ export const ACADEMY_MODULES = [
         titulo: "Galáxias",
         nivel: "Intermediário",
         duracao: "22 min",
-        conteudoXp: 40,
         resumo: "Explore galáxias como grandes sistemas de estrelas, gás, poeira e matéria escura em constante evolução.",
         objetivos: [
             "Definir galáxias como sistemas gravitacionais.",
@@ -151,13 +140,11 @@ export const ACADEMY_MODULES = [
                 id: "identificar-via-lactea",
                 titulo: "Localize nossa galáxia",
                 instrucao: "Explique por que o Sistema Solar pertence à Via Láctea, mas não fica no seu centro.",
-                xp: 20
             },
             {
                 id: "tipos-galaxias",
                 titulo: "Compare formatos",
                 instrucao: "Associe espiral, elíptica e irregular a uma característica visual de cada tipo.",
-                xp: 20
             }
         ],
         quiz: [
@@ -167,7 +154,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Espiral barrada", "Elíptica anã", "Irregular"],
                 correta: 0,
                 explicacao: "A Via Láctea possui braços espirais e uma barra central de estrelas.",
-                xp: 25
             },
             {
                 id: "conteudo-galaxia",
@@ -175,7 +161,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Gás, poeira e matéria escura", "Apenas planetas", "Som atmosférico"],
                 correta: 0,
                 explicacao: "Galáxias são sistemas complexos com estrelas, gás, poeira e matéria escura.",
-                xp: 25
             }
         ]
     },
@@ -185,7 +170,6 @@ export const ACADEMY_MODULES = [
         titulo: "Buracos Negros",
         nivel: "Avançado",
         duracao: "24 min",
-        conteudoXp: 45,
         resumo: "Descubra o que torna buracos negros extremos, como são detectados e por que o horizonte de eventos é tão importante.",
         objetivos: [
             "Definir buracos negros por gravidade extrema.",
@@ -211,13 +195,11 @@ export const ACADEMY_MODULES = [
                 id: "horizonte-eventos",
                 titulo: "Explique o limite",
                 instrucao: "Defina horizonte de eventos em uma frase simples.",
-                xp: 20
             },
             {
                 id: "evidencias",
                 titulo: "Rastreie evidências",
                 instrucao: "Liste dois sinais indiretos usados para identificar buracos negros.",
-                xp: 25
             }
         ],
         quiz: [
@@ -227,7 +209,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["O limite após o qual nem a luz escapa", "A superfície sólida do buraco negro", "Uma lua em órbita"],
                 correta: 0,
                 explicacao: "O horizonte de eventos marca a fronteira sem retorno para luz e matéria.",
-                xp: 30
             },
             {
                 id: "deteccao-buraco-negro",
@@ -235,7 +216,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Movimento de estrelas próximas", "Som no espaço vazio", "Mudança de estações na Terra"],
                 correta: 0,
                 explicacao: "Órbitas de estrelas próximas podem revelar a massa invisível de um buraco negro.",
-                xp: 30
             }
         ]
     },
@@ -245,7 +225,6 @@ export const ACADEMY_MODULES = [
         titulo: "Exoplanetas",
         nivel: "Aplicado",
         duracao: "26 min",
-        conteudoXp: 50,
         resumo: "Conheça planetas fora do Sistema Solar, métodos de descoberta e critérios básicos de habitabilidade.",
         objetivos: [
             "Definir exoplanetas.",
@@ -271,13 +250,11 @@ export const ACADEMY_MODULES = [
                 id: "curva-luz",
                 titulo: "Leia uma curva de luz",
                 instrucao: "Imagine uma queda periódica no brilho de uma estrela e explique por que isso sugere um planeta.",
-                xp: 25
             },
             {
                 id: "habitabilidade",
                 titulo: "Avalie habitabilidade",
                 instrucao: "Liste três fatores que importam além da distância até a estrela.",
-                xp: 25
             }
         ],
         quiz: [
@@ -287,7 +264,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Um planeta fora do Sistema Solar", "Uma estrela jovem", "Uma lua de Saturno"],
                 correta: 0,
                 explicacao: "Exoplanetas orbitam estrelas diferentes do Sol.",
-                xp: 30
             },
             {
                 id: "metodo-transito",
@@ -295,7 +271,6 @@ export const ACADEMY_MODULES = [
                 opcoes: ["Queda no brilho da estrela", "Som emitido pelo planeta", "Cor das nuvens terrestres"],
                 correta: 0,
                 explicacao: "A passagem do planeta diante da estrela reduz levemente o brilho observado.",
-                xp: 30
             }
         ]
     }
