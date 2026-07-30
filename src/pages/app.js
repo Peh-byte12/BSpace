@@ -2,7 +2,6 @@ import { initSiteShell } from "../components/site-shell.js";
 
 const pageModules = {
     home: () => import("./home.js"),
-    academy: () => import("./academy.js"),
     calendar: () => import("./calendar.js"),
     planets: () => import("./planets.js"),
     curiosities: () => import("./curiosities.js"),

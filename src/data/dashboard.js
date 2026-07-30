@@ -1,10 +1,5 @@
 export const DASHBOARD_HIGHLIGHTS = [
     {
-        title: "Academia BSpace",
-        description: "Avance por módulos de astronomia com conteúdo, exercícios, quiz e progresso salvo no navegador.",
-        href: "academia.html"
-    },
-    {
         title: "Calendário astronômico",
         description: "Planeje observações com eclipses, fases da Lua, chuvas de meteoros e conjunções.",
         href: "calendario.html"
