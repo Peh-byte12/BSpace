@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curiosidades e Cosmic Quiz | BSpace</title>
-    <meta name="description" content="Aprenda curiosidades astronômicas, simule tempo da luz e responda ao Cosmic Quiz com categorias, progresso e histórico local.">
+    <title>Curiosidades | BSpace</title>
+    <meta name="description" content="Aprenda curiosidades astronômicas e simule o tempo que a luz leva para percorrer o Sistema Solar.">
     <meta name="author" content="BSpace">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#08133a">
@@ -14,13 +14,13 @@
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="BSpace">
-    <meta property="og:title" content="Curiosidades e Cosmic Quiz | BSpace">
-    <meta property="og:description" content="Curiosidades, simulação da luz e quiz gamificado de astronomia.">
+    <meta property="og:title" content="Curiosidades | BSpace">
+    <meta property="og:description" content="Curiosidades e simulação do tempo da luz no Sistema Solar.">
     <meta property="og:url" content="https://bspace.example/curiosidades.html">
     <meta property="og:image" content="https://bspace.example/src/assets/social-card.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Curiosidades e Cosmic Quiz | BSpace">
-    <meta name="twitter:description" content="Teste seus conhecimentos de astronomia com categorias, progresso e histórico local.">
+    <meta name="twitter:title" content="Curiosidades | BSpace">
+    <meta name="twitter:description" content="Curiosidades e simulação do tempo da luz no Sistema Solar.">
     <meta name="twitter:image" content="https://bspace.example/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
     <link rel="stylesheet" href="src/styles/content.css">
@@ -28,10 +28,10 @@
     {
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        "name": "Curiosidades e Cosmic Quiz",
-        "description": "Área educacional com curiosidades, simulação do tempo da luz e quiz gamificado de astronomia.",
+        "name": "Curiosidades",
+        "description": "Área educacional com curiosidades astronômicas e simulação do tempo da luz.",
         "inLanguage": "pt-BR",
-        "learningResourceType": "Quiz"
+        "learningResourceType": "Article"
     }
     </script>
 </head>
@@ -71,29 +71,16 @@
         <button class="button" id="btnCuriosidade" type="button">Mostrar curiosidade</button>
     </section>
 
-    <section class="interactive-content-grid">
-        <article class="quiz-box surface" data-reveal>
-            <span class="section-kicker">Cosmic Quiz</span>
-            <h2>Teste sua exploração</h2>
-            <div class="quiz-categories" id="quizCategories" role="group" aria-label="Categorias do quiz"></div>
-            <p class="quiz-question-meta" id="quizQuestionMeta">Categoria e dificuldade</p>
-            <p class="quiz-question" id="quizQuestion">Carregando pergunta...</p>
-            <div class="quiz-options" id="quizOptions"></div>
-            <p class="highlight-output" id="quizFeedback">Escolha uma alternativa para responder ao quiz.</p>
-            <div class="quiz-dashboard" id="quizDashboard" aria-live="polite"></div>
-        </article>
-
-        <article class="simulation-box surface" data-reveal>
-            <span class="section-kicker">Simulação</span>
-            <h2>Tempo da luz no Sistema Solar</h2>
-            <label class="field-label">
-                Destino
-                <select id="lightDestination"></select>
-            </label>
-            <div class="simulation-track" aria-hidden="true"><span id="lightMeter"></span></div>
-            <p class="highlight-output" id="lightOutput">Escolha um destino para simular quanto tempo a luz leva para chegar lá.</p>
-        </article>
-    </section>
+    <article class="simulation-box surface" data-reveal>
+        <span class="section-kicker">Simulação</span>
+        <h2>Tempo da luz no Sistema Solar</h2>
+        <label class="field-label">
+            Destino
+            <select id="lightDestination"></select>
+        </label>
+        <div class="simulation-track" aria-hidden="true"><span id="lightMeter"></span></div>
+        <p class="highlight-output" id="lightOutput">Escolha um destino para simular quanto tempo a luz leva para chegar lá.</p>
+    </article>
 
     <article class="topic-card surface">
         <h2>Escalas são difíceis de imaginar</h2>

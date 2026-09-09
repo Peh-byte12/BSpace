@@ -5,8 +5,7 @@ import { readJsonStorage, readStorage, writeJsonStorage, writeStorage } from "..
 const STORAGE_KEYS = {
     lastPlanet: "bspaceLastPlanet",
     visitedPlanets: "bspaceVisitedPlanets",
-    missionSimulations: "bspaceMissionSimulations",
-    quizAnswers: "bspaceQuizAnswers"
+    missionSimulations: "bspaceMissionSimulations"
 };
 
 export function markPlanetVisited(slug) {
@@ -37,21 +36,15 @@ export function incrementMissionSimulations() {
     incrementStoredCounter(STORAGE_KEYS.missionSimulations);
 }
 
-export function incrementQuizAnswers() {
-    incrementStoredCounter(STORAGE_KEYS.quizAnswers);
-}
-
 export function getExplorationStats() {
     const totalPlanets = getPlanets().length;
     const visitedPlanets = readJsonStorage(STORAGE_KEYS.visitedPlanets, []).filter((slug) => getPlanetBySlug(slug));
     const missionSimulations = readStoredCounter(STORAGE_KEYS.missionSimulations);
-    const quizAnswers = readStoredCounter(STORAGE_KEYS.quizAnswers);
 
     return {
         totalPlanets,
         visitedPlanets: new Set(visitedPlanets).size,
-        missionSimulations,
-        quizAnswers
+        missionSimulations
     };
 }
 

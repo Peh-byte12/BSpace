@@ -1,7 +1,6 @@
 import { DASHBOARD_HIGHLIGHTS, MISSION_RECOMMENDATIONS, WEEKLY_EVENTS } from "../data/dashboard.js";
 import { getPlanets } from "../services/planet-service.js";
 import { getExplorationStats, getLastVisitedPlanet, getNextRecommendedPlanet } from "../services/exploration-progress-service.js";
-import { getQuizSummary } from "../services/quiz-engine.js";
 import { setupSolarSelector } from "../components/solar-selector.js";
 import { formatNumber } from "../utils/format.js";
 import { byId, createTextElement, setText } from "../utils/dom.js";
@@ -161,7 +160,6 @@ function renderHeroStats() {
 function getProgressItems() {
     const stats = getExplorationStats();
     const totalPlanets = stats.totalPlanets || getPlanets().length;
-    const quizSummary = getQuizSummary();
     const missionTarget = 5;
 
     return [
@@ -176,14 +174,6 @@ function getProgressItems() {
             label: `${stats.missionSimulations} de ${missionTarget}`,
             description: "Simulações feitas no painel de missões.",
             progress: clampProgress(stats.missionSimulations / missionTarget)
-        },
-        {
-            title: "Cosmic Quiz",
-            label: `${quizSummary.masteredQuestions} de ${quizSummary.totalQuestions}`,
-            description: quizSummary.totalAnswers > 0
-                ? `${quizSummary.accuracy}% de acerto em ${quizSummary.totalAnswers} respostas.`
-                : "Responda ao quiz para acompanhar seu domínio por pergunta.",
-            progress: clampProgress(quizSummary.questionProgress)
         }
     ];
 }

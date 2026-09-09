@@ -15,14 +15,13 @@ Arquitetura
 
 - Os dados dos planetas ficam centralizados em src/data/planets.js.
 - A lista, o comparador, a página de detalhe e o modelo 3D consomem o mesmo cadastro.
-- O quiz, as curiosidades e os tipos de missão ficam em arquivos de dados próprios.
+- As curiosidades e os tipos de missão ficam em arquivos de dados próprios.
 - As páginas HTML apontam para src/pages/app.js, que carrega apenas o módulo da página atual.
 - A página planeta.html carrega src/pages/planet-3d.js separadamente para evitar carregar Three.js nas outras páginas.
 
 Guia de manutenção
 
 - Para adicionar um planeta, edite apenas src/data/planets.js.
-- Para alterar perguntas do quiz, edite src/data/quiz.js.
 - Para alterar curiosidades, edite src/data/curiosities.js.
 - Para alterar tipos de missão, edite src/data/mission-types.js.
 - Para criar uma nova página, adicione um data-page no body, crie um módulo em src/pages/ e registre esse módulo em src/pages/app.js.
@@ -37,8 +36,7 @@ Funcionalidades
 - Sistema solar simplificado na página inicial
 - Último planeta visitado salvo localmente
 - Missão recomendada e evento astronômico da semana
-- Estatísticas locais de exploração, missões e quiz
-- Quiz interativo na página de curiosidades
+- Estatísticas locais de exploração e missões
 - Simulação de tempo da luz
 - Simulador de missões
 - Página de missões em formato de experiência interativa
