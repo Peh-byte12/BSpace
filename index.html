@@ -10,18 +10,18 @@
     <meta name="theme-color" content="#08133a">
     <meta name="color-scheme" content="dark">
     <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
-    <link rel="canonical" href="https://bspace.example/">
+    <link rel="canonical" href="https://peh-byte12.github.io/BSpace/">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="BSpace">
     <meta property="og:title" content="BSpace | Plataforma educacional de astronomia">
     <meta property="og:description" content="Uma plataforma educacional de astronomia com planetas 3D, missões e eventos astronômicos.">
-    <meta property="og:url" content="https://bspace.example/">
-    <meta property="og:image" content="https://bspace.example/src/assets/social-card.png">
+    <meta property="og:url" content="https://peh-byte12.github.io/BSpace/">
+    <meta property="og:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="BSpace | Plataforma educacional de astronomia">
     <meta name="twitter:description" content="Explore astronomia com planetas 3D, missões e calendário astronômico.">
-    <meta name="twitter:image" content="https://bspace.example/src/assets/social-card.png">
+    <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
     <link rel="stylesheet" href="src/styles/home.css">
     <script type="application/ld+json">
@@ -31,7 +31,7 @@
         "name": "BSpace",
         "description": "Plataforma de astronomia com planetas 3D, missões espaciais e eventos astronômicos.",
         "inLanguage": "pt-BR",
-        "url": "https://bspace.example/",
+        "url": "https://peh-byte12.github.io/BSpace/",
         "publisher": {
             "@type": "EducationalOrganization",
             "name": "BSpace"
@@ -100,12 +100,16 @@
                 <h2>Retome sua jornada pelo espaço</h2>
                 <p>Use o mapa interativo para escolher um planeta ou navegar diretamente para curiosidades e missões com um clique.</p>
             </div>
-            <div class="solar-stage" role="img" aria-label="Sistema Solar simplificado">
+            <div class="solar-stage" role="img" aria-label="Sistema Solar simplificado com os oito planetas">
                 <span class="solar-sun"></span>
-                <span class="solar-orbit orbit-mercurio"><i></i></span>
-                <span class="solar-orbit orbit-venus"><i></i></span>
-                <span class="solar-orbit orbit-terra"><i></i></span>
-                <span class="solar-orbit orbit-marte"><i></i></span>
+                <span class="solar-orbit orbit-mercurio" data-orbit="mercurio"><i></i></span>
+                <span class="solar-orbit orbit-venus" data-orbit="venus"><i></i></span>
+                <span class="solar-orbit orbit-terra" data-orbit="terra"><i></i></span>
+                <span class="solar-orbit orbit-marte" data-orbit="marte"><i></i></span>
+                <span class="solar-orbit orbit-jupiter" data-orbit="jupiter"><i></i></span>
+                <span class="solar-orbit orbit-saturno" data-orbit="saturno"><i></i></span>
+                <span class="solar-orbit orbit-urano" data-orbit="urano"><i></i></span>
+                <span class="solar-orbit orbit-netuno" data-orbit="netuno"><i></i></span>
             </div>
             <div class="planet-selector" id="solarPlanetButtons" role="group" aria-label="Selecionar planeta"></div>
             <p class="highlight-output" id="solarPlanetInfo">Selecione um planeta para ver um resumo rápido.</p>

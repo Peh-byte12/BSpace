@@ -1,9 +1,15 @@
-import { readStorage } from "../utils/storage.js";
+import { readStorage, writeStorage } from "../utils/storage.js";
+
+const STORAGE_KEY = "bspaceSound";
 
 let audioContext;
 
-function isSoundEnabled() {
-    return readStorage("bspaceSound", "false") === "true";
+export function isSoundEnabled() {
+    return readStorage(STORAGE_KEY, "false") === "true";
+}
+
+export function setSoundEnabled(isEnabled) {
+    writeStorage(STORAGE_KEY, String(isEnabled));
 }
 
 export function playTone(frequency, forced = false) {
@@ -13,6 +19,10 @@ export function playTone(frequency, forced = false) {
 
     const AudioApi = window.AudioContext || window.webkitAudioContext;
     audioContext = audioContext || new AudioApi();
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
 
     const oscillator = audioContext.createOscillator();
     const gain = audioContext.createGain();

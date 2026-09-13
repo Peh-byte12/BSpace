@@ -117,9 +117,9 @@ function createToolbar({
     const zoomRange = document.createElement("input");
     const zoomInButton = createControlButton("+", "Aumentar zoom", onZoomIn);
     const zoomValue = document.createElement("span");
-    const rotationButton = createControlButton("Rot", "Ativar ou pausar rotação automática", onToggleRotation);
-    const resetButton = createControlButton("Reset", "Restaurar enquadramento", onResetView);
-    const fullscreenButton = createControlButton("[ ]", "Alternar tela cheia", onToggleFullscreen);
+    const rotationButton = createControlButton("Girar", "Ativar ou pausar a rotação automática", onToggleRotation);
+    const resetButton = createControlButton("Centralizar", "Restaurar o enquadramento do planeta", onResetView);
+    const fullscreenButton = createControlButton("Tela cheia", "Alternar o modo tela cheia", onToggleFullscreen);
 
     element.className = "planet-viewer-toolbar";
     element.setAttribute("aria-label", "Controles do modelo 3D");

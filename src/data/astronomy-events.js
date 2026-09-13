@@ -23,6 +23,11 @@ export const ASTRONOMY_EVENT_TYPES = [
         id: "conjuncao",
         label: "Conjunções",
         description: "Aproximações aparentes entre Lua, planetas e estrelas."
+    },
+    {
+        id: "asteroide",
+        label: "Asteroides",
+        description: "Aproximações de asteroides monitoradas pela NASA."
     }
 ];
 

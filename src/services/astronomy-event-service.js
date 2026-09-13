@@ -1,5 +1,7 @@
 import { ASTRONOMY_EVENTS, ASTRONOMY_EVENT_TYPES } from "../data/astronomy-events.js";
+import { fetchNearEarthEvents } from "./astronomy-api-service.js";
 import { normalizeText } from "../utils/format.js";
+import { readJsonStorage, writeJsonStorage } from "../utils/storage.js";
 
 const DEFAULT_FILTERS = {
     type: "todos",
@@ -8,14 +10,40 @@ const DEFAULT_FILTERS = {
     to: ""
 };
 
+const REMOTE_CACHE_KEY = "bspaceAstronomyRemoteEvents";
+const REMOTE_CACHE_TTL = 6 * 60 * 60 * 1000;
+const REMOTE_RETRY_COOLDOWN = 2 * 60 * 1000;
+
+const remoteSource = {
+    status: "idle",
+    updatedAt: 0,
+    failedAt: 0,
+    message: "",
+    events: [],
+    request: null
+};
+
 export async function loadAstronomyEvents({
     filters = DEFAULT_FILTERS,
     provider = "local",
     endpoint = "",
-    fetcher = globalThis.fetch
+    includeRemote = true,
+    forceRefresh = false,
+    fetcher
 } = {}) {
-    const events = await loadEventsFromProvider({ provider, endpoint, fetcher });
-    return filterAstronomyEvents(events.map(normalizeAstronomyEvent), filters);
+    const localEvents = (await loadEventsFromProvider({ provider, endpoint, fetcher })).map(normalizeAstronomyEvent);
+    const remoteEvents = includeRemote ? await loadRemoteEvents({ forceRefresh, fetcher }) : [];
+
+    return filterAstronomyEvents(mergeEvents(localEvents, remoteEvents), filters);
+}
+
+export function getRemoteSourceState() {
+    return {
+        status: remoteSource.status,
+        updatedAt: remoteSource.updatedAt,
+        message: remoteSource.message,
+        total: remoteSource.events.length
+    };
 }
 
 export function getAstronomyEventTypes() {
@@ -66,7 +94,7 @@ export function filterAstronomyEvents(events, filters = DEFAULT_FILTERS) {
         })
         .filter((event) => !fromDate || event.dateObject >= fromDate)
         .filter((event) => !toDate || event.dateObject <= toDate)
-        .sort((a, b) => a.dateObject - b.dateObject);
+        .sort(compareByUpcomingFirst);
 }
 
 export function normalizeAstronomyEvent(event) {
@@ -117,10 +145,111 @@ async function loadEventsFromProvider({ provider, endpoint, fetcher }) {
         return ASTRONOMY_EVENTS;
     }
 
-    const response = await fetcher(endpoint);
+    const request = typeof fetcher === "function" ? fetcher : (url) => globalThis.fetch(url);
+    const response = await request(endpoint);
     const payload = await response.json();
     const rawEvents = Array.isArray(payload) ? payload : payload.events || [];
+
     return rawEvents.map(normalizeExternalAstronomyEvent);
+}
+
+async function loadRemoteEvents({ forceRefresh = false, fetcher } = {}) {
+    if (remoteSource.status === "idle") {
+        hydrateRemoteCache();
+    }
+
+    if (!forceRefresh && (hasFreshRemoteEvents() || isInRetryCooldown())) {
+        return remoteSource.events;
+    }
+
+    if (!remoteSource.request) {
+        remoteSource.status = "loading";
+        remoteSource.request = requestRemoteEvents(fetcher).finally(() => {
+            remoteSource.request = null;
+        });
+    }
+
+    return remoteSource.request;
+}
+
+async function requestRemoteEvents(fetcher) {
+    try {
+        const payloads = await fetchNearEarthEvents(fetcher ? { fetcher } : {});
+
+        remoteSource.events = payloads.map(normalizeExternalAstronomyEvent);
+        remoteSource.updatedAt = Date.now();
+        remoteSource.status = "live";
+        remoteSource.failedAt = 0;
+        remoteSource.message = "";
+        writeJsonStorage(REMOTE_CACHE_KEY, { updatedAt: remoteSource.updatedAt, payloads });
+
+        return remoteSource.events;
+    } catch (error) {
+        return useRemoteFallback(error);
+    }
+}
+
+function useRemoteFallback(error) {
+    remoteSource.message = error?.message || "Não foi possível consultar a API de eventos astronômicos.";
+    console.warn("Calendário astronômico: a API não respondeu, usando dados locais.", error);
+
+    if (remoteSource.events.length === 0) {
+        hydrateRemoteCache();
+    }
+
+    remoteSource.failedAt = Date.now();
+    remoteSource.status = remoteSource.events.length > 0 ? "cache" : "offline";
+
+    return remoteSource.events;
+}
+
+function hydrateRemoteCache() {
+    try {
+        const cached = readJsonStorage(REMOTE_CACHE_KEY, null);
+        const payloads = Array.isArray(cached?.payloads) ? cached.payloads : [];
+
+        if (payloads.length === 0) {
+            return false;
+        }
+
+        remoteSource.events = payloads.map(normalizeExternalAstronomyEvent);
+        remoteSource.updatedAt = Number(cached.updatedAt) || 0;
+        remoteSource.status = "cache";
+
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function isInRetryCooldown() {
+    return remoteSource.failedAt > 0 && Date.now() - remoteSource.failedAt < REMOTE_RETRY_COOLDOWN;
+}
+
+function hasFreshRemoteEvents() {
+    return remoteSource.events.length > 0 && Date.now() - remoteSource.updatedAt < REMOTE_CACHE_TTL;
+}
+
+function mergeEvents(localEvents, remoteEvents) {
+    const merged = new Map();
+
+    [...localEvents, ...remoteEvents].forEach((event) => {
+        merged.set(event.id, event);
+    });
+
+    return [...merged.values()];
+}
+
+function compareByUpcomingFirst(a, b) {
+    if (a.isPast !== b.isPast) {
+        return a.isPast ? 1 : -1;
+    }
+
+    if (a.isPast) {
+        return b.dateObject - a.dateObject;
+    }
+
+    return a.dateObject - b.dateObject;
 }
 
 function startOfToday() {

@@ -8,6 +8,14 @@ const STORAGE_KEYS = {
     missionSimulations: "bspaceMissionSimulations"
 };
 
+export function setLastVisitedPlanet(slug) {
+    if (!getPlanetBySlug(slug)) {
+        return;
+    }
+
+    writeStorage(STORAGE_KEYS.lastPlanet, slug);
+}
+
 export function markPlanetVisited(slug) {
     const planet = getPlanetBySlug(slug);
 
@@ -18,7 +26,7 @@ export function markPlanetVisited(slug) {
     const visited = new Set(readJsonStorage(STORAGE_KEYS.visitedPlanets, []));
     visited.add(slug);
 
-    writeStorage(STORAGE_KEYS.lastPlanet, slug);
+    setLastVisitedPlanet(slug);
     writeJsonStorage(STORAGE_KEYS.visitedPlanets, [...visited]);
 }
 

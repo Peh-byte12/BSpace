@@ -131,6 +131,64 @@
     border-left-color: var(--accent-2);
 }
 
+.calendar-card.is-asteroid {
+    border-left-color: #c98b5e;
+}
+
+.calendar-card.is-past {
+    border-left-color: rgba(255, 255, 255, 0.22);
+}
+
+.calendar-card.is-past time {
+    color: var(--muted);
+}
+
+.calendar-card-status {
+    justify-self: start;
+    padding: 3px 9px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.calendar-source-state {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.calendar-source-state:empty {
+    display: none;
+}
+
+.calendar-source-state::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--muted);
+}
+
+.calendar-source-state[data-state="live"]::before {
+    background: var(--success);
+}
+
+.calendar-source-state[data-state="cache"]::before {
+    background: var(--primary);
+}
+
+.calendar-source-state[data-state="offline"]::before {
+    background: var(--warning);
+}
+
 .calendar-card time {
     color: var(--accent-2);
     font-size: 0.86rem;
@@ -234,7 +292,8 @@
         align-items: end;
     }
 
-    .calendar-stats {
+    .calendar-stats,
+    .calendar-source-state {
         grid-column: 1 / -1;
     }
 

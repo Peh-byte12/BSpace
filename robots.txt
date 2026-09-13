@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://peh-byte12.github.io/BSpace/sitemap.xml

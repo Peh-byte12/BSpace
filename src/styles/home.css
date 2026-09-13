@@ -240,7 +240,7 @@
 
 .solar-stage {
     position: relative;
-    min-height: 238px;
+    min-height: 300px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius);
@@ -265,65 +265,89 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    width: var(--orbit-size);
+    height: var(--orbit-size);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    animation: orbital 18s linear infinite;
+    animation: orbital var(--orbit-duration) linear infinite;
+    transition: border-color 0.2s ease;
 }
 
 .solar-orbit i {
     position: absolute;
     top: 50%;
     right: -6px;
-    width: 12px;
-    height: 12px;
+    width: var(--orbit-dot);
+    height: var(--orbit-dot);
     border-radius: 50%;
-    background: var(--accent-2);
+    background: var(--orbit-color);
     transform: translateY(-50%);
+    transition: box-shadow 0.2s ease;
+}
+
+.solar-orbit.is-active {
+    border-color: rgba(94, 234, 212, 0.5);
+}
+
+.solar-orbit.is-active i {
+    box-shadow: 0 0 0 4px rgba(94, 234, 212, 0.2), 0 0 12px 2px rgba(94, 234, 212, 0.5);
 }
 
 .orbit-mercurio {
-    width: 96px;
-    height: 96px;
-    animation-duration: 8s;
-}
-
-.orbit-mercurio i {
-    background: #cbd5e1;
+    --orbit-size: 64px;
+    --orbit-duration: 8s;
+    --orbit-color: #cbd5e1;
+    --orbit-dot: 11px;
 }
 
 .orbit-venus {
-    width: 142px;
-    height: 142px;
-    animation-duration: 12s;
-}
-
-.orbit-venus i {
-    width: 15px;
-    height: 15px;
-    background: #ffb86b;
+    --orbit-size: 92px;
+    --orbit-duration: 12s;
+    --orbit-color: #ffb86b;
+    --orbit-dot: 14px;
 }
 
 .orbit-terra {
-    width: 188px;
-    height: 188px;
-    animation-duration: 16s;
-}
-
-.orbit-terra i {
-    width: 15px;
-    height: 15px;
-    background: #7ddc8a;
+    --orbit-size: 120px;
+    --orbit-duration: 16s;
+    --orbit-color: #7ddc8a;
+    --orbit-dot: 14px;
 }
 
 .orbit-marte {
-    width: 228px;
-    height: 228px;
-    animation-duration: 22s;
+    --orbit-size: 150px;
+    --orbit-duration: 22s;
+    --orbit-color: #e76f51;
+    --orbit-dot: 12px;
 }
 
-.orbit-marte i {
-    background: #e76f51;
+.orbit-jupiter {
+    --orbit-size: 186px;
+    --orbit-duration: 30s;
+    --orbit-color: #e8b88a;
+    --orbit-dot: 17px;
+}
+
+.orbit-saturno {
+    --orbit-size: 218px;
+    --orbit-duration: 38s;
+    --orbit-color: #f2d9a0;
+    --orbit-dot: 16px;
+}
+
+.orbit-urano {
+    --orbit-size: 248px;
+    --orbit-duration: 46s;
+    --orbit-color: #a8e4ef;
+    --orbit-dot: 13px;
+}
+
+.orbit-netuno {
+    --orbit-size: 276px;
+    --orbit-duration: 54s;
+    --orbit-color: #7aa8ff;
+    --orbit-dot: 13px;
 }
 
 .planet-selector {
@@ -374,27 +398,39 @@
     }
 
     .solar-stage {
-        min-height: 280px;
+        min-height: 340px;
     }
 
     .orbit-mercurio {
-        width: 110px;
-        height: 110px;
+        --orbit-size: 74px;
     }
 
     .orbit-venus {
-        width: 160px;
-        height: 160px;
+        --orbit-size: 106px;
     }
 
     .orbit-terra {
-        width: 214px;
-        height: 214px;
+        --orbit-size: 138px;
     }
 
     .orbit-marte {
-        width: 268px;
-        height: 268px;
+        --orbit-size: 172px;
+    }
+
+    .orbit-jupiter {
+        --orbit-size: 212px;
+    }
+
+    .orbit-saturno {
+        --orbit-size: 248px;
+    }
+
+    .orbit-urano {
+        --orbit-size: 282px;
+    }
+
+    .orbit-netuno {
+        --orbit-size: 314px;
     }
 }
 

@@ -8,6 +8,7 @@ export function initPage() {
         statsPanel: byId("calendarStats"),
         eventsGrid: byId("calendarEvents"),
         detailsPanel: byId("calendarDetails"),
-        emptyState: byId("calendarEmpty")
+        emptyState: byId("calendarEmpty"),
+        sourceState: byId("calendarSourceState")
     });
 }

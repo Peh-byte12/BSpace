@@ -425,6 +425,11 @@ body[data-page="planet"] .planeta-decoracao {
         bottom: 12px;
     }
 
+    .planet-viewer-toolbar button {
+        padding: 8px 6px;
+        font-size: 0.86rem;
+    }
+
     .planet-callout {
         gap: 6px;
         max-width: 150px;

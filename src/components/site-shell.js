@@ -1,7 +1,12 @@
+import { isSoundEnabled, playTone, setSoundEnabled } from "../services/audio-service.js";
+
+const SOUND_PAGES = ["home", "curiosities"];
+
 export function initSiteShell() {
     setupStarrySky();
     highlightActiveLink();
     setupBackToTop();
+    setupSoundToggle();
     setupCurrentYear();
     setupResponsiveImages();
     setupRevealAnimation();
@@ -93,6 +98,43 @@ function setupBackToTop() {
             behavior: "smooth"
         });
     });
+}
+
+function setupSoundToggle() {
+    if (!SOUND_PAGES.includes(document.body.dataset.page) || document.getElementById("soundToggle")) {
+        return;
+    }
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "sound-toggle";
+    button.id = "soundToggle";
+    button.textContent = "♪";
+
+    function updateButtonState() {
+        const isEnabled = isSoundEnabled();
+        const label = isEnabled ? "Desativar sons da interface" : "Ativar sons da interface";
+
+        button.classList.toggle("is-active", isEnabled);
+        button.setAttribute("aria-pressed", String(isEnabled));
+        button.setAttribute("aria-label", label);
+        button.title = label;
+    }
+
+    button.addEventListener("click", () => {
+        const nextState = !isSoundEnabled();
+
+        setSoundEnabled(nextState);
+        updateButtonState();
+
+        if (nextState) {
+            playTone(660, true);
+        }
+    });
+
+    updateButtonState();
+    document.body.appendChild(button);
 }
 
 function setupCurrentYear() {

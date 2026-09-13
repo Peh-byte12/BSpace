@@ -16,11 +16,11 @@ export function setupLightSimulator({ selectId, meterId, outputId }) {
     });
 
     select.value = "terra";
-    select.addEventListener("change", () => renderLightSimulation(selectId, meterId, outputId));
+    select.addEventListener("change", () => renderLightSimulation(selectId, meterId, outputId, { shouldPlaySound: true }));
     renderLightSimulation(selectId, meterId, outputId);
 }
 
-function renderLightSimulation(selectId, meterId, outputId) {
+function renderLightSimulation(selectId, meterId, outputId, options = {}) {
     const select = byId(selectId);
     const meter = byId(meterId);
 
@@ -39,5 +39,8 @@ function renderLightSimulation(selectId, meterId, outputId) {
 
     meter.style.width = `${percentage}%`;
     setText(outputId, `A luz do Sol leva aproximadamente ${formatTime(minutes)} para chegar até ${planet.nome}.`);
-    playTone(520);
+
+    if (options.shouldPlaySound) {
+        playTone(520);
+    }
 }

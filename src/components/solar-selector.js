@@ -2,6 +2,7 @@ import { getPlanetBySlug, getPlanets } from "../services/planet-service.js";
 import { formatNumber } from "../utils/format.js";
 import { byId, setText } from "../utils/dom.js";
 import { playTone } from "../services/audio-service.js";
+import { setLastVisitedPlanet } from "../services/exploration-progress-service.js";
 
 export function setupSolarSelector({ containerId, outputId, defaultSlug = "terra" }) {
     const container = byId(containerId);
@@ -44,6 +45,10 @@ function selectPlanet(slug, containerId, outputId, options = {}) {
         button.classList.toggle("is-active", button.dataset.planet === slug);
     });
 
+    document.querySelectorAll("[data-orbit]").forEach((orbit) => {
+        orbit.classList.toggle("is-active", orbit.dataset.orbit === slug);
+    });
+
     const distanceText = options.includeDistance ? ` Distância média do Sol: ${formatNumber(planet.distancia)} milhões de km.` : "";
     setText(outputId, `${planet.nome}: ${planet.resumo}${distanceText}`);
 
@@ -51,7 +56,5 @@ function selectPlanet(slug, containerId, outputId, options = {}) {
         playTone(440);
     }
 
-    if (window?.localStorage) {
-        window.localStorage.setItem("bspaceLastPlanet", slug);
-    }
+    setLastVisitedPlanet(slug);
 }

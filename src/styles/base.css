@@ -546,6 +546,32 @@ p {
     transform: translateY(0);
 }
 
+.sound-toggle {
+    position: fixed;
+    right: 78px;
+    bottom: 20px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--muted);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    z-index: 20;
+}
+
+.sound-toggle.is-active {
+    border-color: rgba(94, 234, 212, 0.55);
+    background: rgba(94, 234, 212, 0.16);
+    color: var(--text);
+}
+
 .js-reveal {
     opacity: 0;
     transform: translateY(18px);

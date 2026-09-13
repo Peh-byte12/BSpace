@@ -1,4 +1,4 @@
-import { getAstronomyEventStats, getAstronomyEventTypes, loadAstronomyEvents } from "../services/astronomy-event-service.js";
+import { getAstronomyEventStats, getAstronomyEventTypes, getRemoteSourceState, loadAstronomyEvents } from "../services/astronomy-event-service.js";
 import { createTextElement } from "../utils/dom.js";
 import { formatNumber } from "../utils/format.js";
 
@@ -6,8 +6,18 @@ const EVENT_TYPE_CLASS = {
     eclipse: "is-eclipse",
     lua: "is-moon",
     meteoros: "is-meteor",
-    conjuncao: "is-conjunction"
+    conjuncao: "is-conjunction",
+    asteroide: "is-asteroid"
 };
+
+const SOURCE_MESSAGES = {
+    loading: "Consultando eventos atualizados na API da NASA",
+    live: "Asteroides atualizados pela API da NASA",
+    cache: "Dados da NASA guardados neste navegador",
+    offline: "API da NASA indisponível: exibindo apenas o calendário local"
+};
+
+const REFRESH_INTERVAL = 30 * 60 * 1000;
 
 export function setupAstronomyCalendar({
     searchInput,
@@ -15,7 +25,8 @@ export function setupAstronomyCalendar({
     statsPanel,
     eventsGrid,
     detailsPanel,
-    emptyState
+    emptyState,
+    sourceState
 }) {
     if (!searchInput || !typeFilters || !statsPanel || !eventsGrid || !detailsPanel) {
         return;
@@ -24,13 +35,16 @@ export function setupAstronomyCalendar({
     const state = {
         type: "todos",
         search: "",
-        selectedEventId: ""
+        selectedEventId: "",
+        userSelected: false
     };
 
     let debounceTimer = null;
+    let renderToken = 0;
 
     renderTypeFilters();
     bindSearch();
+    scheduleAutoRefresh();
     render();
 
     function renderTypeFilters() {
@@ -47,6 +61,7 @@ export function setupAstronomyCalendar({
             button.addEventListener("click", () => {
                 state.type = type.id;
                 state.selectedEventId = "";
+                state.userSelected = false;
                 renderTypeFilters();
                 render();
             });
@@ -60,32 +75,79 @@ export function setupAstronomyCalendar({
             debounceTimer = window.setTimeout(() => {
                 state.search = searchInput.value;
                 state.selectedEventId = "";
+                state.userSelected = false;
                 render();
             }, 140);
         });
     }
 
-    async function render() {
-        const events = await loadAstronomyEvents({
-            filters: {
-                type: state.type,
-                search: state.search
-            }
-        });
-        const selectedEvent = events.find((event) => event.id === state.selectedEventId) || events[0] || null;
+    function scheduleAutoRefresh() {
+        window.setInterval(() => {
+            render({ forceRefresh: true });
+        }, REFRESH_INTERVAL);
+    }
+
+    async function render({ forceRefresh = false } = {}) {
+        const token = ++renderToken;
+        const filters = {
+            type: state.type,
+            search: state.search
+        };
+
+        paint(await loadAstronomyEvents({ filters, includeRemote: false }), token);
+
+        if (token === renderToken) {
+            showSourceMessage("loading");
+        }
+
+        paint(await loadAstronomyEvents({ filters, forceRefresh }), token);
+    }
+
+    function paint(events, token) {
+        if (token !== renderToken) {
+            return;
+        }
+
+        const chosenEvent = state.userSelected ? events.find((event) => event.id === state.selectedEventId) : null;
+        const selectedEvent = chosenEvent || events[0] || null;
 
         state.selectedEventId = selectedEvent?.id || "";
         renderStats(events);
         renderCards(events);
         renderDetails(selectedEvent);
+        renderSourceState();
 
         if (emptyState) {
             emptyState.hidden = events.length > 0;
         }
     }
 
+    function renderSourceState() {
+        const { status, updatedAt } = getRemoteSourceState();
+
+        showSourceMessage(status, updatedAt);
+    }
+
+    function showSourceMessage(status, updatedAt = 0) {
+        if (!sourceState) {
+            return;
+        }
+
+        const message = SOURCE_MESSAGES[status];
+
+        if (!message) {
+            sourceState.textContent = "";
+            sourceState.removeAttribute("data-state");
+            return;
+        }
+
+        sourceState.dataset.state = status;
+        sourceState.textContent = updatedAt > 0 ? `${message} · ${formatUpdatedAt(updatedAt)}` : message;
+    }
+
     function renderStats(events) {
         const stats = getAstronomyEventStats(events);
+        const activeTypes = stats.countsByType.filter((item) => item.total > 0).length;
         const nextEventText = stats.nextEvent
             ? `${stats.nextEvent.title} · ${formatEventDate(stats.nextEvent.dateObject)}`
             : "Nenhum evento encontrado";
@@ -94,7 +156,7 @@ export function setupAstronomyCalendar({
         statsPanel.append(
             createStat("Eventos", formatNumber(stats.total)),
             createStat("Próximo destaque", nextEventText),
-            createStat("Tipos ativos", `${stats.countsByType.filter((item) => item.total > 0).length}/4`)
+            createStat("Tipos ativos", `${activeTypes}/${stats.countsByType.length}`)
         );
     }
 
@@ -118,16 +180,24 @@ export function setupAstronomyCalendar({
             card.type = "button";
             card.className = `calendar-card ${EVENT_TYPE_CLASS[event.type] || ""}`;
             card.classList.toggle("is-active", event.id === state.selectedEventId);
+            card.classList.toggle("is-past", event.isPast);
             card.setAttribute("aria-pressed", String(event.id === state.selectedEventId));
             card.addEventListener("click", () => {
                 state.selectedEventId = event.id;
+                state.userSelected = true;
                 renderCards(events);
                 renderDetails(event);
             });
 
             date.dateTime = event.date;
             date.textContent = formatEventDate(event.dateObject);
-            card.append(date, meta, title, summary);
+            card.appendChild(date);
+
+            if (event.isPast) {
+                card.appendChild(createTextElement("span", "Já ocorreu", "calendar-card-status"));
+            }
+
+            card.append(meta, title, summary);
             eventsGrid.appendChild(card);
         });
     }
@@ -215,4 +285,13 @@ function formatEventDate(date) {
         month: "short",
         year: "numeric"
     }).format(date);
+}
+
+function formatUpdatedAt(timestamp) {
+    const time = new Intl.DateTimeFormat("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    }).format(new Date(timestamp));
+
+    return `atualizado às ${time}`;
 }

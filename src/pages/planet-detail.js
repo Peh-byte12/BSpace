@@ -14,7 +14,7 @@ export function initPage() {
     if (!planet) {
         layout.hidden = true;
         error.hidden = false;
-        document.title = "Planeta não encontrado";
+        document.title = "Planeta não encontrado | BSpace";
         return;
     }
 
@@ -23,7 +23,7 @@ export function initPage() {
 }
 
 function renderPlanetDetail(planet) {
-    document.title = planet.nome;
+    document.title = `${planet.nome} | BSpace`;
     byId("planetName").textContent = planet.nome;
     byId("planetDescription").textContent = planet.descricao;
     byId("planetSummary").textContent = planet.descricao;
