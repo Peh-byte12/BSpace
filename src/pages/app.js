@@ -1,4 +1,4 @@
-import { initSiteShell } from "../components/site-shell.js";
+import { enhancePageContent, initSiteShell } from "../components/site-shell.js";
 
 const pageModules = {
     home: () => import("./home.js"),
@@ -9,21 +9,26 @@ const pageModules = {
     planet: () => import("./planet-detail.js")
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const page = document.body.dataset.page;
-    const loadPage = pageModules[page];
+async function startApp() {
+    initSiteShell();
 
-    if (!loadPage) {
-        initSiteShell();
-        return;
+    const loadPage = pageModules[document.body.dataset.page];
+
+    if (loadPage) {
+        try {
+            const module = await loadPage();
+            module.initPage?.();
+        } catch (error) {
+            console.error("Não foi possível inicializar a página:", error);
+        }
     }
 
-    try {
-        const module = await loadPage();
-        module.initPage?.();
-    } catch (error) {
-        console.error("Não foi possível inicializar a página:", error);
-    } finally {
-        initSiteShell();
-    }
-});
+    enhancePageContent();
+}
+
+// Não espera o DOMContentLoaded: em planeta.html ele só dispara depois que o Three.js chega do CDN.
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startApp, { once: true });
+} else {
+    startApp();
+}

@@ -31,6 +31,24 @@ Calendário astronômico e API
 - O cache expira em 6 horas, o que evita consultas repetidas à API a cada filtro ou busca.
 - A chave DEMO_KEY da NASA é usada por padrão. Para uso intenso, troque por uma chave própria em src/services/astronomy-api-service.js.
 
+Estatísticas do usuário
+
+- src/services/exploration-progress-service.js guarda todas as estatísticas em uma única chave do localStorage (bspaceUserStats).
+- Não há login: cada navegador recebe um identificador anônimo (profileId) criado na primeira visita.
+- Um usuário novo começa com todos os valores em zero.
+- Métricas: planetas explorados, eventos visualizados, missões históricas exploradas, curiosidades descobertas, missões simuladas, pesquisas realizadas e favoritos.
+- Itens exploráveis são guardados como conjuntos sem repetição, então recarregar a página ou repetir a mesma ação não duplica a contagem.
+- Pesquisas só contam quando o usuário para de digitar um termo com pelo menos 2 letras diferente do último termo contado.
+- A home se atualiza sozinha quando as estatísticas mudam, inclusive a partir de outra aba.
+- O botão "Zerar estatísticas" na home apaga os dados deste navegador.
+
+Acessibilidade
+
+- O botão "Acessibilidade" no cabeçalho abre opções de tamanho do texto, alto contraste, redução de animações, links sublinhados e espaçamento de leitura.
+- As preferências ficam em bspaceA11yPreferences e são aplicadas antes da primeira pintura por src/utils/accessibility-boot.js.
+- Todas as páginas têm link "Pular para o conteúdo principal", foco visível e anúncios para leitores de tela via src/utils/announce.js.
+- O modelo 3D pode ser controlado pelo teclado: setas giram, + e - aproximam ou afastam e R centraliza.
+
 Guia de manutenção
 
 - Para adicionar um planeta, edite apenas src/data/planets.js.
@@ -47,9 +65,10 @@ Funcionalidades
 - Animação suave nos cards e seções
 - Home em formato de dashboard de exploração espacial
 - Sistema solar simplificado na página inicial com os oito planetas e destaque do planeta selecionado
-- Último planeta visitado salvo localmente
+- Estatísticas de uso por navegador, começando em zero
+- Favoritos de planetas e eventos astronômicos
+- Painel de acessibilidade com preferências salvas
 - Missão recomendada e evento astronômico da semana
-- Estatísticas locais de exploração e missões
 - Simulação de tempo da luz
 - Simulador de missões
 - Som de interface opcional, ativado por um botão nas páginas que usam áudio

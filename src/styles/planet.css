@@ -45,6 +45,9 @@
 }
 
 .planet-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     text-decoration: none;
     padding: 12px 16px;
     border-radius: var(--radius);
@@ -172,7 +175,7 @@ body[data-page="planet"] .planeta-decoracao {
 }
 
 .planet-viewer-toolbar button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 8px 11px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius);
@@ -231,12 +234,13 @@ body[data-page="planet"] .planeta-decoracao {
     scrollbar-width: thin;
 }
 
-.planet-context-panel h2,
 .planet-context-panel p {
     margin: 0;
 }
 
-.planet-context-panel h2 {
+.planet-context-panel .planet-context-title {
+    color: var(--text);
+    font-weight: 700;
     font-size: clamp(1.45rem, 3vw, 2.1rem);
     line-height: 1.12;
 }
@@ -443,6 +447,18 @@ body[data-page="planet"] .planeta-decoracao {
 
     .planet-callout-text {
         padding: 6px 7px;
-        font-size: 0.72rem;
+        font-size: 0.78rem;
     }
+}
+
+#planeta3d:focus-visible {
+    outline-offset: -4px;
+}
+
+.planet-context-panel:focus-visible {
+    outline-offset: 2px;
+}
+
+.planet-actions {
+    margin-top: 18px;
 }

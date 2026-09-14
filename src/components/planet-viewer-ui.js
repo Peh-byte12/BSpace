@@ -91,7 +91,7 @@ function createLoader(planet) {
 
     return {
         element,
-        setProgress(percent, message = "Carregando modelo GLB") {
+        setProgress(percent, message = "Carregando modelo 3D") {
             status.textContent = percent === null ? message : `${message}: ${Math.round(percent)}%`;
             fill.style.width = `${percent ?? 22}%`;
         },
@@ -122,6 +122,7 @@ function createToolbar({
     const fullscreenButton = createControlButton("Tela cheia", "Alternar o modo tela cheia", onToggleFullscreen);
 
     element.className = "planet-viewer-toolbar";
+    element.setAttribute("role", "group");
     element.setAttribute("aria-label", "Controles do modelo 3D");
 
     zoomGroup.className = "planet-zoom-control";
@@ -164,20 +165,23 @@ function createControlButton(text, label, onClick) {
 function createContextPanel(planet) {
     const element = document.createElement("aside");
     const kicker = document.createElement("span");
-    const title = document.createElement("h2");
+    const title = document.createElement("p");
     const summary = document.createElement("p");
     const stats = document.createElement("dl");
     const hotspot = document.createElement("div");
 
     element.className = "planet-context-panel";
-    element.setAttribute("aria-live", "polite");
+    element.tabIndex = 0;
+    element.setAttribute("aria-label", `Informações sobre ${planet.nome}`);
 
     kicker.className = "section-kicker";
     kicker.textContent = "Contexto";
+    title.className = "planet-context-title";
     title.textContent = planet.nome;
     summary.textContent = planet.resumo;
     stats.className = "planet-context-stats";
     hotspot.className = "planet-hotspot-detail";
+    hotspot.setAttribute("aria-live", "polite");
 
     [
         ["Tipo", planet.tipo],

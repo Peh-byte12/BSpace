@@ -4,7 +4,7 @@ import { renderMissionGallery } from "../components/mission-gallery.js";
 import { renderMissionStats } from "../components/mission-stats.js";
 import { renderMissionTimeline } from "../components/mission-timeline.js";
 import { setupMissionSimulator } from "../components/mission-simulator.js";
-import { incrementMissionSimulations } from "../services/exploration-progress-service.js";
+import { recordMissionSimulation, recordMissionView } from "../services/exploration-progress-service.js";
 import { byId, createTextElement, setText } from "../utils/dom.js";
 
 let selectedMissionSlug = DEFAULT_MISSION_SLUG;
@@ -17,8 +17,14 @@ export function initPage() {
         typeId: "missionType",
         buttonId: "launchMission",
         outputId: "missionResult",
-        onSimulate: incrementMissionSimulations
+        onSimulate: ({ planet, typeSlug }) => recordMissionSimulation(planet.slug, typeSlug)
     });
+}
+
+function selectMission(slug) {
+    recordMissionView(slug);
+    renderMissionExperience(slug);
+    byId("missionCards")?.querySelector(`[data-mission="${slug}"]`)?.focus();
 }
 
 function renderMissionExperience(slug) {
@@ -30,7 +36,7 @@ function renderMissionExperience(slug) {
         container: byId("missionCards"),
         missions: MISSIONS,
         selectedSlug: selectedMissionSlug,
-        onSelect: renderMissionExperience
+        onSelect: selectMission
     });
     renderMissionStats({
         container: byId("missionStats"),
@@ -67,7 +73,7 @@ function renderMissionBanner(mission) {
     }
 
     if (banner) {
-        banner.style.setProperty("--mission-banner-image", `url("${mission.bannerImage}")`);
+        banner.style.setProperty("--mission-banner-image", `url("${new URL(mission.bannerImage, document.baseURI).href}")`);
     }
 }
 

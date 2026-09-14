@@ -1,15 +1,39 @@
+import { prefersReducedMotion } from "../services/accessibility-service.js";
 import { isSoundEnabled, playTone, setSoundEnabled } from "../services/audio-service.js";
+import { setupAccessibilityPanel } from "./accessibility-panel.js";
 
 const SOUND_PAGES = ["home", "curiosities"];
 
 export function initSiteShell() {
+    setupSkipLink();
     setupStarrySky();
+    setupAccessibilityPanel(document.querySelector(".site-header"));
     highlightActiveLink();
     setupBackToTop();
     setupSoundToggle();
     setupCurrentYear();
+}
+
+export function enhancePageContent() {
     setupResponsiveImages();
     setupRevealAnimation();
+}
+
+function setupSkipLink() {
+    const main = document.querySelector("main");
+
+    if (!main || document.querySelector(".skip-link")) {
+        return;
+    }
+
+    main.id = main.id || "conteudo";
+    main.setAttribute("tabindex", "-1");
+
+    const link = document.createElement("a");
+    link.className = "skip-link";
+    link.href = `#${main.id}`;
+    link.textContent = "Pular para o conteúdo principal";
+    document.body.prepend(link);
 }
 
 function setupStarrySky() {
@@ -95,7 +119,7 @@ function setupBackToTop() {
     button.addEventListener("click", () => {
         window.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: prefersReducedMotion() ? "auto" : "smooth"
         });
     });
 }

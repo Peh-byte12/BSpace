@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="Eclipses, Lua, meteoros e conjunções em uma central preparada para APIs astronômicas.">
     <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/calendar.css">
     <script type="application/ld+json">
     {
@@ -46,7 +47,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -82,11 +83,11 @@
         <article class="calendar-list-panel surface">
             <span class="section-kicker">Agenda</span>
             <h2>Próximos eventos</h2>
-            <p class="calendar-empty" id="calendarEmpty" hidden>Nenhum evento encontrado com os filtros atuais.</p>
+            <p class="calendar-empty" id="calendarEmpty" hidden>Nenhum evento encontrado com os filtros atuais. Tente outro termo de busca ou selecione o filtro "Todos".</p>
             <div class="calendar-events" id="calendarEvents"></div>
         </article>
 
-        <aside class="calendar-detail surface" id="calendarDetails" aria-live="polite"></aside>
+        <aside class="calendar-detail surface" id="calendarDetails"></aside>
     </section>
 </main>
 

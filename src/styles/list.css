@@ -135,3 +135,14 @@
         display: grid;
     }
 }
+
+.search-status {
+    min-height: 1.5em;
+    margin: 0;
+    color: var(--muted);
+}
+
+.search-status.is-empty {
+    color: var(--warning);
+    font-weight: 700;
+}

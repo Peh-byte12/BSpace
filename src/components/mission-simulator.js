@@ -34,6 +34,6 @@ export function setupMissionSimulator({ targetId, typeId, buttonId, outputId, on
 
         const duration = Math.max(2, Math.round((planet.distancia / 120) * missionType.complexidade));
         setText(outputId, `Missão para ${planet.nome}: duração estimada de ${duration} meses e risco ${missionType.risco}.`);
-        onSimulate?.({ planet, missionType, duration });
+        onSimulate?.({ planet, missionType, typeSlug: type.value, duration });
     });
 }

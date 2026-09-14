@@ -1,6 +1,7 @@
 import { getPlanetFromURL, getPlanetNavigation } from "../services/planet-service.js";
 import { markPlanetVisited } from "../services/exploration-progress-service.js";
-import { byId, createTextElement } from "../utils/dom.js";
+import { createFavoriteToggle } from "../components/favorite-toggle.js";
+import { byId, createTextElement, setText } from "../utils/dom.js";
 
 export function initPage() {
     const planet = getPlanetFromURL();
@@ -12,14 +13,28 @@ export function initPage() {
     }
 
     if (!planet) {
-        layout.hidden = true;
-        error.hidden = false;
-        document.title = "Planeta não encontrado | BSpace";
+        renderNotFound(layout, error);
         return;
     }
 
     renderPlanetDetail(planet);
     markPlanetVisited(planet.slug);
+}
+
+function renderNotFound(layout, error) {
+    const requestedName = new URLSearchParams(window.location.search).get("nome")?.trim();
+
+    layout.hidden = true;
+    error.hidden = false;
+    document.title = "Planeta não encontrado | BSpace";
+    setText("planetName", "Planeta não encontrado");
+    setText("planetDescription", "Não foi possível abrir a página pedida.");
+    setText(
+        "planetErrorMessage",
+        requestedName
+            ? `Não existe um planeta chamado "${requestedName}" no BSpace. Confira o endereço ou escolha um dos oito planetas na lista.`
+            : "Nenhum planeta foi informado no endereço. Escolha um dos oito planetas na lista."
+    );
 }
 
 function renderPlanetDetail(planet) {
@@ -30,7 +45,7 @@ function renderPlanetDetail(planet) {
 
     const image = byId("planetImage");
     image.src = planet.imagem;
-    image.alt = `Imagem de ${planet.nome}`;
+    image.alt = `Planeta ${planet.nome} visto do espaço`;
     image.loading = "lazy";
     image.decoding = "async";
 
@@ -46,6 +61,13 @@ function renderPlanetDetail(planet) {
         );
         factsContainer.appendChild(card);
     });
+
+    const actions = byId("planetActions");
+
+    if (actions) {
+        actions.innerHTML = "";
+        actions.appendChild(createFavoriteToggle({ type: "planeta", id: planet.slug, name: planet.nome }));
+    }
 
     const navigation = getPlanetNavigation(planet.slug);
     byId("linkAnterior").href = navigation.anterior;

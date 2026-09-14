@@ -25,6 +25,7 @@
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="dns-prefetch" href="https://unpkg.com">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/planet.css">
     <script type="application/ld+json">
     {
@@ -46,7 +47,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -66,11 +67,12 @@
         <span class="badge">Planeta do Sistema Solar</span>
         <h1 id="planetName">Carregando planeta...</h1>
         <p id="planetDescription">Aguarde enquanto os dados do planeta são preparados.</p>
+        <div class="planet-actions" id="planetActions"></div>
     </section>
 
     <section class="planet-layout" id="planetLayout">
         <article class="planet-image surface">
-            <img id="planetImage" src="" alt="" loading="lazy" decoding="async">
+            <img id="planetImage" alt="" loading="lazy" decoding="async">
         </article>
 
         <article class="planet-content surface">
@@ -88,8 +90,8 @@
     </section>
 
     <section class="surface error-box" id="planetError" hidden>
-        <h2>Planeta não encontrado</h2>
-        <p>O nome informado na URL não corresponde a um planeta cadastrado no projeto.</p>
+        <h2>Não conseguimos abrir esta página</h2>
+        <p id="planetErrorMessage">O planeta informado no endereço não existe no BSpace. Escolha um dos oito planetas na lista.</p>
         <a class="button-secondary" href="planetas.html">Voltar para a lista de planetas</a>
     </section>
 </main>

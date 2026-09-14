@@ -3,12 +3,13 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { createPlanetViewerUI } from "../components/planet-viewer-ui.js";
 import { getPlanetBySlug } from "../services/planet-service.js";
+import { onPreferencesChange, prefersReducedMotion } from "../services/accessibility-service.js";
 
 const container = document.getElementById("planeta3d");
 
 if (container) {
     const params = new URLSearchParams(window.location.search);
-    const planetSlug = (params.get("nome") || "terra").toLowerCase();
+    const planetSlug = (params.get("nome") || "").toLowerCase();
     const planet = getPlanetBySlug(planetSlug);
     const currentModel = planet?.modelo3d;
 
@@ -41,6 +42,7 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
 
     const markerLayer = document.createElement("div");
     markerLayer.className = "planet-callouts";
+    markerLayer.setAttribute("role", "group");
     markerLayer.setAttribute("aria-label", "Hotspots informativos do planeta");
     container.appendChild(markerLayer);
 
@@ -59,7 +61,7 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
     let visibilityObserver;
     let markers = [];
     let activeMarkerIndex = 0;
-    let autoRotationEnabled = true;
+    let autoRotationEnabled = !prefersReducedMotion();
     let isHotspotInteractionPaused = false;
     let shouldRender = true;
     let isContainerVisible = true;
@@ -82,6 +84,12 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
     setupLights(scene, currentModel);
     setupObservers();
     setupFullscreenState();
+    setupKeyboardControls();
+    onPreferencesChange((preferences) => {
+        if (preferences.reduceMotion && autoRotationEnabled) {
+            toggleRotation();
+        }
+    });
     loadModel();
     resizeRenderer();
     animate();
@@ -94,7 +102,7 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
             (gltf) => {
                 prepareModel(gltf).catch((error) => {
                     console.error("Não foi possível preparar o modelo 3D:", error);
-                    ui.setError("O modelo foi baixado, mas não pôde ser preparado.");
+                    ui.setError("O modelo 3D foi baixado, mas não pôde ser exibido neste navegador. As informações do planeta continuam disponíveis abaixo.");
                 });
             },
             (event) => {
@@ -107,7 +115,7 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
             },
             (error) => {
                 console.error("Não foi possível carregar o modelo 3D:", error);
-                ui.setError("Verifique se o arquivo GLB está disponível.");
+                ui.setError("Não foi possível baixar o modelo 3D. Verifique sua conexão com a internet e recarregue a página.");
             }
         );
     }
@@ -256,6 +264,40 @@ function initPlanet3D({ container, planet, currentModel, planetSlug }) {
         }
 
         container.requestFullscreen?.();
+    }
+
+    function setupKeyboardControls() {
+        const instructions = document.createElement("p");
+        const step = 0.18;
+        const actions = {
+            ArrowLeft: () => { planetGroup.rotation.y -= step; },
+            ArrowRight: () => { planetGroup.rotation.y += step; },
+            ArrowUp: () => { planetGroup.rotation.x = THREE.MathUtils.clamp(planetGroup.rotation.x - step, -1.2, 1.2); },
+            ArrowDown: () => { planetGroup.rotation.x = THREE.MathUtils.clamp(planetGroup.rotation.x + step, -1.2, 1.2); },
+            "+": () => zoomBy(0.88),
+            "=": () => zoomBy(0.88),
+            "-": () => zoomBy(1.14),
+            r: resetView,
+            R: resetView
+        };
+
+        instructions.id = "planet3dInstructions";
+        instructions.className = "visually-hidden";
+        instructions.textContent = "Use as setas do teclado para girar o planeta, as teclas mais e menos para aproximar ou afastar e R para centralizar.";
+        container.appendChild(instructions);
+        container.tabIndex = 0;
+        container.setAttribute("aria-describedby", instructions.id);
+
+        container.addEventListener("keydown", (event) => {
+            const action = actions[event.key];
+
+            if (event.target !== container || !planetGroup || !action) {
+                return;
+            }
+
+            event.preventDefault();
+            action();
+        });
     }
 
     function setupFullscreenState() {

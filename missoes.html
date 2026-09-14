@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="Explore timeline, tripulação, tecnologias, resultados e galerias de missões espaciais.">
     <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/content.css">
     <script type="application/ld+json">
     {
@@ -47,7 +48,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -74,7 +75,7 @@
             </div>
         </div>
         <div class="mission-hero-visual" aria-hidden="true">
-            <img id="missionBannerImage" src="" alt="" loading="lazy" decoding="async">
+            <img id="missionBannerImage" alt="" loading="lazy" decoding="async">
         </div>
     </section>
 
@@ -146,7 +147,7 @@
             </label>
             <button class="button" id="launchMission" type="button">Simular missão</button>
         </div>
-        <p class="highlight-output" id="missionResult">Escolha um destino e um tipo de missão para estimar risco e duração.</p>
+        <p class="highlight-output" id="missionResult" aria-live="polite">Escolha um destino e um tipo de missão para estimar risco e duração.</p>
     </section>
 </main>
 

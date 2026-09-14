@@ -27,3 +27,12 @@ export function readJsonStorage(key, fallback) {
 export function writeJsonStorage(key, value) {
     return writeStorage(key, JSON.stringify(value));
 }
+
+export function removeStorage(key) {
+    try {
+        window.localStorage.removeItem(key);
+        return true;
+    } catch {
+        return false;
+    }
+}

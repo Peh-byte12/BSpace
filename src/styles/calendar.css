@@ -28,7 +28,7 @@
 }
 
 .calendar-filter {
-    min-height: 42px;
+    min-height: 44px;
     padding: 10px 13px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -150,7 +150,7 @@
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.08);
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -272,6 +272,9 @@
 }
 
 .calendar-source {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     justify-self: start;
     padding: 10px 12px;
     border: 1px solid rgba(255, 209, 102, 0.26);
@@ -330,4 +333,8 @@
     .calendar-filter-bar {
         display: grid;
     }
+}
+
+.calendar-detail-header .favorite-toggle {
+    margin-top: 14px;
 }

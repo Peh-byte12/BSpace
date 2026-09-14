@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="Busque, compare e abra detalhes dos planetas do Sistema Solar.">
     <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/list.css">
     <script type="application/ld+json">
     {
@@ -47,7 +48,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -80,6 +81,7 @@
                 <input id="planetSearch" type="search" placeholder="Ex.: Marte, gigante, rochoso">
             </label>
         </div>
+        <p class="search-status" id="planetSearchStatus" role="status" aria-live="polite"></p>
 
         <div class="compare-controls">
             <label class="field-label">
@@ -92,7 +94,7 @@
             </label>
         </div>
         <div class="comparison-table" id="planetComparison"></div>
-        <p class="highlight-output" id="planetComparisonInsight"></p>
+        <p class="highlight-output" id="planetComparisonInsight" aria-live="polite"></p>
     </section>
 
     <section class="planets-grid" id="planetsGrid"></section>

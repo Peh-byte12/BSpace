@@ -194,7 +194,9 @@
 .progress-list {
     display: grid;
     gap: 18px;
-    margin-top: 18px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
 }
 
 .progress-item {
@@ -469,4 +471,25 @@
     .hero-stat {
         min-height: 126px;
     }
+}
+
+.mini-grid h2 {
+    font-size: 1.17rem;
+}
+
+.progress-footer {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.progress-note {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.progress-reset {
+    justify-self: start;
 }

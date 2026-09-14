@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="Explore astronomia com planetas 3D, missões e calendário astronômico.">
     <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/home.css">
     <script type="application/ld+json">
     {
@@ -47,7 +48,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -74,21 +75,21 @@
             </div>
         </div>
 
-        <div class="hero-panel">
+        <div class="hero-panel" aria-label="Resumo da sua exploração">
             <div class="hero-stat">
-                <span class="hero-stat-value" id="heroPlanetsStat">8</span>
-                <span class="hero-stat-label">destinos</span>
-                <strong>Planetas disponíveis</strong>
+                <span class="hero-stat-value" id="statPlanetsExplored">0</span>
+                <span class="hero-stat-label">explorados</span>
+                <strong>Planetas</strong>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-value" id="heroVisitedStat">0</span>
-                <span class="hero-stat-label">visitados</span>
-                <strong>Exploração retomável</strong>
+                <span class="hero-stat-value" id="statEventsViewed">0</span>
+                <span class="hero-stat-label">visualizados</span>
+                <strong>Eventos astronômicos</strong>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-value" id="heroMissionStat">0</span>
-                <span class="hero-stat-label">simulações</span>
-                <strong>Missões testadas</strong>
+                <span class="hero-stat-value" id="statFavorites">0</span>
+                <span class="hero-stat-label">salvos</span>
+                <strong>Favoritos</strong>
             </div>
         </div>
     </section>
@@ -112,23 +113,23 @@
                 <span class="solar-orbit orbit-netuno" data-orbit="netuno"><i></i></span>
             </div>
             <div class="planet-selector" id="solarPlanetButtons" role="group" aria-label="Selecionar planeta"></div>
-            <p class="highlight-output" id="solarPlanetInfo">Selecione um planeta para ver um resumo rápido.</p>
+            <p class="highlight-output" id="solarPlanetInfo" aria-live="polite">Selecione um planeta para ver um resumo rápido.</p>
         </article>
 
         <div class="mini-grid">
             <article class="section-box surface panel panel-last-visit" id="lastVisitedPlanet">
                 <div class="section-kicker">Último planeta visitado</div>
-                <h3 id="lastVisitedTitle">Terra</h3>
-                <p id="lastVisitedSummary">Confira de onde você parou e retome sua exploração.</p>
+                <h2 id="lastVisitedTitle">Nenhum planeta visitado ainda</h2>
+                <p id="lastVisitedSummary">Abra a página de um planeta para guardar aqui o seu ponto de partida.</p>
                 <div class="card-footnote">
-                    <span id="lastVisitedDetails">12742 km de diâmetro · 1 lua</span>
-                    <a class="button-secondary" href="planeta.html?nome=terra" id="continuePlanetLink">Continuar</a>
+                    <span id="lastVisitedDetails" hidden></span>
+                    <a class="button-secondary" href="planetas.html" id="continuePlanetLink">Explorar planetas</a>
                 </div>
             </article>
 
             <article class="section-box surface panel panel-mission" id="recommendedMission">
                 <div class="section-kicker">Missão recomendada</div>
-                <h3 id="missionTitle">Sobrevoo em Marte</h3>
+                <h2 id="missionTitle">Sobrevoo em Marte</h2>
                 <p id="missionDescription">Uma missão orbital com risco médio e alto retorno de descobertas para o planeta vermelho.</p>
                 <div class="mission-meta">
                     <span id="missionType">Missão Orbital</span>
@@ -139,7 +140,7 @@
 
             <article class="section-box surface panel panel-event" id="astronomyEvent">
                 <div class="section-kicker">Evento astronômico da semana</div>
-                <h3 id="eventTitle">Chuva de meteoros Perseidas</h3>
+                <h2 id="eventTitle">Chuva de meteoros Perseidas</h2>
                 <p id="eventDescription">Um espetáculo visível no céu noturno, perfeito para conectar a experiência digital à observação real.</p>
                 <ul class="event-list">
                     <li><strong>Melhor horário:</strong> 23h às 2h</li>
@@ -157,7 +158,11 @@
         <article class="section-box surface panel panel-progress">
             <div class="section-kicker">Estatísticas de progresso</div>
             <h2>Seu ritmo de exploração</h2>
-            <div class="progress-list" id="progressList"></div>
+            <ul class="progress-list" id="progressList"></ul>
+            <div class="progress-footer">
+                <p class="progress-note" id="progressNote"></p>
+                <button class="button-secondary progress-reset" id="resetStatsButton" type="button">Zerar estatísticas</button>
+            </div>
         </article>
     </section>
 </main>

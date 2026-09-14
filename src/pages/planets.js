@@ -4,7 +4,8 @@ import { setupPlanetCatalog } from "../components/planet-list.js";
 export function initPage() {
     setupPlanetCatalog({
         gridId: "planetsGrid",
-        searchId: "planetSearch"
+        searchId: "planetSearch",
+        statusId: "planetSearchStatus"
     });
 
     setupPlanetComparison({

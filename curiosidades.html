@@ -23,6 +23,7 @@
     <meta name="twitter:description" content="Curiosidades e simulação do tempo da luz no Sistema Solar.">
     <meta name="twitter:image" content="https://peh-byte12.github.io/BSpace/src/assets/social-card.png">
     <link rel="stylesheet" href="src/styles/base.css">
+    <script src="src/utils/accessibility-boot.js"></script>
     <link rel="stylesheet" href="src/styles/content.css">
     <script type="application/ld+json">
     {
@@ -43,7 +44,7 @@
 
 <header class="page-shell site-header surface">
     <div class="brand">
-        <img src="src/assets/logo.svg" alt="Logotipo do site de astronomia" width="72" height="72" decoding="async" fetchpriority="high">
+        <img src="src/assets/logo.svg" alt="" width="72" height="72" decoding="async" fetchpriority="high">
         <div>
             <strong>BSpace</strong>
             <span>Universo além da sua compreensão</span>
@@ -67,7 +68,7 @@
 
     <section class="curiosity-box surface">
         <h2>Curiosidade aleatória</h2>
-        <p class="curiosity-output" id="curiosidadeTexto">Clique no botão para revelar uma curiosidade astronômica.</p>
+        <p class="curiosity-output" id="curiosidadeTexto" aria-live="polite">Clique no botão para revelar uma curiosidade astronômica.</p>
         <button class="button" id="btnCuriosidade" type="button">Mostrar curiosidade</button>
     </section>
 
@@ -79,7 +80,7 @@
             <select id="lightDestination"></select>
         </label>
         <div class="simulation-track" aria-hidden="true"><span id="lightMeter"></span></div>
-        <p class="highlight-output" id="lightOutput">Escolha um destino para simular quanto tempo a luz leva para chegar lá.</p>
+        <p class="highlight-output" id="lightOutput" aria-live="polite">Escolha um destino para simular quanto tempo a luz leva para chegar lá.</p>
     </article>
 
     <article class="topic-card surface">

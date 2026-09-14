@@ -19,10 +19,11 @@ export function setupSolarSelector({ containerId, outputId, defaultSlug = "terra
         button.type = "button";
         button.textContent = planet.nome;
         button.dataset.planet = planet.slug;
+        button.setAttribute("aria-pressed", "false");
         button.addEventListener("click", () => {
             selectPlanet(planet.slug, containerId, outputId, {
                 includeDistance: true,
-                shouldPlaySound: true
+                fromUser: true
             });
         });
         container.appendChild(button);
@@ -30,7 +31,7 @@ export function setupSolarSelector({ containerId, outputId, defaultSlug = "terra
 
     selectPlanet(defaultSlug, containerId, outputId, {
         includeDistance: false,
-        shouldPlaySound: false
+        fromUser: false
     });
 }
 
@@ -42,7 +43,9 @@ function selectPlanet(slug, containerId, outputId, options = {}) {
     }
 
     document.querySelectorAll(`#${containerId} button`).forEach((button) => {
-        button.classList.toggle("is-active", button.dataset.planet === slug);
+        const isActive = button.dataset.planet === slug;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
     });
 
     document.querySelectorAll("[data-orbit]").forEach((orbit) => {
@@ -52,9 +55,8 @@ function selectPlanet(slug, containerId, outputId, options = {}) {
     const distanceText = options.includeDistance ? ` Distância média do Sol: ${formatNumber(planet.distancia)} milhões de km.` : "";
     setText(outputId, `${planet.nome}: ${planet.resumo}${distanceText}`);
 
-    if (options.shouldPlaySound) {
+    if (options.fromUser) {
         playTone(440);
+        setLastVisitedPlanet(slug);
     }
-
-    setLastVisitedPlanet(slug);
 }

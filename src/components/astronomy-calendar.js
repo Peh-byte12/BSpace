@@ -1,4 +1,7 @@
 import { getAstronomyEventStats, getAstronomyEventTypes, getRemoteSourceState, loadAstronomyEvents } from "../services/astronomy-event-service.js";
+import { createSearchRecorder, recordEventView } from "../services/exploration-progress-service.js";
+import { createFavoriteToggle } from "./favorite-toggle.js";
+import { announce } from "../utils/announce.js";
 import { createTextElement } from "../utils/dom.js";
 import { formatNumber } from "../utils/format.js";
 
@@ -41,6 +44,8 @@ export function setupAstronomyCalendar({
 
     let debounceTimer = null;
     let renderToken = 0;
+    let pendingAnnouncement = false;
+    const searchRecorder = createSearchRecorder("calendario");
 
     renderTypeFilters();
     bindSearch();
@@ -55,6 +60,7 @@ export function setupAstronomyCalendar({
             button.type = "button";
             button.textContent = type.label;
             button.className = "calendar-filter";
+            button.dataset.type = type.id;
             button.classList.toggle("is-active", state.type === type.id);
             button.setAttribute("aria-pressed", String(state.type === type.id));
             button.title = type.description;
@@ -62,7 +68,9 @@ export function setupAstronomyCalendar({
                 state.type = type.id;
                 state.selectedEventId = "";
                 state.userSelected = false;
+                pendingAnnouncement = true;
                 renderTypeFilters();
+                typeFilters.querySelector(`[data-type="${type.id}"]`)?.focus();
                 render();
             });
             typeFilters.appendChild(button);
@@ -70,12 +78,16 @@ export function setupAstronomyCalendar({
     }
 
     function bindSearch() {
+        searchInput.addEventListener("change", () => searchRecorder.flush(searchInput.value));
+
         searchInput.addEventListener("input", () => {
+            searchRecorder.schedule(searchInput.value);
             window.clearTimeout(debounceTimer);
             debounceTimer = window.setTimeout(() => {
                 state.search = searchInput.value;
                 state.selectedEventId = "";
                 state.userSelected = false;
+                pendingAnnouncement = true;
                 render();
             }, 140);
         });
@@ -100,7 +112,15 @@ export function setupAstronomyCalendar({
             showSourceMessage("loading");
         }
 
-        paint(await loadAstronomyEvents({ filters, forceRefresh }), token);
+        const events = await loadAstronomyEvents({ filters, forceRefresh });
+        paint(events, token);
+
+        if (token === renderToken && pendingAnnouncement) {
+            pendingAnnouncement = false;
+            announce(events.length === 0
+                ? "Nenhum evento encontrado. Tente outro termo de busca ou selecione o filtro Todos."
+                : `${events.length} ${events.length === 1 ? "evento encontrado" : "eventos encontrados"}.`);
+        }
     }
 
     function paint(events, token) {
@@ -178,6 +198,7 @@ export function setupAstronomyCalendar({
             const summary = createTextElement("span", event.summary);
 
             card.type = "button";
+            card.dataset.eventId = event.id;
             card.className = `calendar-card ${EVENT_TYPE_CLASS[event.type] || ""}`;
             card.classList.toggle("is-active", event.id === state.selectedEventId);
             card.classList.toggle("is-past", event.isPast);
@@ -185,8 +206,10 @@ export function setupAstronomyCalendar({
             card.addEventListener("click", () => {
                 state.selectedEventId = event.id;
                 state.userSelected = true;
+                recordEventView(event.id);
                 renderCards(events);
                 renderDetails(event);
+                [...eventsGrid.children].find((item) => item.dataset.eventId === event.id)?.focus();
             });
 
             date.dateTime = event.date;
@@ -225,6 +248,7 @@ export function setupAstronomyCalendar({
             createTextElement("h2", event.title),
             createTextElement("p", event.summary)
         );
+        header.appendChild(createFavoriteToggle({ type: "evento", id: event.id, name: event.title }));
 
         facts.className = "calendar-detail-facts";
         [
@@ -255,6 +279,7 @@ export function setupAstronomyCalendar({
             source.rel = "noreferrer";
             source.className = "calendar-source";
             source.textContent = `Fonte: ${event.source.name}`;
+            source.appendChild(createTextElement("span", " (abre em nova aba)", "visually-hidden"));
             detailsPanel.appendChild(source);
         }
     }

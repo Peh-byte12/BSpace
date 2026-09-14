@@ -18,10 +18,18 @@
     --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
     --radius: 8px;
     --content-width: 1120px;
+    --button-start: #2a6fd6;
+    --button-end: #1f63cc;
+    --control-border: rgba(191, 210, 255, 0.55);
+    --focus-ring: #ffd166;
 }
 
 * {
     box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
 }
 
 html {
@@ -113,11 +121,16 @@ main, header, section, footer, nav {
     min-height: 44px;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--control-border);
     border-radius: var(--radius);
     background: rgba(3, 8, 24, 0.86);
     color: var(--text);
     font: inherit;
+}
+
+.field-label input::placeholder {
+    color: rgba(191, 210, 255, 0.75);
+    opacity: 1;
 }
 
 .highlight-output {
@@ -140,7 +153,7 @@ main, header, section, footer, nav {
 }
 
 .button {
-    background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+    background: linear-gradient(135deg, var(--button-start), var(--button-end));
     color: white;
 }
 
@@ -176,16 +189,13 @@ button[disabled] {
     transform: translateY(-2px);
 }
 
-.button:focus-visible,
-.button-secondary:focus-visible,
-.nav-links a:focus-visible,
-.grid-link:focus-visible,
-.planet-nav a:focus-visible,
-button:focus-visible,
-select:focus-visible,
-input:focus-visible {
-    outline: 3px solid rgba(255, 209, 102, 0.72);
+:focus-visible {
+    outline: 3px solid var(--focus-ring);
     outline-offset: 3px;
+}
+
+main[tabindex="-1"]:focus {
+    outline: none;
 }
 
 h1, h2, h3 {
@@ -244,6 +254,10 @@ p {
 
 .nav-links a,
 .grid-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
     text-decoration: none;
     padding: 11px 16px;
     border-radius: var(--radius);
@@ -517,6 +531,7 @@ p {
     background: var(--primary-soft);
     border-color: rgba(77, 163, 255, 0.5);
     color: white;
+    box-shadow: inset 0 -3px 0 var(--accent-2);
 }
 
 .back-to-top {
@@ -527,7 +542,7 @@ p {
     height: 48px;
     border: none;
     border-radius: var(--radius);
-    background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+    background: linear-gradient(135deg, var(--button-start), var(--button-end));
     color: white;
     font-size: 1.2rem;
     font-weight: bold;
@@ -626,4 +641,301 @@ p {
 .error-box {
     padding: 24px;
     text-align: center;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    top: -120px;
+    left: 16px;
+    z-index: 100;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: #07111f;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+@media (min-width: 769px) {
+    .site-header {
+        gap: 12px;
+        padding-inline: 20px;
+    }
+
+    .nav-links {
+        margin-left: auto;
+    }
+}
+
+.a11y-menu {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.a11y-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.a11y-trigger[aria-expanded="true"] {
+    border-color: rgba(94, 234, 212, 0.6);
+    background: rgba(94, 234, 212, 0.14);
+}
+
+.a11y-trigger-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 50%;
+    background: var(--accent-2);
+    color: #07111f;
+    font-size: 0.8em;
+    font-weight: 800;
+}
+
+.a11y-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 40;
+    display: grid;
+    gap: 16px;
+    width: min(360px, calc(100vw - 32px));
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(6, 12, 34, 0.98);
+    box-shadow: var(--shadow);
+}
+
+.a11y-panel-title {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.a11y-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.a11y-font-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.a11y-small-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.a11y-small-button[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.a11y-font-value {
+    min-width: 3.5em;
+    color: var(--text);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.a11y-toggle-list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.a11y-toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.045);
+    cursor: pointer;
+}
+
+.a11y-toggle:has(input:checked) {
+    border-color: rgba(94, 234, 212, 0.6);
+    background: rgba(94, 234, 212, 0.12);
+}
+
+.a11y-toggle input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--accent-2);
+}
+
+.a11y-toggle-text {
+    display: grid;
+    gap: 3px;
+    color: var(--text);
+}
+
+.a11y-hint {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.a11y-reset {
+    justify-self: start;
+}
+
+.favorite-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.favorite-toggle-icon {
+    color: var(--accent);
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.favorite-toggle.is-active {
+    border-color: rgba(255, 209, 102, 0.6);
+    background: rgba(255, 209, 102, 0.14);
+}
+
+.planet-selector button[aria-pressed="true"],
+.calendar-filter[aria-pressed="true"],
+.calendar-card.is-active,
+.mission-card[aria-pressed="true"],
+.timeline-step.is-active,
+.gallery-thumb.is-active {
+    box-shadow: inset 0 0 0 2px rgba(94, 234, 212, 0.75);
+}
+
+@media (max-width: 768px) {
+    .a11y-menu {
+        align-self: flex-start;
+    }
+
+    .a11y-panel {
+        right: auto;
+        left: 0;
+    }
+}
+
+html[data-contrast="high"] {
+    --surface: rgba(2, 6, 23, 0.96);
+    --surface-strong: rgba(2, 6, 23, 0.98);
+    --text: #ffffff;
+    --muted: #e1ebff;
+    --accent-2: #7ff5e2;
+    --border: rgba(255, 255, 255, 0.5);
+    --control-border: rgba(255, 255, 255, 0.85);
+    --primary-soft: rgba(77, 163, 255, 0.32);
+}
+
+html[data-contrast="high"] :is(.hero-stat, .calendar-stat, .calendar-card, .mission-card, .timeline-step, .gallery-thumb, .fact, .highlight-card, .planet-selector button, .calendar-filter) {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+html[data-contrast="high"] :is(.estrela, .planeta-decoracao) {
+    opacity: 0.35;
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+}
+
+html[data-motion="reduced"] :is(.button, .button-secondary, .nav-links a, .grid-link, .planet-nav a, .highlight-card, .mission-card):hover {
+    transform: none;
+}
+
+html[data-motion="reduced"] .js-reveal {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+html[data-links="underline"] a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+}
+
+html[data-spacing="wide"] body {
+    letter-spacing: 0.03em;
+    word-spacing: 0.12em;
+}
+
+html[data-spacing="wide"] :is(p, li, dd) {
+    line-height: 1.95;
 }
