@@ -1,6 +1,9 @@
-import { getPreferences, resetPreferences, stepFontScale, updatePreferences } from "../services/accessibility-service.js";
+import { getPreferences, prefersReducedMotion, resetPreferences, stepFontScale, updatePreferences } from "../services/accessibility-service.js";
 import { FONT_SCALES } from "../services/accessibility-service.js";
 import { announce } from "../utils/announce.js";
+
+// Precisa acompanhar a duração de --dur-base para o painel só sumir depois da animação de saída.
+const CLOSE_DELAY = 220;
 
 const TOGGLES = [
     { key: "highContrast", label: "Alto contraste", hint: "Deixa textos, bordas e fundos mais nítidos." },
@@ -9,35 +12,72 @@ const TOGGLES = [
     { key: "textSpacing", label: "Espaçamento de leitura", hint: "Aumenta o espaço entre linhas, palavras e letras." }
 ];
 
-export function setupAccessibilityPanel(header) {
-    if (!header || document.getElementById("a11yPanel")) {
+export function setupAccessibilityPanel(dock) {
+    if (!dock || document.getElementById("a11yPanel")) {
         return;
     }
 
-    const wrapper = document.createElement("div");
     const trigger = createTrigger();
     const panel = createPanel();
 
-    wrapper.className = "a11y-menu";
-    wrapper.append(trigger, panel.element);
-    header.appendChild(wrapper);
+    dock.append(trigger, panel.element);
 
-    function setOpen(isOpen) {
-        panel.element.hidden = !isOpen;
-        trigger.setAttribute("aria-expanded", String(isOpen));
+    let closeTimer = null;
+
+    function isOpen() {
+        return trigger.getAttribute("aria-expanded") === "true";
     }
 
-    trigger.addEventListener("click", () => setOpen(panel.element.hidden));
+    function setOpen(shouldOpen) {
+        window.clearTimeout(closeTimer);
+        trigger.setAttribute("aria-expanded", String(shouldOpen));
 
-    wrapper.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !panel.element.hidden) {
+        if (shouldOpen) {
+            panel.element.hidden = false;
+            // Uma leitura de layout força o estado inicial a ser aplicado antes da classe de abertura,
+            // senão o navegador agrupa as duas mudanças e o painel aparece sem transição.
+            void panel.element.offsetWidth;
+            panel.element.classList.add("is-open");
+            return;
+        }
+
+        panel.element.classList.remove("is-open");
+
+        if (prefersReducedMotion()) {
+            panel.element.hidden = true;
+            return;
+        }
+
+        closeTimer = window.setTimeout(() => {
+            panel.element.hidden = true;
+        }, CLOSE_DELAY);
+    }
+
+    trigger.addEventListener("click", () => {
+        const shouldOpen = !isOpen();
+
+        setOpen(shouldOpen);
+
+        if (shouldOpen) {
+            panel.focusFirst();
+        }
+    });
+
+    dock.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && isOpen()) {
             setOpen(false);
             trigger.focus();
         }
     });
 
+    dock.addEventListener("focusout", (event) => {
+        if (isOpen() && !dock.contains(event.relatedTarget)) {
+            setOpen(false);
+        }
+    });
+
     document.addEventListener("click", (event) => {
-        if (!panel.element.hidden && !wrapper.contains(event.target)) {
+        if (isOpen() && !dock.contains(event.target)) {
             setOpen(false);
         }
     });
@@ -54,10 +94,13 @@ function createTrigger() {
     button.className = "a11y-trigger";
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-controls", "a11yPanel");
+    button.setAttribute("aria-haspopup", "true");
+    button.setAttribute("aria-label", "Opções de acessibilidade");
+    button.title = "Opções de acessibilidade";
+
     icon.className = "a11y-trigger-icon";
     icon.setAttribute("aria-hidden", "true");
-    icon.textContent = "Aa";
-    button.append(icon, document.createTextNode("Acessibilidade"));
+    button.appendChild(icon);
 
     return button;
 }
@@ -168,7 +211,13 @@ function createPanel() {
         });
     }
 
-    return { element, sync };
+    return {
+        element,
+        sync,
+        focusFirst() {
+            decrease.focus();
+        }
+    };
 }
 
 function createFontButton(symbol, label) {

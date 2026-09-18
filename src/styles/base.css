@@ -22,6 +22,11 @@
     --button-end: #1f63cc;
     --control-border: rgba(191, 210, 255, 0.55);
     --focus-ring: #ffd166;
+    --dur-fast: 140ms;
+    --dur-base: 220ms;
+    --dur-slow: 320ms;
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -149,7 +154,10 @@ main, header, section, footer, nav {
     font-weight: 700;
     max-width: 100%;
     text-align: center;
-    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
 }
 
 .button {
@@ -264,6 +272,10 @@ p {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border);
     white-space: nowrap;
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
 }
 
 .hero {
@@ -316,7 +328,7 @@ p {
     height: 3px;
     background: white;
     border-radius: 50%;
-    animation: piscar 2.4s infinite alternate;
+    animation: piscar 2.4s var(--ease-in-out) infinite alternate;
 }
 
 .planeta-decoracao {
@@ -382,19 +394,17 @@ p {
 }
 
 @keyframes piscar {
-    from { opacity: 0.25; transform: scale(1); }
-    to { opacity: 1; transform: scale(1.4); }
+    from { opacity: 0.25; }
+    to { opacity: 1; }
 }
 
 @keyframes planeta-flutuar {
     0%, 100% {
         transform: translateY(0) rotate(0deg);
-        background-position: 0 0, 0 0, 0 0;
     }
 
     50% {
         transform: translateY(-8px) rotate(1.5deg);
-        background-position: 0 0, 16px 0, 0 0;
     }
 }
 
@@ -534,51 +544,79 @@ p {
     box-shadow: inset 0 -3px 0 var(--accent-2);
 }
 
-.back-to-top {
+.a11y-dock {
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 48px;
-    height: 48px;
-    border: none;
+    z-index: 40;
+    display: grid;
+    justify-items: end;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.a11y-dock > * {
+    pointer-events: auto;
+}
+
+/* O espaço dos botões secundários fica reservado mesmo quando eles estão ocultos,
+   para que a seta nunca mude de posição durante a rolagem. */
+.a11y-dock-secondary {
+    display: grid;
+    justify-items: end;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.dock-button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    background: linear-gradient(135deg, var(--button-start), var(--button-end));
-    color: white;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--muted);
     font-size: 1.2rem;
-    font-weight: bold;
+    line-height: 1;
     cursor: pointer;
     box-shadow: var(--shadow);
+    pointer-events: auto;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition:
+        color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out),
+        transform var(--dur-base) var(--ease-out);
+}
+
+.dock-button:hover {
+    transform: translateY(-2px);
+}
+
+.back-to-top {
     opacity: 0;
     visibility: hidden;
-    transform: translateY(12px);
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-    z-index: 20;
+    transform: translateY(8px) scale(0.92);
+    pointer-events: none;
+    transition:
+        opacity var(--dur-base) var(--ease-out),
+        transform var(--dur-base) var(--ease-out),
+        visibility 0s linear var(--dur-base);
 }
 
 .back-to-top.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: none;
+    pointer-events: auto;
+    transition:
+        opacity var(--dur-base) var(--ease-out),
+        transform var(--dur-base) var(--ease-out),
+        visibility 0s;
 }
 
-.sound-toggle {
-    position: fixed;
-    right: 78px;
-    bottom: 20px;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--muted);
-    font-size: 1.3rem;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-    z-index: 20;
+.back-to-top.show:hover {
+    transform: translateY(-2px);
 }
 
 .sound-toggle.is-active {
@@ -589,26 +627,15 @@ p {
 
 .js-reveal {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(14px);
+    transition:
+        opacity var(--dur-slow) var(--ease-out),
+        transform var(--dur-slow) var(--ease-out);
 }
 
 .js-reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-@supports (content-visibility: auto) {
-    .feature-card,
-    .planet-card,
-    .topic-card,
-    .section-box,
-    .planet-content,
-    .planet-image,
-    [data-reveal] {
-        content-visibility: auto;
-        contain-intrinsic-size: 220px;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -619,6 +646,14 @@ p {
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
+    }
+
+    :is(.button, .button-secondary, .nav-links a, .grid-link, .planet-nav a, .highlight-card, .mission-card, .dock-button, .a11y-trigger):hover {
+        transform: none;
+    }
+
+    .back-to-top.show {
+        transform: none;
     }
 }
 
@@ -683,59 +718,66 @@ p {
     }
 }
 
-.a11y-menu {
-    position: relative;
-    flex: 0 0 auto;
-}
-
 .a11y-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: none;
     border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text);
-    font: inherit;
-    font-weight: 700;
-    white-space: nowrap;
+    background: linear-gradient(135deg, var(--button-start), var(--button-end));
+    color: white;
     cursor: pointer;
+    box-shadow: var(--shadow);
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        box-shadow var(--dur-base) var(--ease-out);
 }
 
-.a11y-trigger[aria-expanded="true"] {
-    border-color: rgba(94, 234, 212, 0.6);
-    background: rgba(94, 234, 212, 0.14);
+.a11y-trigger:hover {
+    transform: translateY(-2px);
 }
 
 .a11y-trigger-icon {
-    display: inline-grid;
-    place-items: center;
-    width: 1.6em;
-    height: 1.6em;
-    border-radius: 50%;
-    background: var(--accent-2);
-    color: #07111f;
-    font-size: 0.8em;
-    font-weight: 800;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+    transform: translateY(2px) rotate(-45deg);
+    transition: transform var(--dur-base) var(--ease-out);
+}
+
+.a11y-trigger[aria-expanded="true"] .a11y-trigger-icon {
+    transform: translateY(-2px) rotate(135deg);
 }
 
 .a11y-panel {
     position: absolute;
-    top: calc(100% + 12px);
     right: 0;
-    z-index: 40;
+    bottom: calc(100% + 12px);
+    z-index: 41;
     display: grid;
     gap: 16px;
     width: min(360px, calc(100vw - 32px));
-    max-height: calc(100vh - 160px);
-    overflow: auto;
+    max-height: min(70vh, calc(100vh - 140px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 18px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: rgba(6, 12, 34, 0.98);
     box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    transform-origin: bottom right;
+    transition:
+        opacity var(--dur-base) var(--ease-out),
+        transform var(--dur-base) var(--ease-out);
+}
+
+.a11y-panel.is-open {
+    opacity: 1;
+    transform: none;
 }
 
 .a11y-panel-title {
@@ -771,6 +813,9 @@ p {
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .a11y-small-button[aria-disabled="true"] {
@@ -804,6 +849,9 @@ p {
     border-radius: var(--radius);
     background: rgba(255, 255, 255, 0.045);
     cursor: pointer;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .a11y-toggle:has(input:checked) {
@@ -848,6 +896,9 @@ p {
     font: inherit;
     font-weight: 700;
     cursor: pointer;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .favorite-toggle-icon {
@@ -870,14 +921,10 @@ p {
     box-shadow: inset 0 0 0 2px rgba(94, 234, 212, 0.75);
 }
 
-@media (max-width: 768px) {
-    .a11y-menu {
-        align-self: flex-start;
-    }
-
-    .a11y-panel {
-        right: auto;
-        left: 0;
+@media (max-width: 480px) {
+    .a11y-dock {
+        right: 12px;
+        bottom: 12px;
     }
 }
 
@@ -909,7 +956,11 @@ html[data-motion="reduced"] *::after {
     transition-duration: 0.01ms !important;
 }
 
-html[data-motion="reduced"] :is(.button, .button-secondary, .nav-links a, .grid-link, .planet-nav a, .highlight-card, .mission-card):hover {
+html[data-motion="reduced"] :is(.button, .button-secondary, .nav-links a, .grid-link, .planet-nav a, .highlight-card, .mission-card, .dock-button, .a11y-trigger):hover {
+    transform: none;
+}
+
+html[data-motion="reduced"] .back-to-top.show {
     transform: none;
 }
 

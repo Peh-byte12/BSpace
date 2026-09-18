@@ -53,6 +53,10 @@
     border-radius: var(--radius);
     background: rgba(255,255,255,0.06);
     border: 1px solid var(--border);
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out);
 }
 
 @media (max-width: 900px) {
@@ -108,7 +112,9 @@ body[data-page="planet"] .planeta-decoracao {
     padding: 24px;
     background: rgba(2, 6, 23, 0.82);
     backdrop-filter: blur(10px);
-    transition: opacity 0.26s ease, visibility 0.26s ease;
+    transition:
+        opacity var(--dur-slow) var(--ease-out),
+        visibility 0s linear var(--dur-slow);
 }
 
 .planet-loader.is-hidden {
@@ -151,11 +157,13 @@ body[data-page="planet"] .planeta-decoracao {
 
 .planet-loader-fill {
     display: block;
-    width: 18%;
+    width: 100%;
     height: 100%;
     border-radius: inherit;
     background: linear-gradient(90deg, var(--accent-2), var(--primary));
-    transition: width 0.2s ease;
+    transform: scaleX(0.18);
+    transform-origin: left center;
+    transition: transform var(--dur-base) var(--ease-out);
 }
 
 .planet-viewer-toolbar {
@@ -187,6 +195,9 @@ body[data-page="planet"] .planeta-decoracao {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .planet-viewer-toolbar button:hover,
@@ -332,7 +343,7 @@ body[data-page="planet"] .planeta-decoracao {
     color: #ffffff;
     cursor: pointer;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.45));
-    transition: opacity 180ms ease;
+    transition: opacity var(--dur-base) var(--ease-out);
     will-change: transform;
     pointer-events: auto;
     font: inherit;

@@ -93,12 +93,12 @@ function createLoader(planet) {
         element,
         setProgress(percent, message = "Carregando modelo 3D") {
             status.textContent = percent === null ? message : `${message}: ${Math.round(percent)}%`;
-            fill.style.width = `${percent ?? 22}%`;
+            fill.style.transform = `scaleX(${(percent ?? 22) / 100})`;
         },
         setError(message) {
             title.textContent = "Não foi possível carregar o planeta";
             status.textContent = message;
-            fill.style.width = "100%";
+            fill.style.transform = "scaleX(1)";
         }
     };
 }

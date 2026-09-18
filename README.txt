@@ -44,7 +44,9 @@ Estatísticas do usuário
 
 Acessibilidade
 
-- O botão "Acessibilidade" no cabeçalho abre opções de tamanho do texto, alto contraste, redução de animações, links sublinhados e espaçamento de leitura.
+- A seta no canto inferior direito abre opções de tamanho do texto, alto contraste, redução de animações, links sublinhados e espaçamento de leitura.
+- Essa seta, o botão de voltar ao topo e o botão de som ficam agrupados em src/components/site-shell.js no mesmo painel flutuante (.a11y-dock), para não se sobreporem.
+- O painel abre acima da seta, fecha com Escape, com clique fora ou quando o foco sai do grupo, e devolve o foco para a seta.
 - As preferências ficam em bspaceA11yPreferences e são aplicadas antes da primeira pintura por src/utils/accessibility-boot.js.
 - Todas as páginas têm link "Pular para o conteúdo principal", foco visível e anúncios para leitores de tela via src/utils/announce.js.
 - O modelo 3D pode ser controlado pelo teclado: setas giram, + e - aproximam ou afastam e R centraliza.
@@ -60,9 +62,9 @@ Guia de manutenção
 Funcionalidades
 
 - Destaque automático do link ativo no menu
-- Botão voltar ao topo
+- Botão voltar ao topo, que aparece junto da seta de acessibilidade depois de rolar a página
 - Ano automático no rodapé
-- Animação suave nos cards e seções
+- Animação suave nos cards e seções, com durações e curvas padronizadas em variáveis CSS (--dur-*, --ease-*)
 - Home em formato de dashboard de exploração espacial
 - Sistema solar simplificado na página inicial com os oito planetas e destaque do planeta selecionado
 - Estatísticas de uso por navegador, começando em zero

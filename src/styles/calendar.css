@@ -37,6 +37,9 @@
     cursor: pointer;
     font: inherit;
     font-weight: 800;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .calendar-filter:hover,
@@ -107,6 +110,9 @@
     cursor: pointer;
     font: inherit;
     text-align: left;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .calendar-card:hover,

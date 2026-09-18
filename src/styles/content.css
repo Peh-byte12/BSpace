@@ -27,10 +27,12 @@
 
 .simulation-track span {
     display: block;
-    width: 0%;
+    width: 100%;
     height: 100%;
     background: linear-gradient(90deg, var(--accent), var(--primary));
-    transition: width 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-slow) var(--ease-out);
 }
 
 .mission-controls {
@@ -107,7 +109,10 @@
     cursor: pointer;
     font: inherit;
     text-align: left;
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    transition:
+        transform var(--dur-base) var(--ease-out),
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .mission-card:hover,
@@ -205,6 +210,9 @@
     cursor: pointer;
     font: inherit;
     text-align: left;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .timeline-step span {
@@ -308,6 +316,9 @@
     cursor: pointer;
     font: inherit;
     text-align: left;
+    transition:
+        border-color var(--dur-base) var(--ease-out),
+        background-color var(--dur-base) var(--ease-out);
 }
 
 .gallery-thumb img {

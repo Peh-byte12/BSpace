@@ -95,6 +95,10 @@ export function setupAstronomyCalendar({
 
     function scheduleAutoRefresh() {
         window.setInterval(() => {
+            if (document.hidden) {
+                return;
+            }
+
             render({ forceRefresh: true });
         }, REFRESH_INTERVAL);
     }
@@ -207,9 +211,8 @@ export function setupAstronomyCalendar({
                 state.selectedEventId = event.id;
                 state.userSelected = true;
                 recordEventView(event.id);
-                renderCards(events);
+                setActiveCard(event.id);
                 renderDetails(event);
-                [...eventsGrid.children].find((item) => item.dataset.eventId === event.id)?.focus();
             });
 
             date.dateTime = event.date;
@@ -222,6 +225,17 @@ export function setupAstronomyCalendar({
 
             card.append(meta, title, summary);
             eventsGrid.appendChild(card);
+        });
+    }
+
+    // Trocar a seleção só altera as classes dos cards já renderizados: reconstruir a grade
+    // inteira descartava o card clicado e, com ele, o foco do teclado.
+    function setActiveCard(eventId) {
+        [...eventsGrid.children].forEach((card) => {
+            const isActive = card.dataset.eventId === eventId;
+
+            card.classList.toggle("is-active", isActive);
+            card.setAttribute("aria-pressed", String(isActive));
         });
     }
 

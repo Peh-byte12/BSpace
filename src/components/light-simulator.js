@@ -35,9 +35,9 @@ function renderLightSimulation(selectId, meterId, outputId, options = {}) {
     }
 
     const minutes = planet.distancia / 17.987;
-    const percentage = Math.max(4, (planet.distancia / getMaxPlanetDistance()) * 100);
+    const ratio = Math.max(0.04, planet.distancia / getMaxPlanetDistance());
 
-    meter.style.width = `${percentage}%`;
+    meter.style.transform = `scaleX(${ratio})`;
     setText(outputId, `A luz do Sol leva aproximadamente ${formatTime(minutes)} para chegar até ${planet.nome}.`);
 
     if (options.shouldPlaySound) {

@@ -5,18 +5,21 @@ import { setupAccessibilityPanel } from "./accessibility-panel.js";
 const SOUND_PAGES = ["home", "curiosities"];
 
 export function initSiteShell() {
+    const dock = setupAccessibilityDock();
+
     setupSkipLink();
     setupStarrySky();
-    setupAccessibilityPanel(document.querySelector(".site-header"));
     highlightActiveLink();
-    setupBackToTop();
-    setupSoundToggle();
+    setupBackToTop(dock);
+    setupSoundToggle(dock);
+    setupAccessibilityPanel(dock);
     setupCurrentYear();
 }
 
 export function enhancePageContent() {
     setupResponsiveImages();
     setupRevealAnimation();
+    setupOffscreenAnimationPause();
 }
 
 function setupSkipLink() {
@@ -82,24 +85,54 @@ function highlightActiveLink() {
     });
 }
 
-function setupBackToTop() {
-    if (document.getElementById("backToTop")) {
+// Agrupa os controles flutuantes do canto inferior direito para que eles não se sobreponham.
+function setupAccessibilityDock() {
+    const existing = document.getElementById("a11yDock");
+
+    if (existing) {
+        return existing;
+    }
+
+    const dock = document.createElement("div");
+    const secondary = document.createElement("div");
+
+    dock.className = "a11y-dock";
+    dock.id = "a11yDock";
+    secondary.className = "a11y-dock-secondary";
+
+    dock.appendChild(secondary);
+    document.body.appendChild(dock);
+
+    return dock;
+}
+
+function setupBackToTop(dock) {
+    if (!dock || document.getElementById("backToTop")) {
         return;
     }
 
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "back-to-top";
+    button.className = "dock-button back-to-top";
     button.id = "backToTop";
     button.setAttribute("aria-label", "Voltar ao topo da página");
+    button.title = "Voltar ao topo";
     button.textContent = "↑";
 
-    document.body.appendChild(button);
+    dock.querySelector(".a11y-dock-secondary").appendChild(button);
 
     let waitingFrame = false;
+    let isShown = null;
 
     function updateButtonState() {
-        button.classList.toggle("show", window.scrollY > 250);
+        const shouldShow = window.scrollY > 250;
+
+        if (shouldShow === isShown) {
+            return;
+        }
+
+        isShown = shouldShow;
+        button.classList.toggle("show", shouldShow);
     }
 
     window.addEventListener("scroll", () => {
@@ -124,15 +157,15 @@ function setupBackToTop() {
     });
 }
 
-function setupSoundToggle() {
-    if (!SOUND_PAGES.includes(document.body.dataset.page) || document.getElementById("soundToggle")) {
+function setupSoundToggle(dock) {
+    if (!dock || !SOUND_PAGES.includes(document.body.dataset.page) || document.getElementById("soundToggle")) {
         return;
     }
 
     const button = document.createElement("button");
 
     button.type = "button";
-    button.className = "sound-toggle";
+    button.className = "dock-button sound-toggle";
     button.id = "soundToggle";
     button.textContent = "♪";
 
@@ -158,7 +191,7 @@ function setupSoundToggle() {
     });
 
     updateButtonState();
-    document.body.appendChild(button);
+    dock.querySelector(".a11y-dock-secondary").appendChild(button);
 }
 
 function setupCurrentYear() {
@@ -188,7 +221,7 @@ function setupResponsiveImages() {
 }
 
 function setupRevealAnimation() {
-    const animatedElements = document.querySelectorAll("[data-reveal], .feature-card, .planet-card, .topic-card, .section-box, .planet-content, .planet-image");
+    const animatedElements = [...document.querySelectorAll("[data-reveal], .feature-card, .planet-card, .topic-card, .section-box, .planet-content, .planet-image")];
 
     if (!("IntersectionObserver" in window) || animatedElements.length === 0) {
         return;
@@ -202,11 +235,36 @@ function setupRevealAnimation() {
             }
         });
     }, {
-        threshold: 0.15
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px"
     });
 
-    animatedElements.forEach((element) => {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    // As medições acontecem todas antes das escritas para não alternar leitura e escrita de layout.
+    const distancesToViewport = animatedElements.map((element) => element.getBoundingClientRect().top);
+
+    animatedElements.forEach((element, index) => {
+        // O conteúdo que já está visível na primeira dobra entra sem animação, evitando o piscar inicial.
+        if (distancesToViewport[index] < viewportHeight) {
+            return;
+        }
+
         element.classList.add("js-reveal");
         observer.observe(element);
     });
+}
+
+// Órbitas fora da tela continuavam animando e consumindo quadros sem nenhum ganho visual.
+function setupOffscreenAnimationPause() {
+    const stage = document.querySelector(".solar-stage");
+
+    if (!stage || !("IntersectionObserver" in window)) {
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        stage.classList.toggle("is-paused", !entries[0].isIntersecting);
+    }, { threshold: 0 });
+
+    observer.observe(stage);
 }

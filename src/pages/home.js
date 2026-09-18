@@ -193,8 +193,12 @@ function createProgressBar(title, value, total) {
     bar.setAttribute("aria-valuetext", `${value} de ${total}`);
 
     fill.className = "progress-fill";
-    fill.style.width = `${percentage}%`;
     bar.appendChild(fill);
+
+    // A barra só recebe o valor depois da primeira pintura para que a transição de preenchimento aconteça.
+    window.requestAnimationFrame(() => {
+        fill.style.transform = `scaleX(${percentage / 100})`;
+    });
 
     return bar;
 }
