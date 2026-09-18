@@ -1,0 +1,12 @@
+# Normaliza as quebras de linha: LF no repositório, nativo no working tree.
+* text=auto eol=lf
+
+# Arquivos binários não devem passar por normalização nem aparecer em diffs de texto.
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.webp binary
+*.glb  binary
+
+# SVG é texto e deve manter LF.
+*.svg text eol=lf

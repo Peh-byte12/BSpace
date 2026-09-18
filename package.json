@@ -1,20 +1,26 @@
 {
-  "name": "bspace-1.2.2",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "bspace",
+  "version": "1.2.2",
+  "description": "Plataforma educacional de astronomia com dashboard, planetas em 3D, missões espaciais e calendário astronômico.",
+  "keywords": [
+    "astronomia",
+    "educacao",
+    "sistema-solar",
+    "three.js",
+    "webgl",
+    "nasa-api",
+    "acessibilidade",
+    "site-estatico"
+  ],
+  "homepage": "https://peh-byte12.github.io/BSpace/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Peh-byte12/BSpace.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Peh-byte12/BSpace/issues"
   },
-  "homepage": "https://github.com/Peh-byte12/BSpace#readme"
+  "author": "Peh-byte12",
+  "license": "ISC",
+  "private": true
 }

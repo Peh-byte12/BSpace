@@ -1,5 +1,34 @@
+# Dependências
 node_modules/
+
+# Variáveis de ambiente e configurações locais
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Caches e saídas de build
+.cache/
+.parcel-cache/
+.temp/
+.tmp/
+dist/
+build/
+coverage/
+
+# Editores e IDEs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
 
 # Arquivos de sistema
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 .DS_Store
